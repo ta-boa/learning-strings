@@ -1,0 +1,28 @@
+@import "variables";
+
+@media (max-width: 639px) {
+    #app>main {
+        margin: 0 2rem;
+    }
+}
+
+*,
+*::after,
+*::before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $font-family;
+    font-size: 10px;
+    font-weight: $font-weight;
+    color: $light-color;
+    background-color: $light-background;
+}
