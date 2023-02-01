@@ -43,14 +43,13 @@ const Home = ({ instrument }: Props) => {
         }
         return ""
     })
-    const stringifyActiveKeys = "Ttb"
+    const stringifyActiveKeys = computed(() => {
+        return Object.values(state.activeKeys.value).map(data => data.note)
+    })
     return (
         <AppContext.Provider value={state}>
             <main class={style.main} data-view={stringfyViews} data-active-notes={stringifyActiveKeys}>
                 <menu class={style.menu}>
-                    <header class={style.header}>
-                        <h1>🎵Learning Strings</h1>
-                    </header>
                     <Display />
                     <Tuning />
                     <Chords />

@@ -34,6 +34,8 @@ const getNextHalfStep = (note: Note, list: Note[]) => {
     return minor(targetNote);
 }
 
+const echo = (note: Note) => note;
+
 const getMajorScaleFromNote = (
     note: Note
 ): Note[] => {
@@ -70,7 +72,26 @@ const getMajorScaleFromNote = (
     return result;
 };
 
-export const MajorScale = {
+const pick = (range: number[], list: Note[]) => {
+    return list.filter((_, index) => {
+        return range.includes(index);
+    });
+};
+
+type Mutation = (note: Note) => Note;
+const transformNotes = (notes: Note[], mutations: Mutation[]) => {
+    if (mutations.length === 0) return notes;
+    if (notes.length != mutations.length) {
+        throw Error("notes and mutations should have same length")
+    }
+    return notes.map((note: Note, index: number) => {
+        const fn = mutations[index]
+        return fn(note)
+    })
+
+}
+
+export const MajorScaleProgression = {
     F: getMajorScaleFromNote("F"),
     C: getMajorScaleFromNote("C"),
     G: getMajorScaleFromNote("G"),
@@ -78,4 +99,41 @@ export const MajorScale = {
     A: getMajorScaleFromNote("A"),
     E: getMajorScaleFromNote("E"),
     B: getMajorScaleFromNote("B"),
+}
+
+
+const buildScale = (selection: number[], mutations: Mutation[] = []) => {
+    return Object.keys(MajorScaleProgression)
+        .reduce((newScale, note: Note) => {
+            const notes = MajorScaleProgression[note];
+            newScale[note] = transformNotes(pick(selection, notes), mutations)
+            return newScale;
+        }, {})
+}
+
+export default {
+    Major: {
+        ...buildScale([0, 2, 4])
+    },
+    Minor: {
+        ...buildScale([0, 2, 4], [echo, minor, echo])
+    },
+    Diminished: {
+        ...buildScale([0, 2, 4], [echo, minor, minor])
+    },
+    Augmented: {
+        ...buildScale([0, 2, 4], [echo, echo, sharp])
+    },
+    "Major 7": {
+        ...buildScale([0, 2, 4, 6])
+    },
+    "Minor 7": {
+        ...buildScale([0, 2, 4, 6], [echo, minor, echo, minor])
+    },
+    "Dominant 7": {
+        ...buildScale([0, 2, 4, 6], [echo, echo, echo, minor])
+    },
+    "Augmented 7": {
+        ...buildScale([0, 2, 4, 6], [echo, echo, sharp, minor])
+    }
 }

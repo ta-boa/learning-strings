@@ -15,6 +15,7 @@
 		"paths": {
 			"react": ["./node_modules/preact/compat"],
 			"react-dom": ["./node_modules/preact/compat"],
+            "app": ["./src/components/app"],
             "music/*" : ["./src/music/*"],
             "routes/*": ["./src/routes/*"],
             "style/*" : ["./src/style/*"],
