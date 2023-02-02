@@ -10,6 +10,8 @@
         "prettier/prettier": "error"
     },
     "ignorePatterns": [
-        "build/"
+        "build/",
+        "node_modules/",
+        "**/tests/"
     ]
 }
