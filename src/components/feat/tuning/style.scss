@@ -2,17 +2,17 @@
 
 $padding: 0.2rem;
 
-.string-list, 
+.string-list,
 .tuning-options {
-    margin:$padding 0;
+    margin: $padding 0;
 }
 
-.string-list{
-    margin-right:$padding;
+.string-list {
+    margin-right: $padding;
 }
 
 .string-list:first-child {
-    margin-right:0;
+    margin-right: 0;
 }
 
 .tuning-options {
@@ -20,11 +20,11 @@ $padding: 0.2rem;
 }
 
 .legend {
-    color:black;
+    color: black;
 }
 
 .current {
-    display:flex;
+    display: flex;
     flex-flow: row-reverse;
     justify-content: flex-end;
 }

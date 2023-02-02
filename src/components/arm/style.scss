@@ -74,16 +74,14 @@ $note-fret-font-color: darkgray;
 }
 
 .semi {
-
-    [data-sharp=true],
-    [data-minor=true] {
+    [data-sharp="true"],
+    [data-minor="true"] {
         flex: 1;
         font-size: 0.8rem;
     }
 }
 
 main {
-
     // hide major
     &:not([data-view*="major"]) {
         .note [data-major="true"] {

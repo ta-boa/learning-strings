@@ -22,11 +22,10 @@ $menu-min-width: min(280px, 25vw);
         min-width: 40%;
     }
     .content {
-        position:fixed;
+        position: fixed;
         right: 5rem;
     }
 }
-
 
 .content {
     display: flex;
@@ -40,7 +39,7 @@ $menu-min-width: min(280px, 25vw);
 
     h1 {
         flex: 1;
-        color:indigo;
+        color: indigo;
         text-align: center;
         font-size: 1.4rem;
         padding: 0;
