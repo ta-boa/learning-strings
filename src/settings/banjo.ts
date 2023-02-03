@@ -9,11 +9,21 @@ export const tuningOptions: Record<string, Note[]> = {
     "G modal": ["D", "G", "C", "D"], // 5th G
 }
 
+// • · ∙ ●
+const bullet = "•"
 export default {
     name: "Banjo",
     frets: 22,
     strings: 4,
-    armBullets: [3, 5, 7, 10, 12, 15, 17],
+    armBullets: {
+        3: bullet,
+        5: bullet,
+        7: bullet,
+        10: bullet,
+        12: bullet.repeat(2),
+        15: bullet,
+        17: bullet,
+    },
     tuning: tuningOptions["Open G"],
     tuningOptions,
 } as InstrumentSettings

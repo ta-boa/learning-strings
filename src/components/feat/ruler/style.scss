@@ -1,0 +1,22 @@
+@import "../feat.scss";
+
+fieldset {
+    display: flex;
+    flex-direction: row;
+    outline: none;
+    border: 0;
+}
+
+label,
+select {
+    flex: 1;
+    padding: 0.2rem;
+}
+
+label {
+    text-align: center;
+}
+
+input[type="radio"] {
+    margin-right: 0.2rem;
+}

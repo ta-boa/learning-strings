@@ -60,6 +60,23 @@ $note-fret-font-color: darkgray;
     }
 }
 
+[data-last-string="true"] {
+    .note[data-bullet]:before {
+        cursor: default;
+        position: absolute;
+        color:inherit;
+        background-color: white;
+        display: flex;
+        min-width: 1ch;
+        height: $note-size;
+        align-items: center;
+        margin-left: -1rem;
+        content: attr(data-bullet);
+        font-size: 1.2rem;
+        display: flex;
+    }
+}
+
 .full,
 .semi {
     flex: 1;

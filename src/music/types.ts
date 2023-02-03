@@ -12,5 +12,5 @@ export interface InstrumentSettings {
     tuning: Note[]
     tuningOptions: InstrumentTuning
     description?: string
-    armBullets?: number[]
+    armBullets?: Record<number, string>
 }

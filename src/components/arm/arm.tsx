@@ -1,5 +1,6 @@
 import { h } from "preact"
 import { useContext } from "preact/hooks"
+import { AppState } from "routes/home"
 import { Note, NoteSettings, PressedKeys } from "src/music/types"
 import { getFriendlySemiNote, getNoteFromFret, isMinor, isSharp } from "../../music/notes"
 import { AppContext } from "../app"
@@ -10,9 +11,17 @@ export type ArmStringProps = {
 }
 
 export const ArmString = ({ position }: ArmStringProps) => {
-    const { tuning, instrument, activeKeys } = useContext(AppContext)
+    const { tuning, instrument, activeKeys } = useContext(AppContext) as AppState
+    const armBullets = instrument.value.armBullets
     const rootNote = (tuning.value as Note[])[position] as Note
+    const last = instrument.value.strings - 1
+    const bulletList = Object.keys(armBullets) as string[]
     const notes = []
+
+    const getArmBullet = (fret: number): string | undefined => {
+        const sfret = fret.toString()
+        return bulletList.includes(sfret) ? armBullets[sfret] : undefined
+    }
 
     for (let fret = 0; fret < instrument.value.frets; fret++) {
         notes.push(getNoteFromFret(rootNote, fret))
@@ -39,7 +48,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
     }
 
     return (
-        <div data-position={position}>
+        <div data-position={position} data-last-string={position === last}>
             {notes.map((current: NoteSettings, key: number) => {
                 const fret = current.fret === 0 ? "open" : current.fret
                 const n = current.note
@@ -72,6 +81,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
                         data-fret={fret}
                         data-position={position}
                         data-note={current.note}
+                        data-bullet={getArmBullet(current.fret)}
                     >
                         {body}
                     </button>

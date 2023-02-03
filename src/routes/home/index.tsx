@@ -8,6 +8,7 @@ import style from "./style.scss"
 import Display from "../../components/feat/display/display"
 import Tuning from "../../components/feat/tuning/tuning"
 import Chords from "../../components/feat/chord/chord"
+import Ruler from "../../components/feat/ruler/ruler"
 
 export type AppState = {
     activeKeys: Signal<Record<string, NoteSettings>>
@@ -59,6 +60,7 @@ const Home = ({ instrument }: Props) => {
                     <Display />
                     <Tuning />
                     <Chords />
+                    <Ruler />
                 </menu>
                 <section class={style.content}>
                     <Instrument />
