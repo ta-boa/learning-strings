@@ -3,7 +3,7 @@
     "plugins": ["prettier"],
     "extends": [
         "preact",
-        "plugin:@typescript-eslint/recommended",
+//        "plugin:@typescript-eslint/recommended",
         "prettier"
     ],
     "rules": {

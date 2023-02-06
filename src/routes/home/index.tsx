@@ -1,6 +1,6 @@
 import { computed, Signal, signal } from "@preact/signals"
 import { h } from "preact"
-import { InstrumentSettings, Note, NoteSettings, PressedKeys } from "src/music/types"
+import { InstrumentSettings, Note, NoteSettings, PressedKeys, Progression } from "src/music/types"
 import { AppContext } from "../../components/app"
 import Instrument from "../../components/instrument/instrument"
 import Instruments from "../../settings/index"
@@ -15,19 +15,21 @@ export type AppState = {
     instrument: Signal<InstrumentSettings>
     tuning: Signal<Note[]>
     views: Signal<Record<string, boolean>>
+    progression: Signal<Progression[]>
 }
 
 function createAppState(iSettings: InstrumentSettings): AppState {
     const instrument = signal(iSettings)
     const tuning = signal(iSettings.tuning)
     const activeKeys = signal({} as PressedKeys)
+    const progression = signal([])
     const views = signal({
         major: true,
         sharp: true,
         minor: false,
         fret: true,
     })
-    return { instrument, tuning, activeKeys, views } as AppState
+    return { instrument, tuning, activeKeys, views , progression } as AppState
 }
 
 interface Props {

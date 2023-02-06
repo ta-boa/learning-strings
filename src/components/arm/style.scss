@@ -40,19 +40,19 @@ $note-fret-font-color: darkgray;
         }
     }
 
-    &:hover {
-        color: $note-hover-font-color;
-        background-color: $note-hover-background-color;
-    }
-
     &[data-fret="open"] {
         position: sticky;
         top: 0;
         z-index: 1;
     }
 
-    &.highlight {
-        background-color: yellow;
+    &[data-progression="true"] {
+        background-color:purple;
+    }
+
+    &:hover {
+        color: $note-hover-font-color;
+        background-color: $note-hover-background-color;
     }
 
     &[aria-pressed="true"] {
@@ -64,7 +64,7 @@ $note-fret-font-color: darkgray;
     .note[data-bullet]:before {
         cursor: default;
         position: absolute;
-        color:inherit;
+        color: inherit;
         background-color: white;
         display: flex;
         min-width: 1ch;

@@ -7,23 +7,31 @@ import { FretSequence, getFriendlySemiNote } from "../../../music/notes"
 import style from "./style.scss"
 
 export default function Tuning() {
-    const { tuning, instrument } = useContext(AppContext) as AppState
+    const { tuning, instrument, progression, activeKeys } = useContext(AppContext) as AppState
     const tuningOptions = instrument.value.tuningOptions
     const tuningName = Object.keys(tuningOptions)
         .filter((name) => {
             return tuningOptions[name] === tuning.value
         })
         .pop()
+
+    const resetOtherFeatures = () => {
+        progression.value = []
+        activeKeys.value = {}
+    }
+
     const updateStringTuning = (position: number) => (event: Event) => {
         const newTuning = (event.target as HTMLOptionElement).value as Note
         const newList = [...tuning.value]
         newList[position] = newTuning
+        resetOtherFeatures()
         tuning.value = newList
     }
     const updateTuning = (event: Event) => {
         const select = event.target as HTMLSelectElement
         const newTuning = tuningOptions[select.value]
         if (Array.isArray(newTuning)) {
+            resetOtherFeatures()
             tuning.value = newTuning
         }
     }
@@ -64,9 +72,8 @@ export default function Tuning() {
         <details class={style.wrapper}>
             <summary class={style.trigger}>Tuning</summary>
             <div class={style.content}>
-                {getTuningList()}
-                <small style={style.legend}>Current tuning</small>
                 <div class={style.current}>{tuning.value.map(getList)}</div>
+                {getTuningList()}
             </div>
         </details>
     )

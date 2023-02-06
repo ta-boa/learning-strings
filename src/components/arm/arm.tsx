@@ -1,7 +1,7 @@
 import { h } from "preact"
 import { useContext } from "preact/hooks"
 import { AppState } from "routes/home"
-import { Note, NoteSettings, PressedKeys } from "src/music/types"
+import { Note, NoteSettings, PressedKeys, Progression } from "src/music/types"
 import { getFriendlySemiNote, getNoteFromFret, isMinor, isSharp } from "../../music/notes"
 import { AppContext } from "../app"
 import style from "./style.scss"
@@ -11,7 +11,7 @@ export type ArmStringProps = {
 }
 
 export const ArmString = ({ position }: ArmStringProps) => {
-    const { tuning, instrument, activeKeys } = useContext(AppContext) as AppState
+    const { tuning, instrument, activeKeys, progression } = useContext(AppContext) as AppState
     const armBullets = instrument.value.armBullets
     const rootNote = (tuning.value as Note[])[position] as Note
     const last = instrument.value.strings - 1
@@ -32,6 +32,12 @@ export const ArmString = ({ position }: ArmStringProps) => {
         const current: NoteSettings | undefined = keys[position]
         if (current === undefined) return false
         return current.note === note.note && current.fret === note.fret
+    }
+
+    const isProgression = (note: NoteSettings): boolean => {
+        return progression.value.some((prog: Progression) => {
+            return prog.position === position && note.fret === prog.fret
+        })
     }
 
     const togglePressed = (target: NoteSettings) => {
@@ -78,6 +84,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
                         class={style.note}
                         onClick={togglePressed(current)}
                         aria-pressed={isPressed(current)}
+                        data-progression={isProgression(current)}
                         data-fret={fret}
                         data-position={position}
                         data-note={current.note}

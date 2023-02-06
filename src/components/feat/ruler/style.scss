@@ -2,7 +2,7 @@
 
 fieldset {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     outline: none;
     border: 0;
 }
@@ -14,7 +14,7 @@ select {
 }
 
 label {
-    text-align: center;
+    flex:1;
 }
 
 input[type="radio"] {

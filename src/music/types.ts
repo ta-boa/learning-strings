@@ -5,6 +5,11 @@ export interface NoteSettings {
 }
 export type PressedKeys = Record<string, NoteSettings>
 export type InstrumentTuning = Record<string, Note[]>
+export interface Progression {
+    position: number
+    fret: number
+    order: number
+}
 export interface InstrumentSettings {
     name: string
     frets: number
