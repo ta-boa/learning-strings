@@ -1,8 +1,8 @@
 import { h } from "preact"
 import { useContext } from "preact/hooks"
 import { AppState } from "routes/home"
-import { Note, NoteSettings, PressedKeys, Progression } from "src/music/types"
-import { getFriendlySemiNote, getNoteFromFret, isMinor, isSharp } from "../../music/notes"
+import { NoteSettings, PressedKeys, Progression } from "src/music/types"
+import { getFriendlySemiNote, isMinor, isSharp } from "../../music/notes"
 import { AppContext } from "../app"
 import style from "./style.scss"
 
@@ -11,20 +11,15 @@ export type ArmStringProps = {
 }
 
 export const ArmString = ({ position }: ArmStringProps) => {
-    const { tuning, instrument, activeKeys, progression } = useContext(AppContext) as AppState
+    const { instrument, activeKeys, progression, notesGrid } = useContext(AppContext) as AppState
     const armBullets = instrument.value.armBullets
-    const rootNote = (tuning.value as Note[])[position] as Note
     const last = instrument.value.strings - 1
     const bulletList = Object.keys(armBullets) as string[]
-    const notes = []
+    const notes = notesGrid.value[position]
 
     const getArmBullet = (fret: number): string | undefined => {
         const sfret = fret.toString()
         return bulletList.includes(sfret) ? armBullets[sfret] : undefined
-    }
-
-    for (let fret = 0; fret < instrument.value.frets; fret++) {
-        notes.push(getNoteFromFret(rootNote, fret))
     }
 
     const isPressed = (note: NoteSettings) => {

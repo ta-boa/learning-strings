@@ -9,8 +9,8 @@ import style from "./style.scss"
 
 type Mode = "off" | "linear" | "grid"
 
-export default function Display() {
-    const { tuning, instrument, progression } = useContext(AppContext) as AppState
+export default function ScaleProgression() {
+    const { tuning, instrument, progression, notesGrid } = useContext(AppContext) as AppState
 
     let selectedNote: Note = tuning.value[0]
     let selectedPosition = 0
@@ -32,6 +32,26 @@ export default function Display() {
             getNoteFromFret(selectedNote, selectedFret + 11), // whole
             getNoteFromFret(selectedNote, selectedFret + 12), // half
         ];
+        console.log(linearNotes)
+        if (mode === "grid") {
+            const notesToSearch = linearNotes.map((target: NoteSettings) => {
+                return target.note;
+            })
+            const rootNote = linearNotes[0]
+            // const startFret = linearNotes[0].fret;
+            const progressionGrid = notesToSearch.map((targetNote: Note | Note[], index: number) => {
+                if (index === 0) return
+                return notesGrid.value.map((stringNotes: NoteSettings[]) => {
+                    return stringNotes.filter((fretNote: NoteSettings) => {
+                        if (Array.isArray(fretNote.note) && Array.isArray(targetNote)) {
+                            return targetNote.includes(fretNote.note[0]) || targetNote.includes(fretNote.note[1])
+                        }
+                        return fretNote.note === targetNote
+                    })
+                })
+            })
+            console.table(progressionGrid)
+        }
         progression.value = linearNotes.map((settings: NoteSettings, order: number) => {
             return { position: selectedPosition, fret: settings.fret, order } as Progression
         })
@@ -65,11 +85,11 @@ export default function Display() {
                     </label>
                     <label>
                         <input type="radio" name="type" value="linear" />
-                        single string
+                        single
                     </label>
                     <label>
                         <input type="radio" name="type" value="grid" />
-                        multi strings
+                        multi
                     </label>
                 </fieldset>
                 <fieldset>

@@ -8,7 +8,8 @@ import style from "./style.scss"
 import Display from "../../components/feat/display/display"
 import Tuning from "../../components/feat/tuning/tuning"
 import Chords from "../../components/feat/chord/chord"
-import Ruler from "../../components/feat/ruler/ruler"
+import ChordProgression from "../../components/feat/progression/progression"
+import { getNoteFromFret } from "../../music/notes"
 
 export type AppState = {
     activeKeys: Signal<Record<string, NoteSettings>>
@@ -16,6 +17,7 @@ export type AppState = {
     tuning: Signal<Note[]>
     views: Signal<Record<string, boolean>>
     progression: Signal<Progression[]>
+    notesGrid: Signal<NoteSettings[][]>
 }
 
 function createAppState(iSettings: InstrumentSettings): AppState {
@@ -29,7 +31,17 @@ function createAppState(iSettings: InstrumentSettings): AppState {
         minor: false,
         fret: true,
     })
-    return { instrument, tuning, activeKeys, views , progression } as AppState
+    const notesGrid = computed(() => {
+        return tuning.value.map((rootNote: Note) => {
+            const armNotes = []
+            for (let fret = 0; fret < instrument.value.frets; fret++) {
+                armNotes.push(getNoteFromFret(rootNote, fret))
+            }
+            return armNotes as NoteSettings[]
+        })
+    })
+
+    return { instrument, tuning, activeKeys, views, progression, notesGrid } as AppState
 }
 
 interface Props {
@@ -62,7 +74,7 @@ const Home = ({ instrument }: Props) => {
                     <Display />
                     <Tuning />
                     <Chords />
-                    <Ruler />
+                    <ChordProgression />
                 </menu>
                 <section class={style.content}>
                     <Instrument />

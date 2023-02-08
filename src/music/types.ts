@@ -1,6 +1,6 @@
 export type Note = `${"A" | "B" | "C" | "D" | "E" | "F" | "G"}${"" | "b" | "s"}`
 export interface NoteSettings {
-    note: Note
+    note: Note | Note[]
     fret: number
 }
 export type PressedKeys = Record<string, NoteSettings>
