@@ -8,7 +8,7 @@ export type InstrumentTuning = Record<string, Note[]>
 export interface Progression {
     position: number
     fret: number
-    order: number
+    note: Note | Note[]
 }
 export interface InstrumentSettings {
     name: string

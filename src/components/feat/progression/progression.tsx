@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { AppContext } from "../../app"
 import { Note, NoteSettings, Progression } from "../../../music/types"
-import { getFriendlySemiNote, getNoteFromFret } from "../../../music/notes"
+import { FretSequence, getFriendlySemiNote, getNoteFromFret } from "../../../music/notes"
 import { useContext } from "preact/hooks"
 import { AppState } from "../../../routes/home"
 import { h } from "preact"
@@ -32,17 +32,15 @@ export default function ScaleProgression() {
             getNoteFromFret(selectedNote, selectedFret + 11), // whole
             getNoteFromFret(selectedNote, selectedFret + 12), // half
         ];
-        console.log(linearNotes)
         if (mode === "grid") {
             const notesToSearch = linearNotes.map((target: NoteSettings) => {
                 return target.note;
             })
-            const rootNote = linearNotes[0]
-            // const startFret = linearNotes[0].fret;
             const progressionGrid = notesToSearch.map((targetNote: Note | Note[], index: number) => {
-                if (index === 0) return
+                if (index === 0) return []
                 return notesGrid.value.map((stringNotes: NoteSettings[]) => {
                     return stringNotes.filter((fretNote: NoteSettings) => {
+                        if (fretNote.fret < selectedFret) return false
                         if (Array.isArray(fretNote.note) && Array.isArray(targetNote)) {
                             return targetNote.includes(fretNote.note[0]) || targetNote.includes(fretNote.note[1])
                         }
@@ -50,11 +48,57 @@ export default function ScaleProgression() {
                     })
                 })
             })
-            console.table(progressionGrid)
+            // resolve best sequence
+            const result = {}
+            const rootNote = linearNotes[0]
+            progressionGrid.forEach((matchList: NoteSettings[][], position: number) => {
+                const progressionStep = position.toString()
+                if (position === 0) {
+                    result[progressionStep] = {
+                        fret: rootNote.fret,
+                        position: selectedPosition,
+                        note: rootNote.note
+                    }
+                    return
+                }
+                let closestNote: Progression
+                matchList.forEach((notesToCheck: NoteSettings[], matchPosition) => {
+                    notesToCheck.forEach((value: NoteSettings) => {
+                        if (!closestNote) {
+                            closestNote = {
+                                note: value.note,
+                                fret: value.fret,
+                                position: matchPosition
+                            } as Progression
+                            return;
+                        }
+                        const closestDist = closestNote.fret - rootNote.fret
+                        const newDist = value.fret - rootNote.fret
+                        if (newDist < closestDist) {
+                            closestNote = {
+                                note: value.note,
+                                position: matchPosition,
+                                fret: value.fret
+                            } as Progression
+                        }
+                    })
+                    if (result[progressionStep]) {
+                        const currentMatch = result[progressionStep]
+                        if (closestNote.fret < currentMatch.fret) {
+                            result[progressionStep] = closestNote
+                        }
+                        return
+                    }
+                    result[progressionStep] = closestNote
+                })
+            })
+            progression.value = Object.values(result)
+        } else {
+            // Linear progression
+            progression.value = linearNotes.map((settings: NoteSettings) => {
+                return { position: selectedPosition, fret: settings.fret } as Progression
+            })
         }
-        progression.value = linearNotes.map((settings: NoteSettings, order: number) => {
-            return { position: selectedPosition, fret: settings.fret, order } as Progression
-        })
     }
 
     const setString = (event: Event) => {

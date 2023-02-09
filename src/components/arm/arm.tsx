@@ -29,10 +29,15 @@ export const ArmString = ({ position }: ArmStringProps) => {
         return current.note === note.note && current.fret === note.fret
     }
 
-    const isProgression = (note: NoteSettings): boolean => {
-        return progression.value.some((prog: Progression) => {
-            return prog.position === position && note.fret === prog.fret
+    const getProgressionStep = (note: NoteSettings): number | null => {
+        let step: number = -1
+        progression.value.some((prog: Progression, index) => {
+            const match = prog.position === position && note.fret === prog.fret
+            if (match) step = index
+            return match
         })
+        if (step === -1) return null
+        return step + 1
     }
 
     const togglePressed = (target: NoteSettings) => {
@@ -79,7 +84,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
                         class={style.note}
                         onClick={togglePressed(current)}
                         aria-pressed={isPressed(current)}
-                        data-progression={isProgression(current)}
+                        data-progression-step={getProgressionStep(current)}
                         data-fret={fret}
                         data-position={position}
                         data-note={current.note}
