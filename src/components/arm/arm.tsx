@@ -1,7 +1,7 @@
 import { h } from "preact"
 import { useContext } from "preact/hooks"
 import { AppState } from "routes/home"
-import { NoteSettings, PressedKeys, Progression } from "src/music/types"
+import { Note, NoteSettings, PressedKeys, Progression } from "src/music/types"
 import { getFriendlySemiNote, isMinor, isSharp } from "../../music/notes"
 import { AppContext } from "../app"
 import style from "./style.scss"
@@ -74,7 +74,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
                 } else {
                     body = (
                         <span class={style.full} data-major="true">
-                            {getFriendlySemiNote(current.note)}
+                            {getFriendlySemiNote(current.note as Note)}
                         </span>
                     )
                 }

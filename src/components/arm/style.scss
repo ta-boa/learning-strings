@@ -56,24 +56,6 @@ $note-fret-font-color: darkgray;
             padding:0.2rem;
         }
     }
-    // &[data-progression-step="1"] {
-    //     background-color: #938cfa;
-    // }
-    // &[data-progression-step="2"] {
-    //     background-color: #756cfa;
-    // }
-    // &[data-progression-step="3"] {
-    //     background-color: #483ecc;
-    // }
-    // &[data-progression-step="4"] {
-    //     background-color: #3831a1;
-    // }
-    // &[data-progression-step="5"] {
-    //     background-color: #292372;
-    // }
-    // &[data-progression-step="6"] {
-    //     background-color: #1f1c5d;
-    // }
 
     &:hover {
         color: $note-hover-font-color;
@@ -86,20 +68,20 @@ $note-fret-font-color: darkgray;
 }
 
 [data-last-string="true"] {
-    .note[data-bullet]:before {
-        cursor: default;
-        position: absolute;
-        color: inherit;
-        background-color: white;
-        display: flex;
-        min-width: 1ch;
-        height: $note-size;
-        align-items: center;
-        margin-left: -1rem;
-        content: attr(data-bullet);
-        font-size: 1.2rem;
-        display: flex;
-    }
+    // .note[data-bullet]:before {
+    //     cursor: default;
+    //     position: absolute;
+    //     color: inherit;
+    //     background-color: white;
+    //     display: flex;
+    //     min-width: 1ch;
+    //     height: $note-size;
+    //     align-items: center;
+    //     margin-left: -1rem;
+    //     content: attr(data-bullet);
+    //     font-size: 1.2rem;
+    //     display: flex;
+    // }
 }
 
 .full,
@@ -107,12 +89,12 @@ $note-fret-font-color: darkgray;
     flex: 1;
     display: flex;
     justify-content: center;
-    align-self: center;
     min-width: 100%;
+    height:100%;
     font-family: $note-font-family;
     font-size: $note-font-size;
+    line-height: 3rem;
     color: $note-font-color;
-    overflow: hidden;
 }
 
 .semi {

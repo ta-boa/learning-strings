@@ -7,7 +7,7 @@ import { AppState } from "../../../routes/home"
 import { h } from "preact"
 import style from "./style.scss"
 
-type Mode = "off" | "linear" | "grid"
+type Mode = "off" | "single" | "grid"
 
 export default function ScaleProgression() {
     const { tuning, instrument, progression, notesGrid } = useContext(AppContext) as AppState
@@ -36,6 +36,7 @@ export default function ScaleProgression() {
             const notesToSearch = linearNotes.map((target: NoteSettings) => {
                 return target.note;
             })
+
             const progressionGrid = notesToSearch.map((targetNote: Note | Note[], index: number) => {
                 if (index === 0) return []
                 return notesGrid.value.map((stringNotes: NoteSettings[]) => {
@@ -48,9 +49,11 @@ export default function ScaleProgression() {
                     })
                 })
             })
+
             // resolve best sequence
             const result = {}
             const rootNote = linearNotes[0]
+
             progressionGrid.forEach((matchList: NoteSettings[][], position: number) => {
                 const progressionStep = position.toString()
                 if (position === 0) {
@@ -72,9 +75,12 @@ export default function ScaleProgression() {
                             } as Progression
                             return;
                         }
+
                         const closestDist = closestNote.fret - rootNote.fret
                         const newDist = value.fret - rootNote.fret
-                        if (newDist < closestDist) {
+                        const isLeadingString = selectedPosition === matchPosition
+
+                        if (newDist < closestDist || newDist === closestDist && isLeadingString) {
                             closestNote = {
                                 note: value.note,
                                 position: matchPosition,
@@ -82,13 +88,6 @@ export default function ScaleProgression() {
                             } as Progression
                         }
                     })
-                    if (result[progressionStep]) {
-                        const currentMatch = result[progressionStep]
-                        if (closestNote.fret < currentMatch.fret) {
-                            result[progressionStep] = closestNote
-                        }
-                        return
-                    }
                     result[progressionStep] = closestNote
                 })
             })
