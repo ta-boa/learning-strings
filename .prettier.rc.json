@@ -1,5 +1,4 @@
 {
-    "extends": ["plugin:prettier/recommended"],
     "printWidth": 100,
     "singleQuote": false,
 }

@@ -11,124 +11,124 @@ $note-fret-border: 2px solid darkgray;
 $note-fret-font-color: darkgray;
 
 .note {
-    appearance: none;
-    background-color: $note-background-color;
-    border: 0;
-    border-bottom: $note-fret-border;
-    border-right: $note-border;
-    cursor: pointer;
-    display: flex;
-    height: $note-size;
-    outline: none;
-    width: $note-size;
+  appearance: none;
+  background-color: $note-background-color;
+  border: 0;
+  border-bottom: $note-fret-border;
+  border-right: $note-border;
+  cursor: pointer;
+  display: flex;
+  height: $note-size;
+  outline: none;
+  width: $note-size;
 
-    // show fret when string position is 0
-    &[data-position="0"] {
-        border-right-color: transparent;
+  // show fret when string position is 0
+  &[data-position="0"] {
+    border-right-color: transparent;
 
-        &:after {
-            cursor: default;
-            color: $note-fret-font-color;
-            position: absolute;
-            background-color: white;
-            content: attr(data-fret);
-            display: flex;
-            min-width: $note-size;
-            height: $note-size;
-            align-items: center;
-            margin-left: calc($note-size + 10px);
-        }
+    &:after {
+      cursor: default;
+      color: $note-fret-font-color;
+      position: absolute;
+      background-color: white;
+      content: attr(data-fret);
+      display: flex;
+      min-width: $note-size;
+      height: $note-size;
+      align-items: center;
+      margin-left: calc($note-size + 10px);
     }
+  }
 
-    &[data-fret="open"] {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
+  &[data-fret="open"] {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 
-    &[data-progression-step] {
-        background-color: cyan;
-        &:before{
-            position:absolute;
-            content:attr(data-progression-step);
-            display:block;
-            font-family: monospace;
-            padding:0.2rem;
-        }
+  &[data-progression-step] {
+    background-color: cyan;
+    &:before {
+      position: absolute;
+      content: attr(data-progression-step);
+      display: block;
+      font-family: monospace;
+      padding: 0.2rem;
     }
+  }
 
-    &:hover {
-        color: $note-hover-font-color;
-        background-color: $note-hover-background-color;
-    }
+  &:hover {
+    color: $note-hover-font-color;
+    background-color: $note-hover-background-color;
+  }
 
-    &[aria-pressed="true"] {
-        background-color: $note-pressed-background-color;
-    }
+  &[aria-pressed="true"] {
+    background-color: $note-pressed-background-color;
+  }
 }
 
 [data-last-string="true"] {
-    // .note[data-bullet]:before {
-    //     cursor: default;
-    //     position: absolute;
-    //     color: inherit;
-    //     background-color: white;
-    //     display: flex;
-    //     min-width: 1ch;
-    //     height: $note-size;
-    //     align-items: center;
-    //     margin-left: -1rem;
-    //     content: attr(data-bullet);
-    //     font-size: 1.2rem;
-    //     display: flex;
-    // }
+  // .note[data-bullet]:before {
+  //     cursor: default;
+  //     position: absolute;
+  //     color: inherit;
+  //     background-color: white;
+  //     display: flex;
+  //     min-width: 1ch;
+  //     height: $note-size;
+  //     align-items: center;
+  //     margin-left: -1rem;
+  //     content: attr(data-bullet);
+  //     font-size: 1.2rem;
+  //     display: flex;
+  // }
 }
 
 .full,
 .semi {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    min-width: 100%;
-    height:100%;
-    font-family: $note-font-family;
-    font-size: $note-font-size;
-    line-height: 3rem;
-    color: $note-font-color;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 100%;
+  height: 100%;
+  font-family: $note-font-family;
+  font-size: $note-font-size;
+  line-height: 3rem;
+  color: $note-font-color;
 }
 
 .semi {
-    [data-sharp="true"],
-    [data-minor="true"] {
-        flex: 1;
-        font-size: 0.8rem;
-    }
+  [data-sharp="true"],
+  [data-minor="true"] {
+    flex: 1;
+    font-size: 0.8rem;
+  }
 }
 
 main {
-    // hide major
-    &:not([data-view*="major"]) {
-        .note [data-major="true"] {
-            display: none;
-        }
+  // hide major
+  &:not([data-view*="major"]) {
+    .note [data-major="true"] {
+      display: none;
     }
+  }
 
-    // hide sharp
-    &:not([data-view*="sharp"]) {
-        .note [data-sharp="true"] {
-            display: none;
-        }
+  // hide sharp
+  &:not([data-view*="sharp"]) {
+    .note [data-sharp="true"] {
+      display: none;
     }
+  }
 
-    &:not([data-view*="minor"]) {
-        .note [data-minor="true"] {
-            display: none;
-        }
+  &:not([data-view*="minor"]) {
+    .note [data-minor="true"] {
+      display: none;
     }
+  }
 
-    &:not([data-view*="fret"]) {
-        .note:after {
-            content: none;
-        }
+  &:not([data-view*="fret"]) {
+    .note:after {
+      content: none;
     }
+  }
 }

@@ -1,51 +1,51 @@
 $menu-min-width: min(280px, 25vw);
 
 .menu {
-    font-size: 1.2rem;
-    font-family: mono;
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    min-width: $menu-min-width;
-    height: 100vh;
-    overflow-y: auto;
-    border-right: 1px solid black;
+  font-size: 1.2rem;
+  font-family: mono;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: $menu-min-width;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid black;
 }
 
 @media screen and (max-width: 720px) {
-    body {
-        min-width: 480px;
-    }
-    .menu {
-        min-width: 40%;
-    }
-    .content {
-        position: fixed;
-        right: 5rem;
-    }
+  body {
+    min-width: 480px;
+  }
+  .menu {
+    min-width: 40%;
+  }
+  .content {
+    position: fixed;
+    right: 5rem;
+  }
 }
 
 .content {
-    display: flex;
-    height: 100vh;
-    margin-left: $menu-min-width;
+  display: flex;
+  height: 100vh;
+  margin-left: $menu-min-width;
 }
 
 .header {
-    display: flex;
-    padding: 1rem 0.2rem 2rem 0.2rem;
+  display: flex;
+  padding: 1rem 0.2rem 2rem 0.2rem;
 
-    h1 {
-        flex: 1;
-        color: indigo;
-        text-align: center;
-        font-size: 1.4rem;
-        padding: 0;
-    }
+  h1 {
+    flex: 1;
+    color: indigo;
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 0;
+  }
 }
 
 .main {
-    font-size: 1rem;
+  font-size: 1rem;
 }

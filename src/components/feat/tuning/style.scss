@@ -4,23 +4,23 @@ $padding: 0.2rem;
 
 .string-list,
 .tuning-options {
-    margin: $padding 0;
+  margin: $padding 0;
 }
 
 .string-list {
-    margin-right: $padding;
+  margin-right: $padding;
 }
 
 .string-list:first-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .tuning-options {
-    margin-bottom: 0.6rem;
+  margin-bottom: 0.6rem;
 }
 
 .current {
-    display: flex;
-    flex-flow: row-reverse;
-    justify-content: flex-end;
+  display: flex;
+  flex-flow: row-reverse;
+  justify-content: flex-end;
 }

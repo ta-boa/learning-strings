@@ -5,33 +5,33 @@ $base-padding: 0.2rem;
 $double-padding: 0.2rem * 2;
 
 .chord {
-    display: flex;
-    padding: $base-padding;
+  display: flex;
+  padding: $base-padding;
 }
 
 .chord-root-note {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .chord-list {
-    display: flex;
-    flex: 1;
-    margin-left: $double-padding;
+  display: flex;
+  flex: 1;
+  margin-left: $double-padding;
 }
 
 .chord-list-note {
-    flex: 1;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    margin-left: $base-padding;
-    letter-spacing: -0.1rem;
-    text-align: center;
-    &:first-child {
-        margin-left: 0;
-    }
-    &[data-pressed="true"] {
-        background-color: indigo;
-        color: white;
-    }
+  flex: 1;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  margin-left: $base-padding;
+  letter-spacing: -0.1rem;
+  text-align: center;
+  &:first-child {
+    margin-left: 0;
+  }
+  &[data-pressed="true"] {
+    background-color: indigo;
+    color: white;
+  }
 }
