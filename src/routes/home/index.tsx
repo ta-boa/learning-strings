@@ -7,15 +7,15 @@ import {
   PressedKeys,
   Progression,
 } from "src/music/types";
-import { AppContext } from "../../components/app";
-import Instrument from "../../components/instrument/instrument";
-import Instruments from "../../settings/index";
+import { AppContext } from "app";
+import Instrument from "components/instrument/instrument";
+import Instruments from "settings";
 import style from "./style.scss";
-import Display from "../../components/feat/display/display";
-import Tuning from "../../components/feat/tuning/tuning";
-import Chords from "../../components/feat/chord/chord";
-import ChordProgression from "../../components/feat/progression/progression";
-import { getNoteFromFret } from "../../music/notes";
+import Display from "feat/display/display";
+import Tuning from "feat/tuning/tuning";
+import Chords from "feat/chord/chord";
+import ChordProgression from "feat/progression/progression";
+import { getNoteFromFret } from "music/notes";
 
 export type AppState = {
   activeKeys: Signal<Record<string, NoteSettings>>;

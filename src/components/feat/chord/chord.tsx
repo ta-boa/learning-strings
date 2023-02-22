@@ -2,10 +2,10 @@ import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { signal } from "@preact/signals";
 import { AppState } from "routes/home";
-import AllScales from "../../../music/scales";
-import { Note, NoteSettings } from "../../../music/types";
-import { AppContext } from "../../app";
-import { getFriendlySemiNote } from "../../../music/notes";
+import AllScales from "music/scales";
+import { Note, NoteSettings } from "music/types";
+import { AppContext } from "app";
+import { getFriendlySemiNote } from "music/notes";
 import style from "./style.scss";
 
 function ChordItem({ name, notes }) {

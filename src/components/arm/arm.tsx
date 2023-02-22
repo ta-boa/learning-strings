@@ -1,9 +1,9 @@
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppState } from "routes/home";
-import { Note, NoteSettings, PressedKeys, Progression } from "src/music/types";
-import { getFriendlySemiNote, isMinor, isSharp } from "../../music/notes";
-import { AppContext } from "../app";
+import { Note, NoteSettings, PressedKeys, Progression } from "music/types";
+import { getFriendlySemiNote, isMinor, isSharp } from "music/notes";
+import { AppContext } from "app";
 import style from "./style.scss";
 
 export type ArmStringProps = {

@@ -3,7 +3,7 @@ import { AppContext } from "../../app";
 import { useContext } from "preact/hooks";
 import { AppState } from "routes/home";
 import { Note } from "music/types";
-import { FretSequence, getFriendlySemiNote } from "../../../music/notes";
+import { FretSequence, getFriendlySemiNote } from "music/notes";
 import style from "./style.scss";
 
 export default function Tuning() {
