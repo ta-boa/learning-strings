@@ -28,15 +28,13 @@ $note-fret-font-color: darkgray;
 
     &:after {
       cursor: default;
-      color: $note-fret-font-color;
-      position: absolute;
+      position: relative;
       background-color: white;
       content: attr(data-fret);
       display: flex;
-      min-width: $note-size;
       height: $note-size;
       align-items: center;
-      margin-left: calc($note-size + 10px);
+      right: -0.5rem;
     }
   }
 
