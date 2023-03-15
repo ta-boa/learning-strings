@@ -14,6 +14,7 @@ import style from "./style.scss";
 import Display from "feat/display/display";
 import Tuning from "feat/tuning/tuning";
 import Chords from "feat/chord/chord";
+import MenuItem from "feat/menu/menu";
 import ChordProgression from "feat/progression/progression";
 import { getNoteFromFret } from "music/notes";
 
@@ -84,10 +85,18 @@ const Home = ({ instrument }: Props) => {
         data-active-notes={stringifyActiveKeys}
       >
         <menu class={style.menu}>
-          <Display />
-          <Tuning />
-          <Chords />
-          <ChordProgression />
+          <MenuItem>
+            <Display />
+          </MenuItem>
+          <MenuItem>
+            <Tuning />
+          </MenuItem>
+          <MenuItem>
+            <Chords />
+          </MenuItem>
+          <MenuItem>
+            <ChordProgression />
+          </MenuItem>
         </menu>
         <section class={style.content}>
           <Instrument />

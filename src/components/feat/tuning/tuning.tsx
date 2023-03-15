@@ -75,12 +75,12 @@ export default function Tuning() {
   };
 
   return (
-    <details class={style.wrapper}>
+    <>
       <summary class={style.trigger}>Tuning</summary>
       <div class={style.content}>
         <div class={style.current}>{tuning.value.map(getList)}</div>
         {getTuningList()}
       </div>
-    </details>
+    </>
   );
 }

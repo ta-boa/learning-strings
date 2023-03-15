@@ -18,7 +18,7 @@ export default function Display() {
   const viewList = Object.keys(views.value);
 
   return (
-    <details class={style.wrapper}>
+    <>
       <summary class={style.trigger}>Display</summary>
       <div class={style.content}>
         {viewList.map((name: string, key: number) => {
@@ -40,6 +40,6 @@ export default function Display() {
           );
         })}
       </div>
-    </details>
+    </>
   );
 }

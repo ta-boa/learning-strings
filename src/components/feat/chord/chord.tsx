@@ -64,14 +64,8 @@ const Scales = () => {
 };
 
 export default function Chords() {
-  const scrollToView = (event: Event) => {
-    const { currentTarget } = event;
-    setTimeout(() => {
-      currentTarget.scrollIntoView();
-    }, 50);
-  };
   return (
-    <details onClick={scrollToView} class={style.wrapper}>
+    <>
       <summary class={style.trigger}>Chords</summary>
       <div class={style.content}>
         <Scales />
@@ -85,6 +79,6 @@ export default function Chords() {
             })}
         </div>
       </div>
-    </details>
+    </>
   );
 }
