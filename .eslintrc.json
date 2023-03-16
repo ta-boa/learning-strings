@@ -1,0 +1,14 @@
+{
+"root":true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["prettier"],
+  "extends": [
+    "preact",
+    //        "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error"
+  },
+  "ignorePatterns": ["build/", "node_modules/", "**/tests/"]
+}

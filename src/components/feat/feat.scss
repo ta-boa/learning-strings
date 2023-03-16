@@ -1,34 +1,46 @@
+@import "../../style/variables";
+
 .wrapper {
-    display: flex;
-    font-family: monospace;
-    margin: 0;
-    padding: 0;
-    user-select: none;
+  display: flex;
+  font-family: monospace;
+  margin: 0;
+  padding: 0;
+  user-select: none;
 }
 
 .wrapper[open] {
-    margin-bottom: 0.4rem;
+  margin-bottom: 0.4rem;
 
-    .trigger {
-        background-color: whitesmoke
-    }
+  .trigger {
+    background-color: whitesmoke;
+  }
+}
+
+@media screen and (max-width: $max-desktop) {
+  .wrapper {
+    display: inline-flex;
+    min-width: fit-content;
+  }
+  .wrapper[open] {
+    min-width: 100%;
+  }
 }
 
 .trigger {
-    cursor: pointer;
-    color: midnightblue;
-    user-select: none;
-    padding: 0.2rem;
-    background-color: white;
-    transition: background-color 0.2s ease-out;
+  cursor: pointer;
+  color: midnightblue;
+  user-select: none;
+  padding: 0.2rem;
+  background-color: white;
+  transition: background-color 0.2s ease-out;
 
-    &:hover {
-        background-color: whitesmoke;
-    }
+  &:hover {
+    background-color: whitesmoke;
+  }
 }
 
 .content {
-    padding:0.4rem;
-    display:flex;
-    flex-direction: column;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
 }

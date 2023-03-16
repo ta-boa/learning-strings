@@ -1,28 +1,28 @@
 {
-	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"esModuleInterop": true,
-		"jsx": "react",
-		"jsxFactory": "h",
-		"jsxFragmentFactory": "Fragment",
-		"noEmit": true,
-		"allowJs": true,
-		"checkJs": true,
-		"skipLibCheck": true,
-		"baseUrl": "./",
-		"paths": {
-			"react": ["./node_modules/preact/compat"],
-			"react-dom": ["./node_modules/preact/compat"],
-            "app": ["./src/components/app"],
-            "music/*" : ["./src/music/*"],
-            "routes/*": ["./src/routes/*"],
-            "style/*" : ["./src/style/*"],
-            "settings/*" : ["./src/settings/*"],
-            "components/*" : ["./src/components/*"],
-            "feat/*" : ["./src/components/feat/*"],
-		}
-	},
-	"include": ["src/**/*"]
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "react": ["./node_modules/preact/compat"],
+      "react-dom": ["./node_modules/preact/compat"],
+      "app": ["./src/components/app"],
+      "settings": ["./src/settings/index"],
+      "music/*": ["./src/music/*"],
+      "routes/*": ["./src/routes/*"],
+      "components/*": ["./src/components/*"],
+      "feat/*": ["./src/components/feat/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**"]
 }

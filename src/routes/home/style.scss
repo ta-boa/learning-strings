@@ -1,52 +1,36 @@
-$menu-min-width: min(280px, 25vw);
-
-.menu {
-    font-size: 1.2rem;
-    font-family: mono;
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    min-width: $menu-min-width;
-    height: 100vh;
-    overflow-y: auto;
-    border-right: 1px solid black;
-}
-
-@media screen and (max-width: 720px) {
-    body {
-        min-width: 480px;
-    }
-    .menu {
-        min-width: 40%;
-    }
-    .content {
-        position:fixed;
-        right: 5rem;
-    }
-}
-
-
-.content {
-    display: flex;
-    height: 100vh;
-    margin-left: $menu-min-width;
-}
-
-.header {
-    display: flex;
-    padding: 1rem 0.2rem 2rem 0.2rem;
-
-    h1 {
-        flex: 1;
-        color:indigo;
-        text-align: center;
-        font-size: 1.4rem;
-        padding: 0;
-    }
-}
+@import "../../style/variables";
 
 .main {
-    font-size: 1rem;
+  display: flex;
+  font-size: 1rem;
+  height: 100vh;
+}
+
+.menu {
+  background-color: white;
+  display: inline-flex;
+  flex-direction: column;
+  font-family: mono;
+  font-size: 1.2rem;
+  width: 220px;
+  overflow-y: auto;
+}
+
+.content {
+  flex: 1;
+  display: inline-flex;
+  overflow-x: scroll;
+}
+
+@media screen and (max-width: $max-desktop) {
+  .main {
+    flex-direction: column-reverse;
+  }
+  .menu {
+    border-top: 1px solid gray;
+    padding: 0.6rem;
+    flex-direction: row;
+    min-width: 100%;
+    overflow: scroll;
+  }
 }
