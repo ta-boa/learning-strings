@@ -22,7 +22,6 @@ const Instrument = () => {
       console.log("image loaded", args);
       ctx.drawImage(img, 0, 0);
     };
-    window.copy(b64);
     img.current.src = b64;
   };
 

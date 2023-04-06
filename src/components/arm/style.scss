@@ -47,7 +47,7 @@ $note-fret-font-color: darkgray;
   &[data-progression-step] {
     background-color: cyan;
     &:before {
-      position: absolute;
+      position: relative;
       content: attr(data-progression-step);
       display: block;
       font-family: monospace;
