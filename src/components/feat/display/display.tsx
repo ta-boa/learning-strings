@@ -1,7 +1,7 @@
 import { AppContext } from "../../app";
 import { useContext } from "preact/hooks";
 import { AppState } from "../../../routes/home";
-import { h } from "preact";
+import { Fragment, h } from "preact";
 import style from "./style.scss";
 
 export default function Display() {
@@ -18,7 +18,7 @@ export default function Display() {
   const viewList = Object.keys(views.value);
 
   return (
-    <>
+    <Fragment>
       <summary class={style.trigger}>Display</summary>
       <div class={style.content}>
         {viewList.map((name: string, key: number) => {
@@ -40,6 +40,6 @@ export default function Display() {
           );
         })}
       </div>
-    </>
+    </Fragment>
   );
 }

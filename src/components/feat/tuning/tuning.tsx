@@ -1,4 +1,4 @@
-import { h } from "preact";
+import { Fragment, h } from "preact";
 import { AppContext } from "../../app";
 import { useContext } from "preact/hooks";
 import { AppState } from "routes/home";
@@ -75,12 +75,12 @@ export default function Tuning() {
   };
 
   return (
-    <>
+    <Fragment>
       <summary class={style.trigger}>Tuning</summary>
       <div class={style.content}>
         {getTuningList()}
         <div class={style.current}>{tuning.value.map(getList)}</div>
       </div>
-    </>
+    </Fragment>
   );
 }

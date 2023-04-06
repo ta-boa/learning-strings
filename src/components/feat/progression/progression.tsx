@@ -4,7 +4,7 @@ import { Note, NoteSettings, Progression } from "../../../music/types";
 import { getFriendlySemiNote, getNoteFromFret } from "../../../music/notes";
 import { useContext } from "preact/hooks";
 import { AppState } from "../../../routes/home";
-import { h } from "preact";
+import { Fragment, h } from "preact";
 import style from "./style.scss";
 
 type Mode = "off" | "single" | "grid";
@@ -133,7 +133,7 @@ export default function ScaleProgression() {
   };
 
   return (
-    <>
+    <Fragment>
       <summary class={style.trigger}>Progression</summary>
       <div class={style.content}>
         <fieldset onInput={setMode}>
@@ -174,6 +174,6 @@ export default function ScaleProgression() {
           </select>
         </fieldset>
       </div>
-    </>
+    </Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import { h } from "preact";
+import { Fragment, h } from "preact";
 import { useContext } from "preact/hooks";
 import { signal } from "@preact/signals";
 import { AppState } from "routes/home";
@@ -65,7 +65,7 @@ const Scales = () => {
 
 export default function Chords() {
   return (
-    <>
+    <Fragment>
       <summary class={style.trigger}>Chords</summary>
       <div class={style.content}>
         <Scales />
@@ -79,6 +79,6 @@ export default function Chords() {
             })}
         </div>
       </div>
-    </>
+    </Fragment>
   );
 }
