@@ -7,16 +7,15 @@ import {
   PressedKeys,
   Progression,
 } from "src/music/types";
-import { AppContext } from "app";
-import Instrument from "components/instrument/instrument";
-import Instruments from "settings";
-import style from "./style.scss";
-import Display from "feat/display/display";
-import Tuning from "feat/tuning/tuning";
-import Chords from "feat/chord/chord";
-import MenuItem from "feat/menu/menu";
-import ChordProgression from "feat/progression/progression";
-import { getNoteFromFret } from "music/notes";
+import { AppContext } from "../../components/app";
+import Instrument from "../../components/instrument/instrument";
+import Instruments from "../../settings/index";
+
+//import Display from "../../components/feat/display/display";
+//import Tuning from "../../components/feat/tuning/tuning";
+//import Chords from "../../components/feat/chord/chord";
+//import ChordProgression from "../../components/feat/progression/progression";
+import { getNoteFromFret } from "../../music/notes";
 
 export type AppState = {
   activeKeys: Signal<Record<string, NoteSettings>>;
@@ -64,7 +63,7 @@ interface Props {
 
 const Home = ({ instrument }: Props) => {
   const state = createAppState(Instruments[instrument] || Instruments.banjo);
-  const stringfyViews = computed(() => {
+  const stringifyViews = computed(() => {
     if (state?.views?.value) {
       return Object.keys(state.views.value)
         .filter((val: string) => {
@@ -80,25 +79,11 @@ const Home = ({ instrument }: Props) => {
   return (
     <AppContext.Provider value={state}>
       <main
-        class={style.main}
-        data-view={stringfyViews}
+        class="app-main"
+        data-view={stringifyViews}
         data-active-notes={stringifyActiveKeys}
       >
-        <menu class={style.menu}>
-          <MenuItem>
-            <Display />
-          </MenuItem>
-          <MenuItem>
-            <Tuning />
-          </MenuItem>
-          <MenuItem>
-            <Chords />
-          </MenuItem>
-          <MenuItem>
-            <ChordProgression />
-          </MenuItem>
-        </menu>
-        <section class={style.content}>
+        <section class="app-content">
           <Instrument />
         </section>
       </main>
@@ -106,3 +91,11 @@ const Home = ({ instrument }: Props) => {
   );
 };
 export default Home;
+/**
+ <menu class={style.menu}>
+  <Display />
+  <Tuning />
+  <Chords />
+  <ChordProgression />
+</menu>
+ */

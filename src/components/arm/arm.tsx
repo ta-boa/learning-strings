@@ -19,9 +19,8 @@ export const ArmString = ({ position }: ArmStringProps) => {
   const bulletList = Object.keys(armBullets) as string[];
   const notes = notesGrid.value[position];
 
-  const getArmBullet = (fret: number): string | undefined => {
-    const sfret = fret.toString();
-    return bulletList.includes(sfret) ? armBullets[sfret] : undefined;
+  const hasBullet = (fret: number): string | undefined => {
+    return bulletList.includes(fret.toString())
   };
 
   const isPressed = (note: NoteSettings) => {
@@ -60,43 +59,46 @@ export const ArmString = ({ position }: ArmStringProps) => {
   };
 
   return (
-    <div data-position={position} data-last-string={position === last}>
+    <div class={style.string} data-position={position} data-last-string={position === last}>
       {notes.map((current: NoteSettings, key: number) => {
         const fret = current.fret === 0 ? "open" : current.fret;
-        const n = current.note;
-        let body: any;
-        if (Array.isArray(n) && n.length === 2) {
-          const [first, last] = n;
-          body = (
-            <div class={style.semi}>
-              <span data-sharp={isSharp(first)} data-minor={isMinor(first)}>
-                {getFriendlySemiNote(first)}
-              </span>
-              <span data-sharp={isSharp(last)} data-minor={isMinor(last)}>
-                {getFriendlySemiNote(last)}
-              </span>
-            </div>
-          );
-        } else {
-          body = (
-            <span class={style.full} data-major="true">
-              {getFriendlySemiNote(current.note as Note)}
-            </span>
-          );
-        }
+        const n = current.note[0];
+        //if (Array.isArray(n) && n.length === 2) {
+        //  const [first, last] = n;
+        //  body = (
+        //    "foo"
+        //    // <div class={style.semi}>
+        //    //   <span data-sharp={isSharp(first)} data-minor={isMinor(first)}>
+        //    //     {getFriendlySemiNote(first)}
+        //    //   </span>
+        //    //   <span data-sharp={isSharp(last)} data-minor={isMinor(last)}>
+        //    //     {getFriendlySemiNote(last)}
+        //    //   </span>
+        //    // </div>
+        //  );
+        //} else {
+        //  body = (
+        //    "bar"
+        //    //<span class={style.full} data-major="true">
+        //    //  {getFriendlySemiNote(current.note as Note)}
+        //    //</span>
+        //  );
+        //}
         return (
           <button
             key={key}
             class={style.note}
             onClick={togglePressed(current)}
-            aria-pressed={isPressed(current)}
-            data-progression-step={getProgressionStep(current)}
-            data-fret={fret}
-            data-position={position}
-            data-note={current.note}
-            data-bullet={getArmBullet(current.fret)}
+          //aria-pressed={isPressed(current)}
+          //data-progression-step={getProgressionStep(current)}
+          //data-fret={fret}
+          //data-position={position}
+          //data-note={current.note}
+          //data-bullet={getArmBullet(current.fret)}
           >
-            {body}
+            <span class={style.note_label}>{n}</span>
+            <span class={style.string_cord}></span>
+            {position === 0 && <span data-bullet={hasBullet(current.fret)} class={style.note_fret}>{fret}</span>}
           </button>
         );
       })}

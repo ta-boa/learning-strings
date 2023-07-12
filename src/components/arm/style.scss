@@ -1,3 +1,5 @@
+@import "../../style/mixins";
+
 $note-size: 3rem;
 $note-background-color: white;
 $note-border: 1px solid black;
@@ -10,123 +12,173 @@ $note-pressed-background-color: lightblue;
 $note-fret-border: 2px solid darkgray;
 $note-fret-font-color: darkgray;
 
+.string {
+  display: flex;
+  flex-direction: column;
+
+  @include for-tablet-landscape-up {
+    flex-direction: row;
+  }
+}
+
+.string_cord {
+  background-color: rgba($color: black, $alpha: 0.7);
+  width: 1px;
+  height: 100%;
+  opacity: .8;
+  transform: translateX($note-size * 0.5);
+  filter: drop-shadow(1px 2px 3px rgba($color: black, $alpha: 1));
+
+  @include for-tablet-landscape-up {
+    width: 100%;
+    height: 1px;
+    opacity: .8;
+    transform: translateY($note-size * 0.5);
+  }
+}
+
 .note {
   appearance: none;
   background-color: $note-background-color;
   border: 0;
   border-bottom: $note-fret-border;
-  border-right: $note-border;
   cursor: pointer;
   display: flex;
   height: $note-size;
   outline: none;
   width: $note-size;
+  position: relative;
 
-  // show fret when string position is 0
-  &[data-position="0"] {
-    border-right-color: transparent;
-
-    &:after {
-      cursor: default;
-      position: relative;
-      background-color: white;
-      content: attr(data-fret);
-      display: flex;
-      height: $note-size;
-      align-items: center;
-      right: -0.5rem;
-    }
+  @include for-tablet-landscape-up {
+    border: 0;
+    border-right: $note-border;
   }
 
-  &[data-fret="open"] {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
+  // // show fret when string position is 0
+  // &[data-position="0"] {
+  //   // border-right-color: transparent;
 
-  &[data-progression-step] {
-    background-color: cyan;
-    &:before {
-      position: relative;
-      content: attr(data-progression-step);
-      display: block;
-      font-family: monospace;
-      padding: 0.2rem;
-    }
-  }
+  //   &:after {
+  //     cursor: default;
+  //     position: relative;
+  //     background-color: white;
+  //     content: attr(data-fret);
+  //     display: flex;
+  //     height: $note-size;
+  //     align-items: center;
+  //     right: -0.5rem;
+  //   }
+  // }
+
+  // &[data-fret="open"] {
+  //   position: sticky;
+  //   top: 0;
+  //   z-index: 1;
+  // }
+
+  // &[data-progression-step] {
+  //   background-color: cyan;
+
+  //   &:before {
+  //     position: relative;
+  //     content: attr(data-progression-step);
+  //     display: block;
+  //     font-family: monospace;
+  //     padding: 0.2rem;
+  //   }
+  // }
 
   &:hover {
-    color: $note-hover-font-color;
     background-color: $note-hover-background-color;
   }
 
-  &[aria-pressed="true"] {
-    background-color: $note-pressed-background-color;
-  }
-}
-
-[data-last-string="true"] {
-  // .note[data-bullet]:before {
-  //     cursor: default;
-  //     position: absolute;
-  //     color: inherit;
-  //     background-color: white;
-  //     display: flex;
-  //     min-width: 1ch;
-  //     height: $note-size;
-  //     align-items: center;
-  //     margin-left: -1rem;
-  //     content: attr(data-bullet);
-  //     font-size: 1.2rem;
-  //     display: flex;
+  // &[aria-pressed="true"] {
+  //   background-color: $note-pressed-background-color;
   // }
 }
 
-.full,
-.semi {
-  flex: 1;
+.note_label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  place-content: center;
   display: flex;
+  font-weight: bold;
+}
+
+.note_fret {
+  pointer-events: none;
+  cursor: none;
+  align-items: center;
   justify-content: center;
-  min-width: 100%;
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
   height: 100%;
-  font-family: $note-font-family;
-  font-size: $note-font-size;
-  line-height: 3rem;
-  color: $note-font-color;
+  transform: translate($note-size * 1.2, $note-size * 0.5);
+
+  &[data-bullet="true"] {
+    font-weight: bold;
+  }
+  
+  @include for-tablet-landscape-up {
+    transform: translate($note-size * 0.5, -$note-size * 1.2);
+  }
+
 }
 
-.semi {
-  [data-sharp="true"],
-  [data-minor="true"] {
-    flex: 1;
-    font-size: 0.8rem;
-  }
-}
+// .full,
+// .semi {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+//   min-width: 100%;
+//   height: 100%;
+//   font-family: $note-font-family;
+//   font-size: $note-font-size;
+//   line-height: 3rem;
+//   color: $note-font-color;
+// }
 
-main {
-  // hide major
-  &:not([data-view*="major"]) {
-    .note [data-major="true"] {
-      display: none;
-    }
-  }
+// .semi {
 
-  // hide sharp
-  &:not([data-view*="sharp"]) {
-    .note [data-sharp="true"] {
-      display: none;
-    }
-  }
+//   [data-sharp="true"],
+//   [data-minor="true"] {
+//     flex: 1;
+//     font-size: 0.8rem;
+//   }
+// }
 
-  &:not([data-view*="minor"]) {
-    .note [data-minor="true"] {
-      display: none;
-    }
-  }
+// main {
 
-  &:not([data-view*="fret"]) {
-    .note:after {
-      content: none;
-    }
-  }
-}
+//   // hide major
+//   &:not([data-view*="major"]) {
+//     .note [data-major="true"] {
+//       display: none;
+//     }
+//   }
+
+//   // hide sharp
+//   &:not([data-view*="sharp"]) {
+//     .note [data-sharp="true"] {
+//       display: none;
+//     }
+//   }
+
+//   &:not([data-view*="minor"]) {
+//     .note [data-minor="true"] {
+//       display: none;
+//     }
+//   }
+
+//   &:not([data-view*="fret"]) {
+//     .note:after {
+//       content: none;
+//     }
+//   }
+// }
