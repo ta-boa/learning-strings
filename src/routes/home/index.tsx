@@ -15,13 +15,21 @@ import Instruments from "../../settings/index";
 //import Tuning from "../../components/feat/tuning/tuning";
 //import Chords from "../../components/feat/chord/chord";
 //import ChordProgression from "../../components/feat/progression/progression";
-import { getNoteFromFret } from "../../music/notes";
+import { getNoteFromFret, NoteLang } from "../../music/notes";
+
+interface View {
+  major: boolean,
+  sharp: boolean,
+  minor: boolean,
+  fret: boolean,
+  lang: NoteLang
+}
 
 export type AppState = {
   activeKeys: Signal<Record<string, NoteSettings>>;
   instrument: Signal<InstrumentSettings>;
   tuning: Signal<Note[]>;
-  views: Signal<Record<string, boolean>>;
+  view: Signal<View>;
   progression: Signal<Progression[]>;
   notesGrid: Signal<NoteSettings[][]>;
 };
@@ -31,19 +39,20 @@ function createAppState(iSettings: InstrumentSettings): AppState {
   const tuning = signal(iSettings.tuning);
   const activeKeys = signal({} as PressedKeys);
   const progression = signal([]);
-  const views = signal({
+  const view = signal({
     major: true,
     sharp: true,
     minor: false,
     fret: true,
+    lang: "doremi"
   });
   const notesGrid = computed(() => {
     return tuning.value.map((rootNote: Note) => {
-      const armNotes = [];
+      const armNotes: NoteSettings[] = [];
       for (let fret = 0; fret < instrument.value.frets; fret++) {
         armNotes.push(getNoteFromFret(rootNote, fret));
       }
-      return armNotes as NoteSettings[];
+      return armNotes;
     });
   });
 
@@ -51,7 +60,7 @@ function createAppState(iSettings: InstrumentSettings): AppState {
     instrument,
     tuning,
     activeKeys,
-    views,
+    view,
     progression,
     notesGrid,
   } as AppState;
@@ -63,25 +72,25 @@ interface Props {
 
 const Home = ({ instrument }: Props) => {
   const state = createAppState(Instruments[instrument] || Instruments.banjo);
-  const stringifyViews = computed(() => {
-    if (state?.views?.value) {
-      return Object.keys(state.views.value)
-        .filter((val: string) => {
-          return state.views.value[val];
-        })
-        .join(",");
-    }
-    return "";
-  });
-  const stringifyActiveKeys = computed(() => {
-    return Object.values(state.activeKeys.value).map((data) => data.note);
-  });
+  //const stringifyViews = computed(() => {
+  //  if (state?.view?.value) {
+  //    return Object.keys(state.view.value)
+  //      .filter((val: string) => {
+  //        return state.view.value[val];
+  //      })
+  //      .join(",");
+  //  }
+  //  return "";
+  //});
+  //const stringifyActiveKeys = computed(() => {
+  //  return Object.values(state.activeKeys.value).map((data) => data.note);
+  //});
   return (
     <AppContext.Provider value={state}>
       <main
         class="app-main"
-        data-view={stringifyViews}
-        data-active-notes={stringifyActiveKeys}
+      //data-view={stringifyViews}
+      //data-active-notes={stringifyActiveKeys}
       >
         <section class="app-content">
           <Instrument />

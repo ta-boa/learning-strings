@@ -21,22 +21,6 @@ $note-fret-font-color: darkgray;
   }
 }
 
-.string_cord {
-  background-color: rgba($color: black, $alpha: 0.7);
-  width: 1px;
-  height: 100%;
-  opacity: .8;
-  transform: translateX($note-size * 0.5);
-  filter: drop-shadow(1px 2px 3px rgba($color: black, $alpha: 1));
-
-  @include for-tablet-landscape-up {
-    width: 100%;
-    height: 1px;
-    opacity: .8;
-    transform: translateY($note-size * 0.5);
-  }
-}
-
 .note {
   appearance: none;
   background-color: $note-background-color;
@@ -46,12 +30,16 @@ $note-fret-font-color: darkgray;
   display: flex;
   height: $note-size;
   outline: none;
-  width: $note-size;
   position: relative;
+  width: $note-size;
 
   @include for-tablet-landscape-up {
     border: 0;
     border-right: $note-border;
+  }
+
+  &:hover {
+    background-color: $note-hover-background-color;
   }
 
   // // show fret when string position is 0
@@ -88,10 +76,6 @@ $note-fret-font-color: darkgray;
   //   }
   // }
 
-  &:hover {
-    background-color: $note-hover-background-color;
-  }
-
   // &[aria-pressed="true"] {
   //   background-color: $note-pressed-background-color;
   // }
@@ -106,7 +90,6 @@ $note-fret-font-color: darkgray;
   align-items: center;
   place-content: center;
   display: flex;
-  font-weight: bold;
 }
 
 .note_fret {
@@ -121,15 +104,35 @@ $note-fret-font-color: darkgray;
   right: 0;
   height: 100%;
   transform: translate($note-size * 1.2, $note-size * 0.5);
+  color: darkgray;
 
-  &[data-bullet="true"] {
+  &[data-bullet="true"],
+  &[data-fret="open"] {
     font-weight: bold;
+    color: black
   }
-  
+
   @include for-tablet-landscape-up {
     transform: translate($note-size * 0.5, -$note-size * 1.2);
   }
 
+}
+
+
+.string_cord {
+  background-color: rgba($color: black, $alpha: 0.3);
+  width: 1px;
+  height: 100%;
+  opacity: .8;
+  transform: translateX($note-size * 0.5);
+  filter: drop-shadow(1px 2px 3px rgba($color: black, $alpha: 1));
+
+  @include for-tablet-landscape-up {
+    width: 100%;
+    height: 1px;
+    opacity: .8;
+    transform: translateY($note-size * 0.5);
+  }
 }
 
 // .full,

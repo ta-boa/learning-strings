@@ -27,8 +27,24 @@ export const FretSequence: Record<string, Note | Note[]> = {
   B: "C",
 };
 
-export const getFriendlySemiNote = (note: Note) => {
-  return note.replace(/s$/, "♯").replace(/b$/, "♭");
+export const NoteName = {
+  C : "Do",
+  D : "Re",
+  E : "Mi",
+  F : "Fa",
+  G : "So",
+  A : "La",
+  B : "Si",
+}
+
+export type NoteLang = "abc" | "doremi";
+
+export const getFriendlySemiNote = (note: Note, lang:NoteLang) : string => {
+  let rootNote = note[0];
+  if (lang === "doremi"){
+    rootNote = note.replace(/^[A-Z]/, NoteName[rootNote]);
+  }
+  return rootNote.replace(/s$/, "♯").replace(/b$/, "♭");
 };
 
 export const getNoteFromFret = (note: Note, fret: number): NoteSettings => {
