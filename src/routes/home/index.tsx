@@ -88,11 +88,11 @@ const Home = ({ instrument }: Props) => {
   return (
     <AppContext.Provider value={state}>
       <main
-        class="app-main"
+        class="app_main"
       //data-view={stringifyViews}
       //data-active-notes={stringifyActiveKeys}
       >
-        <section class="app-content">
+        <section class="app_content">
           <Instrument />
         </section>
       </main>

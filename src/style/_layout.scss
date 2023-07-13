@@ -1,0 +1,40 @@
+@import "./mixins";
+@import "./variables";
+
+.app_main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app_content {
+    display: flex;
+    flex: 1;
+    overflow-y: auto;
+
+    @include for-tablet-landscape-up {
+        overflow-y: hidden;
+        overflow-x: auto;
+        align-items: center;
+    }
+}
+
+/*Instrument*/
+
+.instrument {
+    flex: 1;
+}
+
+.instrument_arm {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: auto;
+    max-width: fit-content;
+    padding: $note-size 0;
+    background-color:var(--surface);
+
+    @include for-tablet-landscape-up {
+        padding: 0 $note-size;
+        flex-direction: column;
+    }
+}

@@ -4,7 +4,6 @@ import { AppState } from "routes/home";
 import { Note, NoteSettings, PressedKeys, Progression } from "music/types";
 import { getFriendlySemiNote, isMajor, isMinor, isSharp } from "music/notes";
 import { AppContext } from "app";
-import style from "./style.scss";
 
 export type ArmStringProps = {
   position: number;
@@ -20,27 +19,24 @@ export const ArmString = ({ position }: ArmStringProps) => {
 
   const pickNote = (notes: Note[] | Note): Note | string => {
     const { major, minor, sharp } = view.value;
-    if ((minor || major)) {
-      if (Array.isArray(notes)) {
-        return notes.reduce((acc, n: Note) => {
-          if (acc !== "") return acc;
-          if (isMajor(n) && major) {
-            acc = getFriendlySemiNote(n, view.value.lang)
-          } else if (isSharp(n) && sharp) {
-            acc = getFriendlySemiNote(n, view.value.lang)
-          } else if (isMinor(n) && minor) {
-            acc = getFriendlySemiNote(n, view.value.lang)
-          }
-          return acc;
-        }, "");
-      }
-      return getFriendlySemiNote(notes, view.value.lang)
+    if (Array.isArray(notes)) {
+      return notes.reduce((acc, n: Note) => {
+        if (acc !== "") return acc;
+        if (isMajor(n) && major) {
+          acc = getFriendlySemiNote(n, view.value.lang)
+        } else if (isSharp(n) && sharp) {
+          acc = getFriendlySemiNote(n, view.value.lang)
+        } else if (isMinor(n) && minor) {
+          acc = getFriendlySemiNote(n, view.value.lang)
+        }
+        return acc;
+      }, "");
     }
-    return "⛔";
+    return getFriendlySemiNote(notes as Note, view.value.lang)
   }
 
   const hasBullet = (fret: number): boolean => {
-    return fret in instrument.value.armBullets
+    return fret in instrument.value.armBullets || fret === 0;
   };
 
   //const isPressed = (note: NoteSettings) => {
@@ -79,7 +75,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
   //};
 
   return (
-    <div class={style.string} data-position={position} data-last-string={position === last}>
+    <div class="arm_string" data-position={position} data-last-string={position === last}>
       {notes.map((current: NoteSettings, key: number) => {
         const fret = current.fret === 0 ? "open" : current.fret;
         const noteName = pickNote(current.note)
@@ -107,7 +103,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
         return (
           <button
             key={key}
-            class={style.note}
+            class="note"
             //onClick={togglePressed(current)}
             //aria-pressed={isPressed(current)}
             //data-progression-step={getProgressionStep(current)}
@@ -116,9 +112,9 @@ export const ArmString = ({ position }: ArmStringProps) => {
           //data-note={current.note}
           //data-bullet={getArmBullet(current.fret)}
           >
-            <span class={style.note_label}>{noteName}</span>
-            <span class={style.string_cord}></span>
-            {position === 0 && <span data-fret={fret} data-bullet={hasBullet(current.fret)} class={style.note_fret}>{fret}</span>}
+            <span class="string_cord"></span>
+            {position === 0 && <span data-bullet={hasBullet(current.fret)} class="note_fret">{fret}</span>}
+            <span class="note_label">{noteName}</span>
           </button>
         );
       })}

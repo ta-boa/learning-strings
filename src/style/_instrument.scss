@@ -1,0 +1,162 @@
+@import "./mixins";
+@import "./variables";
+
+$note-border: 1px solid var(--muted);
+$note-font-size: 1.2rem;
+$note-font-color: var(--highlight_high);
+$note-font-color-hover: var(--text);
+
+$note-background-color: var(--surface);
+$note-background-color-hover: var(--overlay);
+$note-background-color-pressed: lightblue;
+
+$note-fret-border-color: var(--pine);
+$note-fret-font-size: 1.1rem;
+$note-fret-font-color: var(--subtle);
+$note-fret-bullet-font-color: var(--gold);
+
+.arm_string {
+  display: flex;
+  flex-direction: column;
+
+  @include for-tablet-landscape-up {
+    flex-direction: row;
+  }
+}
+
+.note {
+  appearance: none;
+  outline: none;
+  background-color: $note-background-color;
+  border: 0;
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-color: $note-fret-border-color;
+  color: var(--subtle);
+  display: flex;
+  position: relative;
+  height: $note-size;
+  width: $note-size;
+  font-weight: lighter;
+  transition: background-color 100ms linear 100ms;
+  
+  @include for-tablet-landscape-up {
+    border-bottom-width: 0;
+    border-right-width: 1px;
+  }
+
+  &:hover {
+    background-color: $note-background-color-hover;
+    color: $note-font-color-hover;
+
+    //.string_cord {
+    //  opacity: 0;
+    //}
+  }
+  
+  &[data-fret="open"] {
+    color:var(--text)
+  }
+
+  // // show fret when string position is 0
+  //   // border-right-color: transparent;
+
+  //   &:after {
+  //     cursor: default;
+  //     position: relative;
+  //     background-color: white;
+  //     content: attr(data-fret);
+  //     display: flex;
+  //     height: $note-size;
+  //     align-items: center;
+  //     right: -0.5rem;
+  //   }
+  // }
+
+  // &[data-fret="open"] {
+  //   position: sticky;
+  //   top: 0;
+  //   z-index: 1;
+  // }
+
+  // &[data-progression-step] {
+  //   background-color: cyan;
+
+  //   &:before {
+  //     position: relative;
+  //     content: attr(data-progression-step);
+  //     display: block;
+  //     font-family: monospace;
+  //     padding: 0.2rem;
+  //   }
+  // }
+
+  // &[aria-pressed="true"] {
+  //   background-color: $note-background-color-pressed;
+  // }
+}
+
+.note_label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  place-content: center;
+  display: flex;
+  font-size: $note-font-size;
+}
+
+.note_fret {
+  cursor: none;
+  pointer-events: none;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  transform: translate($note-size * 1.2, 0);
+  color: $note-fret-font-color;
+  font-size: $note-fret-font-size;
+
+  &[data-bullet="true"] {
+    color: $note-fret-bullet-font-color;
+  }
+
+  @include for-tablet-landscape-up {
+    transform: translate(0, $note-size * -1);
+  }
+}
+
+.string_cord {
+  background-color: var(--text);
+  width: 1px;
+  height: $note-size;
+  opacity: 0.2;
+  transform: translate($note-size * 0.5, 0);
+  transition: opacity 200ms linear;
+
+  @include for-tablet-landscape-up {
+    width: $note-size;
+    height: 1px;
+    transform: translate(0, $note-size * 0.5);
+  }
+}
+
+[data-fret="open"] .string_cord {
+  width: 1px;
+  height: $note-size * 2;
+  margin:0;
+  margin-top: $note-size * -1;
+  
+  @include for-tablet-landscape-up {
+    width: $note-size * 2;
+    height: 1px;
+    margin:0;
+    margin-left: $note-size * -1;
+  }
+}

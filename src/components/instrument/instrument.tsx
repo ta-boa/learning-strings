@@ -14,7 +14,7 @@ const Instrument = () => {
   }
   return (
     <div class="instrument">
-      <div class="arm">{arm}</div>
+      <div class="instrument_arm">{arm}</div>
     </div>
   );
 };
