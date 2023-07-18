@@ -2,7 +2,7 @@ import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppState } from "routes/home";
 import { Note, NoteSettings, PressedKeys, Progression } from "music/types";
-import { getFriendlySemiNote, isMajor, isMinor, isSharp } from "music/notes";
+import { getFriendlyNoteName, isMajor, isMinor, isSharp } from "music/notes";
 import { AppContext } from "app";
 
 export type ArmStringProps = {
@@ -17,22 +17,25 @@ export const ArmString = ({ position }: ArmStringProps) => {
   const last = instrument.value.strings - 1;
   const notes = notesGrid.value[position];
 
-  const pickNote = (notes: Note[] | Note): Note | string => {
-    const { major, minor, sharp } = view.value;
-    if (Array.isArray(notes)) {
-      return notes.reduce((acc, n: Note) => {
-        if (acc !== "") return acc;
-        if (isMajor(n) && major) {
-          acc = getFriendlySemiNote(n, view.value.lang)
-        } else if (isSharp(n) && sharp) {
-          acc = getFriendlySemiNote(n, view.value.lang)
-        } else if (isMinor(n) && minor) {
-          acc = getFriendlySemiNote(n, view.value.lang)
-        }
-        return acc;
-      }, "");
+  const pickNote = (notes: Note[]): Note => {
+    if (notes.length === 1) {
+      return notes[0];
     }
-    return getFriendlySemiNote(notes as Note, view.value.lang)
+
+    const { major, minor, sharp } = view.value;
+
+    const result = notes.reduce((acc: Note, n: Note): Note => {
+      if (!!acc) return acc;
+      if (isMajor(n) && major) {
+        acc = n;
+      } else if (isSharp(n) && sharp) {
+        acc = n;
+      } else if (isMinor(n) && minor) {
+        acc = n;
+      }
+      return acc;
+    }, null);
+    return result
   }
 
   const hasBullet = (fret: number): boolean => {
@@ -78,7 +81,8 @@ export const ArmString = ({ position }: ArmStringProps) => {
     <div class="arm_string" data-position={position} data-last-string={position === last}>
       {notes.map((current: NoteSettings, key: number) => {
         const fret = current.fret === 0 ? "open" : current.fret;
-        const noteName = pickNote(current.note)
+        const note = pickNote(current.note);
+        const noteName = getFriendlyNoteName(note, view.value.lang);
         //if (Array.isArray(n) && n.length === 2) {
         //  const [first, last] = n;
         //  body = (
@@ -108,11 +112,14 @@ export const ArmString = ({ position }: ArmStringProps) => {
             //aria-pressed={isPressed(current)}
             //data-progression-step={getProgressionStep(current)}
             data-fret={fret}
+            data-major={isMajor(note)}
+            data-minor={isMinor(note)}
+            data-sharp={isSharp(note)}
             data-position={position}
-          //data-note={current.note}
+            data-note={current.note}
+
           //data-bullet={getArmBullet(current.fret)}
           >
-            <span class="string_cord"></span>
             {position === 0 && <span data-bullet={hasBullet(current.fret)} class="note_fret">{fret}</span>}
             <span class="note_label">{noteName}</span>
           </button>

@@ -1,2 +1,25 @@
+$text-font-family: 'IBM Plex Sans Condensed', sans-serif;
+
+// INSTRUMENT
+
 $note-size: 4.5rem;
-$note-font-family: monospace;
+$note-font-family: 'Fragment Mono', monospace;
+
+$string-color: color-mix(in srgb, var(--text) 10%, transparent);
+
+$note-border: 1px solid var(--muted);
+$note-font-size: 1.4rem;
+$note-font-color: var(--highlight_high);
+$note-font-color-hover: var(--text);
+
+$note-open-font-color: var(--text);
+$note-open-font-color-hover: var(--highlight_high);
+
+$note-background-color: var(--surface);
+$note-background-color-hover: var(--overlay);
+$note-background-color-pressed: lightblue;
+
+$note-fret-border-color: var(--pine);
+$note-fret-font-size: 1.1rem;
+$note-fret-font-color: var(--subtle);
+$note-fret-bullet-font-color: var(--gold);

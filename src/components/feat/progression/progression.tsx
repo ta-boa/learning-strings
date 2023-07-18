@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { AppContext } from "../../app";
 import { Note, NoteSettings, Progression } from "../../../music/types";
-import { getFriendlySemiNote, getNoteFromFret } from "../../../music/notes";
+import { getFriendlyNoteName, getNoteFromFret } from "../../../music/notes";
 import { useContext } from "preact/hooks";
 import { AppState } from "../../../routes/home";
 import { Fragment, h } from "preact";
@@ -155,7 +155,9 @@ export default function ScaleProgression() {
             {tuning.value.map((note: Note, index: number) => {
               return (
                 <option value={note} key={`s-${index}`}>
-                  ({index + 1}) {getFriendlySemiNote(note)}
+                  ({index + 1}) {
+                  "getFriendlySemiNote(note)"
+                  }
                 </option>
               );
             })}

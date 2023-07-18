@@ -39,22 +39,26 @@ export const NoteName = {
 
 export type NoteLang = "abc" | "doremi";
 
-export const getFriendlySemiNote = (note: Note, lang:NoteLang) : string => {
-  let rootNote = note[0];
+export const getFriendlyNoteName = (note: Note, lang:NoteLang) : string => {
+  let friendlyNote = note.toString();
   if (lang === "doremi"){
-    rootNote = note.replace(/^[A-Z]/, NoteName[rootNote]);
+    friendlyNote = friendlyNote.replace(/^[A-Z]/, NoteName[friendlyNote.charAt(0)]);
   }
-  return rootNote.replace(/s$/, "♯").replace(/b$/, "♭");
+  return friendlyNote.replace(/s$/, "♯").replace(/b$/, "♭");
 };
 
 export const getNoteFromFret = (note: Note, fret: number): NoteSettings => {
   let lastNote: Note = note;
   let count = fret;
+  let nextNote : Note | Note[]
   while (fret > 0 && count--) {
-    lastNote = FretSequence[lastNote] as Note;
-    if (Array.isArray(lastNote) && count > 0) {
-      lastNote = lastNote[0];
+    nextNote = FretSequence[lastNote];
+    if (Array.isArray(nextNote) && count > 0) {
+      lastNote = nextNote[0];
+    } else {
+      lastNote = nextNote as Note;
     }
   }
-  return { note: lastNote, fret } as NoteSettings;
+  nextNote = Array.isArray(lastNote) ? lastNote : [lastNote]
+  return { note: nextNote, fret } as NoteSettings;
 };

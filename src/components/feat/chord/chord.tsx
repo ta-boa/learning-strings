@@ -5,7 +5,7 @@ import { AppState } from "routes/home";
 import AllScales from "../../../music/scales";
 import { Note, NoteSettings } from "../../../music/types";
 import { AppContext } from "../../app";
-import { getFriendlySemiNote } from "../../../music/notes";
+import { getFriendlyNoteName } from "../../../music/notes";
 import style from "./style.scss";
 
 function ChordItem({ name, notes }) {
@@ -34,7 +34,7 @@ function ChordItem({ name, notes }) {
               data-pressed={isPressed(note)}
               class={style["chord-list-note"]}
             >
-              {getFriendlySemiNote(note)}
+              //getFriendlySemiNote(note)
             </span>
           );
         })}

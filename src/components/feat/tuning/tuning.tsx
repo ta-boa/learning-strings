@@ -3,7 +3,7 @@ import { AppContext } from "../../app";
 import { useContext } from "preact/hooks";
 import { AppState } from "routes/home";
 import { Note } from "music/types";
-import { FretSequence, getFriendlySemiNote } from "music/notes";
+import { FretSequence, getFriendlyNoteName } from "music/notes";
 import style from "./style.scss";
 
 export default function Tuning() {
@@ -47,7 +47,9 @@ export default function Tuning() {
         {Object.keys(FretSequence).map((note: string, key: number) => {
           return (
             <option key={key} value={note} selected={note === target}>
-              {getFriendlySemiNote(note as Note)}
+              {
+              "getFriendlySemiNote(note as Note)"
+              }
             </option>
           );
         })}

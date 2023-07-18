@@ -17,7 +17,7 @@ import Instruments from "../../settings/index";
 //import ChordProgression from "../../components/feat/progression/progression";
 import { getNoteFromFret, NoteLang } from "../../music/notes";
 
-interface View {
+export interface View {
   major: boolean,
   sharp: boolean,
   minor: boolean,
@@ -35,17 +35,20 @@ export type AppState = {
 };
 
 function createAppState(iSettings: InstrumentSettings): AppState {
+
   const instrument = signal(iSettings);
   const tuning = signal(iSettings.tuning);
   const activeKeys = signal({} as PressedKeys);
   const progression = signal([]);
+
   const view = signal({
     major: true,
     sharp: true,
     minor: false,
     fret: true,
-    lang: "doremi"
+    lang: "abc"
   });
+
   const notesGrid = computed(() => {
     return tuning.value.map((rootNote: Note) => {
       const armNotes: NoteSettings[] = [];
@@ -85,13 +88,58 @@ const Home = ({ instrument }: Props) => {
   //const stringifyActiveKeys = computed(() => {
   //  return Object.values(state.activeKeys.value).map((data) => data.note);
   //});
+  //data-view={stringifyViews}
+  //data-active-notes={stringifyActiveKeys}
   return (
     <AppContext.Provider value={state}>
-      <main
-        class="app_main"
-      //data-view={stringifyViews}
-      //data-active-notes={stringifyActiveKeys}
-      >
+      <header class="header">
+        <menu class="menu">
+          <details class="menu_item">
+            <summary class="menu_label">Settings</summary>
+            <div class="menu_content">
+              <fieldset>
+                <legend>Notes as</legend>
+                <div>
+                  <label>
+                    <input checked type='radio' name="note-name" />
+                    <span>A</span>
+                  </label>
+                  <label>
+                    <input type='radio' name="note-name" />
+                    <span>Do</span>
+                  </label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Tunning</legend>
+                <div>
+                  <select>
+                    <option>G</option>
+                    <option>G</option>
+                    <option>G</option>
+                    <option>G</option>
+                  </select>
+                  <select>
+                    <option>D</option>
+                    <option>D</option>
+                    <option>D</option>
+                  </select>
+                  <select>
+                    <option>G</option>
+                  </select>
+                  <select>
+                    <option>B</option>
+                  </select>
+                  <select>
+                    <option>D</option>
+                  </select>
+                </div>
+              </fieldset>
+            </div>
+          </details>
+        </menu>
+      </header>
+      <main class="app_main" >
         <section class="app_content">
           <Instrument />
         </section>
