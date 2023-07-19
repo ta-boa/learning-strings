@@ -3,7 +3,7 @@ import { AppContext } from "../../app";
 import { Note, NoteSettings, Progression } from "../../../music/types";
 import { getFriendlyNoteName, getNoteFromFret } from "../../../music/notes";
 import { useContext } from "preact/hooks";
-import { AppState } from "../../../routes/home";
+import { AppState } from "../../app";
 import { Fragment, h } from "preact";
 import style from "./style.scss";
 

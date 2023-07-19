@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useContext } from "preact/hooks";
-import { AppState } from "routes/home";
+import { AppState } from "../app";
 import { Note, NoteSettings, PressedKeys, Progression } from "music/types";
 import { getFriendlyNoteName, isMajor, isMinor, isSharp } from "music/notes";
 import { AppContext } from "app";
@@ -9,8 +9,8 @@ export type ArmStringProps = {
   position: number;
 };
 
-export const ArmString = ({ position }: ArmStringProps) => {
-  const { instrument, activeKeys, progression, notesGrid, view } = useContext(
+export const Arm = ({ position }: ArmStringProps) => {
+  const { instrument, activeKeys, progression, notesGrid, settings, lang } = useContext(
     AppContext
   ) as AppState;
 
@@ -22,7 +22,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
       return notes[0];
     }
 
-    const { major, minor, sharp } = view.value;
+    const { major, minor, sharp } = settings.value;
 
     const result = notes.reduce((acc: Note, n: Note): Note => {
       if (!!acc) return acc;
@@ -75,50 +75,23 @@ export const ArmString = ({ position }: ArmStringProps) => {
   //    }
   //    activeKeys.value = aKeys;
   //  };
-  //};
-
+  //}
   return (
     <div class="arm_string" data-position={position} data-last-string={position === last}>
       {notes.map((current: NoteSettings, key: number) => {
         const fret = current.fret === 0 ? "open" : current.fret;
         const note = pickNote(current.note);
-        const noteName = getFriendlyNoteName(note, view.value.lang);
-        //if (Array.isArray(n) && n.length === 2) {
-        //  const [first, last] = n;
-        //  body = (
-        //    "foo"
-        //    // <div class={style.semi}>
-        //    //   <span data-sharp={isSharp(first)} data-minor={isMinor(first)}>
-        //    //     {getFriendlySemiNote(first)}
-        //    //   </span>
-        //    //   <span data-sharp={isSharp(last)} data-minor={isMinor(last)}>
-        //    //     {getFriendlySemiNote(last)}
-        //    //   </span>
-        //    // </div>
-        //  );
-        //} else {
-        //  body = (
-        //    "bar"
-        //    //<span class={style.full} data-major="true">
-        //    //  {getFriendlySemiNote(current.note as Note)}
-        //    //</span>
-        //  );
-        //}
+        const noteName = getFriendlyNoteName(note, lang.value);
         return (
           <button
             key={key}
             class="note"
-            //onClick={togglePressed(current)}
-            //aria-pressed={isPressed(current)}
-            //data-progression-step={getProgressionStep(current)}
             data-fret={fret}
             data-major={isMajor(note)}
             data-minor={isMinor(note)}
             data-sharp={isSharp(note)}
             data-position={position}
             data-note={current.note}
-
-          //data-bullet={getArmBullet(current.fret)}
           >
             {position === 0 && <span data-bullet={hasBullet(current.fret)} class="note_fret">{fret}</span>}
             <span class="note_label">{noteName}</span>

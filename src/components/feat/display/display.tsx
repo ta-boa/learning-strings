@@ -1,6 +1,6 @@
 import { AppContext } from "../../app";
 import { useContext } from "preact/hooks";
-import { AppState } from "../../../routes/home";
+import { AppState } from "../../home";
 import { Fragment, h } from "preact";
 import style from "./style.scss";
 

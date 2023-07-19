@@ -1,7 +1,7 @@
 import { h, Fragment } from "preact";
 import { AppContext } from "../../app";
 import { useContext } from "preact/hooks";
-import { AppState } from "routes/home";
+import { AppState } from "../../app";
 import { Note } from "music/types";
 import { FretSequence, getFriendlyNoteName } from "music/notes";
 import style from "./style.scss";

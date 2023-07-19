@@ -18,7 +18,6 @@
       "app": ["./src/components/app"],
       "settings": ["./src/settings/index"],
       "music/*": ["./src/music/*"],
-      "routes/*": ["./src/routes/*"],
       "components/*": ["./src/components/*"],
       "feat/*": ["./src/components/feat/*"]
     }
