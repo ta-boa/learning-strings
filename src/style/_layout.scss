@@ -21,17 +21,13 @@
 
 /*Instrument*/
 
-.instrument {
-    flex: 1;
-}
-
 .instrument_arm {
     display: flex;
     flex-direction: row-reverse;
     margin: auto;
     max-width: fit-content;
     padding: $note-size 0;
-    background-color:var(--surface);
+    background-color: $arm-background-color;
 
     @include for-tablet-landscape-up {
         padding: 0 $note-size;

@@ -82,6 +82,7 @@ export const Arm = ({ position }: ArmStringProps) => {
         const fret = current.fret === 0 ? "open" : current.fret;
         const note = pickNote(current.note);
         const noteName = getFriendlyNoteName(note, lang.value);
+        const fretEl = position === 0 && <span aria-hidden="true" data-bullet={hasBullet(current.fret)} class="note_fret">{fret}</span>
         return (
           <button
             key={key}
@@ -90,14 +91,17 @@ export const Arm = ({ position }: ArmStringProps) => {
             data-major={isMajor(note)}
             data-minor={isMinor(note)}
             data-sharp={isSharp(note)}
+            data-semi={isSharp(note) || isMinor(note)}
             data-position={position}
             data-note={current.note}
+            aria-label={"string " + (position + 1) + " note" + noteName}
           >
-            {position === 0 && <span data-bullet={hasBullet(current.fret)} class="note_fret">{fret}</span>}
+            {fretEl}
             <span class="note_label">{noteName}</span>
           </button>
         );
       })}
+      <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
     </div>
   );
 };

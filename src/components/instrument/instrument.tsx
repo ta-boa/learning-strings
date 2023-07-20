@@ -13,9 +13,7 @@ const Instrument = () => {
     arm.push(<Arm position={position} />);
   }
   return (
-    <div class="instrument">
-      <div class="instrument_arm">{arm}</div>
-    </div>
+    <div class="instrument_arm">{arm}</div>
   );
 };
 

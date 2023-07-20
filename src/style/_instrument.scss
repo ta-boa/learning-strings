@@ -9,25 +9,51 @@
   @include for-tablet-landscape-up {
     flex-direction: row;
   }
+}
 
-  &::after {
-    content: "";
-    position: absolute;
-    display: block;
-    background-color: $string-color;
-    cursor: none;
+.arm_string_cord {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  background-color: $string-color;
+  top: -$note-size;
+  bottom: -$note-size;
+  left: 49%;
+  width: 1px;
+
+  @include for-tablet-landscape-up {
+    top: 50%;
+    right: -$note-size;
+    left: -$note-size;
+    height: 1px;
+    width: unset;
+  }
+
+  &::before {
+    content: attr(data-string);
     pointer-events: none;
-    top: -$note-size;
-    bottom: -$note-size;
-    left: 49%;
-    width: 1px;
+    display: flex;
+    position: relative;
+    cursor: default;
+
+    background-color: $arm-background-color;
+    color: var(--text);
+    font-family: $note-font-family;
+    font-size: 1rem;
+
+    height: 1rem;
+    width: 1rem;
+
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    left: -0.5rem;
+    top: 0;
 
     @include for-tablet-landscape-up {
-      top: 49%;
-      right: -$note-size;
-      left: -$note-size;
-      height: 1px;
-      width: unset;
+      padding: 0 1rem;
+      left: 0;
+      top: -0.5rem;
     }
   }
 }
@@ -44,7 +70,8 @@
   position: relative;
   height: $note-size;
   width: $note-size;
-  //transition: background-color 100ms linear 100ms;
+  cursor: pointer;
+  transition: background-color 100ms linear;
 
   @include for-tablet-landscape-up {
     border-bottom-width: 0;
@@ -64,6 +91,7 @@
   place-content: center;
   display: flex;
   font-size: $note-font-size;
+  transition: color 100ms linear;
 
   &:hover {
     background-color: $note-background-color-hover;
@@ -73,23 +101,41 @@
 
 [data-fret="open"] .note_label {
   color: $note-open-font-color;
+
+  &:hover {
+    color: $note-open-font-color-hover;
+  }
+}
+
+:not([data-fret="open"])[data-semi="true"] .note_label {
+  color: $note-semi-font-color;
+
+  &:hover {
+    color: $note-semi-font-color-hover;
+
+  }
 }
 
 $fret-gap: 1.2;
+
 .note_fret {
   cursor: none;
+  user-select: none;
   pointer-events: none;
   align-items: center;
-  justify-content: center;
+
+  color: $note-fret-font-color;
+  font-size: $note-fret-font-size;
+
   display: flex;
   position: absolute;
+
+  justify-content: center;
   left: 0;
   top: 0;
   right: 0;
   height: 100%;
   transform: translate($note-size * $fret-gap, 0);
-  color: $note-fret-font-color;
-  font-size: $note-fret-font-size;
 
   &[data-bullet="true"] {
     color: $note-fret-bullet-font-color;

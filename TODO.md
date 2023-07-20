@@ -1,6 +1,4 @@
-- left right handed
-- horizontal and vertical layouts
-- mobile
-- Chords: 
-    - Show the correct name of notes according to the list (minor, major etc)
-    - Highlight note on Arm?
+- settings
+    left/right hand
+- share
+- figure seminotes
