@@ -2,7 +2,7 @@ import { AppContext, AppState } from "app";
 import { NoteLang } from "music/notes";
 import { h } from "preact"
 import { useContext } from "preact/hooks";
-export default function SettingsLang() {
+export default function Lang() {
     const { lang } = useContext(AppContext) as AppState;
     const updateLang = (event: Event) => {
         const select = event.target as HTMLSelectElement;
@@ -10,10 +10,10 @@ export default function SettingsLang() {
     }
     return (
         <fieldset>
-            <legend for="note-lang">Notes as</legend>
+            <legend>Notes as</legend>
             <div>
                 <select id="note-lang" name="note-lang" onChange={updateLang}>
-                    <option value="abc">A B C</option>
+                    <option value="abc">C D E</option>
                     <option value="doremi">Do Re Mi</option>
                 </select>
             </div>

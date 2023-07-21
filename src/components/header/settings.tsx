@@ -1,13 +1,15 @@
 import { h } from "preact";
-import SettingsLang from "./settings.lang";
-import SettingsTunning from "./settings.tunning";
+import Lang from "./settings.lang";
+import Preset from "./settings.preset";
+import Tunning from "./settings.tunning";
 export default function Settings() {
     return (<menu class="menu">
         <details class="menu_item">
             <summary class="menu_label">Settings</summary>
             <div class="menu_content">
-                <SettingsLang></SettingsLang>
-                <SettingsTunning></SettingsTunning>
+                <Lang></Lang>
+                <Preset></Preset>
+                <Tunning></Tunning>
             </div>
         </details>
     </menu>)

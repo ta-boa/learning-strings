@@ -32,7 +32,7 @@ export const NoteName = {
   D : "Re",
   E : "Mi",
   F : "Fa",
-  G : "Sol",
+  G : "So",
   A : "La",
   B : "Si",
 }

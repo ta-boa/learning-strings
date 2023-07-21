@@ -1,6 +1,6 @@
 {
-  "name": "Learn strings",
-  "short_name": "🪕Ls",
+  "name": "Learning strings",
+  "short_name": "🪕LS",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -8,14 +8,9 @@
   "theme_color": "#000",
   "icons": [
     {
-      "src": "/assets/icons/android-chrome-192x192.png",
+      "src": "/assets/banjo.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/assets/icons/android-chrome-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "200x200"
     }
   ]
 }

@@ -9,7 +9,7 @@ export type ArmStringProps = {
   position: number;
 };
 
-export const Arm = ({ position }: ArmStringProps) => {
+export const ArmString = ({ position }: ArmStringProps) => {
   const { instrument, activeKeys, progression, notesGrid, settings, lang } = useContext(
     AppContext
   ) as AppState;

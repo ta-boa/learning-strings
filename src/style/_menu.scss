@@ -19,10 +19,10 @@
     font-weight: normal;
     font-size: 1.4rem;
     padding: 1rem;
+    cursor: pointer;
 }
 
 .menu_content {
-    cursor: default;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -56,23 +56,7 @@
 
     }
 
-    label {
-        margin-right: 1rem;
-
-        &:last-child {
-            margin-right: 0;
-        }
-
-        span,
-        input {
-            font-size: 1.4rem;
-            user-select: none;
-        }
-
-    }
-
     legend {
-        cursor: default;
         font-size: 1.4rem;
         padding: 0 0.3rem;
     }
@@ -85,7 +69,6 @@
 .menu_label {
     color: var(--text);
     border: 1px solid var(--subtle);
-    cursor: pointer;
 
     &:hover,
     &:active {
@@ -97,6 +80,14 @@
 [open] .menu_label {
     border-color: var(--gold);
     color: var(--gold)
+}
+
+select {
+    cursor: pointer;
+
+    &:not(:last-of-type) {
+        margin-right: 1rem;
+    }
 }
 
 select,
