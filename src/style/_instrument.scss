@@ -77,6 +77,11 @@
     border-bottom-width: 0;
     border-right-width: 1px;
   }
+
+  &:hover {
+    background-color: $note-background-color-hover;
+    color: $note-font-color-hover;
+  }
 }
 
 .note_label {
@@ -93,10 +98,7 @@
   font-size: $note-font-size;
   transition: color 100ms linear;
 
-  &:hover {
-    background-color: $note-background-color-hover;
-    color: $note-font-color-hover;
-  }
+
 }
 
 [data-fret="open"] .note_label {
@@ -114,6 +116,10 @@
     color: $note-semi-font-color-hover;
 
   }
+}
+
+[data-hidden="true"] .note_label {
+  opacity: 0;
 }
 
 $fret-gap: 1.2;

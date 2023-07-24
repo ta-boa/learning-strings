@@ -16,21 +16,21 @@ export const ArmString = ({ position }: ArmStringProps) => {
 
   const last = instrument.value.strings - 1;
   const notes = notesGrid.value[position];
+  const display = settings.value;
+  const { major, semi } = settings.value;
 
   const pickNote = (notes: Note[]): Note => {
     if (notes.length === 1) {
       return notes[0];
     }
 
-    const { major, minor, sharp } = settings.value;
-
     const result = notes.reduce((acc: Note, n: Note): Note => {
       if (!!acc) return acc;
       if (isMajor(n) && major) {
         acc = n;
-      } else if (isSharp(n) && sharp) {
+      } else if (isSharp(n)) {
         acc = n;
-      } else if (isMinor(n) && minor) {
+      } else if (isMinor(n)) {
         acc = n;
       }
       return acc;
@@ -38,9 +38,60 @@ export const ArmString = ({ position }: ArmStringProps) => {
     return result
   }
 
-  const hasBullet = (fret: number): boolean => {
-    return fret in instrument.value.armBullets || fret === 0;
+  const hasBullet = (fretNum: number): boolean => {
+    return fretNum in instrument.value.armBullets || fretNum === 0;
   };
+
+  return (
+    <div class="arm_string" data-position={position} data-last-string={position === last}>
+      {notes.map((current: NoteSettings, key: number) => {
+        const note = pickNote(current.note);
+        const noteName = getFriendlyNoteName(note, lang.value);
+
+        let fretValue: number | string = current.fret;
+        const isBullet = hasBullet(current.fret);
+        if (position === 0) {
+          if (current.fret === 0) {
+            fretValue = "open";
+          } else if (display.fret) {
+            fretValue = current.fret;
+          } else {
+            fretValue = isBullet ? instrument.value.armBullets[current.fret] : "";
+          }
+        }
+        const noteFret = position === 0 && (<span aria-hidden="true" data-bullet={isBullet} class="note_fret">{fretValue}</span>)
+
+        let hidden = false;
+        if (isSharp(note) || isMinor(note)) {
+          hidden = semi === false && current.fret !== 0;
+        } else if (isMajor(note)) {
+          hidden = major === false && current.fret !== 0;
+        }
+        return (
+          <button
+            key={key}
+            class="note"
+            data-fret={current.fret}
+            data-major={isMajor(note)}
+            data-minor={isMinor(note)}
+            data-sharp={isSharp(note)}
+            data-semi={isSharp(note) || isMinor(note)}
+            data-hidden={hidden}
+            data-position={position}
+            data-note={current.note}
+            aria-label={"string " + (position + 1) + " note " + noteName}
+          >
+            {noteFret}
+            <span class="note_label">{noteName}</span>
+          </button>
+        );
+      })}
+      <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
+    </div>
+  );
+};
+
+
 
   //const isPressed = (note: NoteSettings) => {
   //  const keys = activeKeys.value as PressedKeys;
@@ -76,32 +127,3 @@ export const ArmString = ({ position }: ArmStringProps) => {
   //    activeKeys.value = aKeys;
   //  };
   //}
-  return (
-    <div class="arm_string" data-position={position} data-last-string={position === last}>
-      {notes.map((current: NoteSettings, key: number) => {
-        const fret = current.fret === 0 ? "open" : current.fret;
-        const note = pickNote(current.note);
-        const noteName = getFriendlyNoteName(note, lang.value);
-        const fretEl = position === 0 && <span aria-hidden="true" data-bullet={hasBullet(current.fret)} class="note_fret">{fret}</span>
-        return (
-          <button
-            key={key}
-            class="note"
-            data-fret={fret}
-            data-major={isMajor(note)}
-            data-minor={isMinor(note)}
-            data-sharp={isSharp(note)}
-            data-semi={isSharp(note) || isMinor(note)}
-            data-position={position}
-            data-note={current.note}
-            aria-label={"string " + (position + 1) + " note" + noteName}
-          >
-            {fretEl}
-            <span class="note_label">{noteName}</span>
-          </button>
-        );
-      })}
-      <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
-    </div>
-  );
-};

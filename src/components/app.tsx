@@ -9,8 +9,7 @@ export const AppContext = createContext(null);
 
 export interface Settings {
   major: boolean,
-  sharp: boolean,
-  minor: boolean,
+  semi: boolean,
   fret: boolean,
 }
 
@@ -34,8 +33,7 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
 
   const view = signal({
     major: true,
-    sharp: true,
-    minor: false,
+    semi: true,
     fret: true,
   });
 

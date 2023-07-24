@@ -40,6 +40,9 @@ export const NoteName = {
 export type NoteLang = "abc" | "doremi";
 
 export const getFriendlyNoteName = (note: Note, lang:NoteLang) : string => {
+  if (typeof note !== "string"){
+    throw new Error("Not string");
+  }
   let friendlyNote = note.toString();
   if (lang === "doremi"){
     friendlyNote = friendlyNote.replace(/^[A-Z]/, NoteName[friendlyNote.charAt(0)]);

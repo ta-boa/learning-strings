@@ -1,3 +1,4 @@
+- sticky open notes
 - migrar cores dos menus para variables
 - settings
     left/right hand
@@ -7,4 +8,5 @@
 - figure out seminotes
 - about
 - share
+- vite?
 - arrumar alias (~/music, ~/...)

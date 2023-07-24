@@ -15,10 +15,10 @@ export default function Tunning() {
         tuning.value = newTuning;
     }
 
-    const getNotesSequence = (target: Note) => {
+    const getNotesSequence = (target: Note, position: number) => {
         return Object.keys(FretSequence).map((note: string, key: number) => {
             return (<option key={key} value={note} selected={note === target}>
-                {getFriendlyNoteName(note as Note, lang.value)}
+                {position}. {getFriendlyNoteName(note as Note, lang.value)}
             </option>
             );
         })
@@ -28,7 +28,7 @@ export default function Tunning() {
         <legend>Tunning</legend>
         {tuning.value.map((value: Note, index: number) => {
             return <select onChange={updateTunning(index)} name={"tunning-string-" + index}>
-                {getNotesSequence(value)}
+                {getNotesSequence(value, index + 1)}
             </select>
         })}
         <div>

@@ -103,3 +103,33 @@ option {
 option {
     background-color: var(--surface);
 }
+
+.checkbox_field {
+    display: inline-flex;
+    align-items: baseline;
+
+    &:not(:last-of-type) {
+        margin-right: 1rem;
+    }
+
+    label,
+    input[type="checkbox"] {
+        font-size: 1.4rem;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    input[type="checkbox"] {
+        appearance: none;
+        outline: none;
+        display: block;
+        width: 1.2rem;
+        height: 1.2rem;
+        font-size: 1.2rem;
+        border: 1px solid var(--text);
+
+        &:checked {
+            background-color: var(--muted);
+        }
+    }
+}
