@@ -14,7 +14,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
     AppContext
   ) as AppState;
 
-  const last = instrument.value.strings - 1;
+  const last = instrument.value.tuning.length;
   const notes = notesGrid.value[position];
   const display = settings.value;
   const { major, semi } = settings.value;
@@ -44,10 +44,14 @@ export const ArmString = ({ position }: ArmStringProps) => {
 
   return (
     <div class="arm_string" data-position={position} data-last-string={position === last}>
+      <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
+
       {notes.map((current: NoteSettings, key: number) => {
         const note = pickNote(current.note);
         const noteName = getFriendlyNoteName(note, lang.value);
-
+        if (position === 4 && instrument.value.name === "Banjo" && current.fret >= instrument.value.frets - 5) {
+          return;
+        }
         let fretValue: number | string = current.fret;
         const isBullet = hasBullet(current.fret);
         if (position === 0) {
@@ -67,7 +71,9 @@ export const ArmString = ({ position }: ArmStringProps) => {
         } else if (isMajor(note)) {
           hidden = major === false && current.fret !== 0;
         }
+
         return (
+
           <button
             key={key}
             class="note"
@@ -86,7 +92,6 @@ export const ArmString = ({ position }: ArmStringProps) => {
           </button>
         );
       })}
-      <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
     </div>
   );
 };

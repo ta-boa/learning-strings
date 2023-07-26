@@ -1,13 +1,21 @@
 $text-font-family: 'IBM Plex Sans Condensed', sans-serif;
 
+$body-background-color: var(--base);
+$body-font-color: var(--text);
+
 // INSTRUMENT
 
-$note-size: 4.5rem;
-$note-font-family: 'Fragment Mono', monospace;
-
 $string-color: color-mix(in srgb, var(--text) 10%, transparent);
+$string-font-color: var(--text);
+$string-font-color-hover: var(--gold);
 
-$arm-background-color:var(--surface);
+$arm-background-color: var(--surface);
+
+$string-cord-z: 110;
+$sticky-note-z: 100;
+$note-width: 4rem;
+$note-height: 4.5rem;
+$note-font-family: 'Fragment Mono', monospace;
 
 $note-border: 1px solid var(--muted);
 $note-font-size: 1.4rem;
@@ -21,10 +29,10 @@ $note-open-font-color-hover: var(--text);
 $note-semi-font-color: color-mix(in srgb, var(--subtle) 50%, transparent);
 $note-semi-font-color-hover: var(--text);
 
-$note-background-color: var(--surface);
+$note-background-color: var(--base);
 $note-background-color-hover: var(--overlay);
 
-$note-fret-border-color: var(--pine);
+$note-fret-border-color: var(--highlight_med);
 $note-fret-font-size: 1.1rem;
 $note-fret-font-color: var(--subtle);
 $note-fret-bullet-font-color: var(--gold);

@@ -26,11 +26,13 @@
     flex-direction: row-reverse;
     margin: auto;
     max-width: fit-content;
-    padding: $note-size 0;
-    background-color: $arm-background-color;
+    padding: $note-width 0;
+    $spread:2rem;
+    filter: drop-shadow(2px 0rem $spread var(--base));
 
     @include for-tablet-landscape-up {
-        padding: 0 $note-size;
+        filter: drop-shadow(0px 2rem $spread var(--base));
+        padding: 0 $note-width;
         flex-direction: column;
     }
 }

@@ -20,7 +20,6 @@ export interface Progression {
 export interface InstrumentSettings {
   name: string;
   frets: number;
-  strings: number;
   tuning: Note[];
   tuningOptions: InstrumentTuning;
   description?: string;

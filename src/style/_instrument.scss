@@ -11,50 +11,71 @@
   }
 }
 
+[data-instrument="banjo"] .arm_string[data-position="4"] {
+  margin-top: $note-height * 5;
+  margin-left: inherit;
+
+  @include for-tablet-landscape-up {
+    margin-top: inherit;
+    margin-left: $note-height * 5;
+  }
+}
+
 .arm_string_cord {
   position: absolute;
   display: block;
   pointer-events: none;
+  cursor: none;
+
   background-color: $string-color;
-  top: -$note-size;
-  bottom: -$note-size;
+  color: $string-font-color;
+
+  top: -$note-width;
+  bottom: -$note-width;
   left: 49%;
   width: 1px;
+  z-index: $string-cord-z;
 
   @include for-tablet-landscape-up {
     top: 50%;
-    right: -$note-size;
-    left: -$note-size;
+    right: -$note-width;
+    left: -$note-width;
     height: 1px;
     width: unset;
   }
 
   &::before {
     content: attr(data-string);
+    cursor: default;
     pointer-events: none;
     display: flex;
     position: relative;
-    cursor: default;
 
     background-color: $arm-background-color;
-    color: var(--text);
+    color: inherit;
     font-family: $note-font-family;
     font-size: 1rem;
 
-    height: 1rem;
-    width: 1rem;
+    min-height: 1.2rem;
+    width: 1.2rem;
 
     align-items: center;
     justify-content: center;
-    padding: 1rem 0;
+    padding: 0.2rem;
     left: -0.5rem;
     top: 0;
 
     @include for-tablet-landscape-up {
-      padding: 0 1rem;
+      padding: 0.2rem;
       left: 0;
-      top: -0.5rem;
+      top: -0.8rem;
     }
+  }
+}
+
+.arm_string:hover {
+  .arm_string_cord {
+    color: $string-font-color-hover;
   }
 }
 
@@ -68,20 +89,38 @@
   border-color: $note-fret-border-color;
   display: flex;
   position: relative;
-  height: $note-size;
-  width: $note-size;
+  height: $note-height;
+  width: $note-width;
   cursor: pointer;
   transition: background-color 100ms linear;
 
-  @include for-tablet-landscape-up {
-    border-bottom-width: 0;
-    border-right-width: 1px;
+
+  &[data-fret="0"] {
+    position: sticky;
+    top: 0;
+    z-index: $sticky-note-z;
   }
 
   &:hover {
     background-color: $note-background-color-hover;
-    color: $note-font-color-hover;
+
+    .note_label {
+      color: $note-font-color-hover;
+    }
   }
+
+  @include for-tablet-landscape-up {
+    height: $note-width;
+    width: $note-height;
+
+    border-bottom-width: 0;
+    border-right-width: 1px;
+
+    &[data-fret="0"] {
+      left: 0;
+    }
+  }
+
 }
 
 .note_label {
@@ -97,24 +136,20 @@
   display: flex;
   font-size: $note-font-size;
   transition: color 100ms linear;
-
-
 }
 
 [data-fret="open"] .note_label {
   color: $note-open-font-color;
-
-  &:hover {
-    color: $note-open-font-color-hover;
-  }
 }
 
-:not([data-fret="open"])[data-semi="true"] .note_label {
-  color: $note-semi-font-color;
+:not([data-fret="open"])[data-semi="true"] {
 
-  &:hover {
-    color: $note-semi-font-color-hover;
+  &:hover .note_label {
+    color: $note-font-color-hover;
+  }
 
+  .note_label {
+    color: $note-semi-font-color;
   }
 }
 
@@ -122,7 +157,7 @@
   opacity: 0;
 }
 
-$fret-gap: 1.2;
+$fret-gap: 1.02;
 
 .note_fret {
   cursor: none;
@@ -132,6 +167,7 @@ $fret-gap: 1.2;
 
   color: $note-fret-font-color;
   font-size: $note-fret-font-size;
+  background-color: $body-background-color;
 
   display: flex;
   position: absolute;
@@ -141,13 +177,13 @@ $fret-gap: 1.2;
   top: 0;
   right: 0;
   height: 100%;
-  transform: translate($note-size * $fret-gap, 0);
+  transform: translate($note-width * $fret-gap, 0);
 
   &[data-bullet="true"] {
     color: $note-fret-bullet-font-color;
   }
 
   @include for-tablet-landscape-up {
-    transform: translate(0, $note-size * -$fret-gap);
+    transform: translate(0, $note-width * -$fret-gap);
   }
 }
