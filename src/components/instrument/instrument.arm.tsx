@@ -42,6 +42,30 @@ export const ArmString = ({ position }: ArmStringProps) => {
     return fretNum in instrument.value.armBullets || fretNum === 0;
   };
 
+  const togglePressed = (target: NoteSettings) => {
+    return () => {
+      const aKeys = { ...activeKeys.value } as PressedKeys;
+      const current: null | NoteSettings = aKeys[position];
+      if (
+        current &&
+        current.note === target.note &&
+        current.fret == target.fret
+      ) {
+        delete aKeys[position];
+      } else {
+        aKeys[position] = target;
+      }
+      activeKeys.value = aKeys;
+    };
+  }
+
+  const isPressed = (note: NoteSettings) => {
+    const keys = activeKeys.value as PressedKeys;
+    const current: NoteSettings | undefined = keys[position];
+    if (current === undefined) return false;
+    return current.note === note.note && current.fret === note.fret;
+  };
+
   return (
     <div class="arm_string" data-position={position} data-last-string={position === last}>
       <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
@@ -77,6 +101,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
           <button
             key={key}
             class="note"
+            onClick={togglePressed(current)}
             data-fret={current.fret}
             data-major={isMajor(note)}
             data-minor={isMinor(note)}
@@ -85,6 +110,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
             data-hidden={hidden}
             data-position={position}
             data-note={current.note}
+            aria-pressed={isPressed(current)}
             aria-label={"string " + (position + 1) + " note " + noteName}
           >
             {noteFret}
@@ -116,19 +142,3 @@ export const ArmString = ({ position }: ArmStringProps) => {
   //  return step + 1;
   //};
 
-  //const togglePressed = (target: NoteSettings) => {
-  //  return () => {
-  //    const aKeys = { ...activeKeys.value } as PressedKeys;
-  //    const current: null | NoteSettings = aKeys[position];
-  //    if (
-  //      current &&
-  //      current.note === target.note &&
-  //      current.fret == target.fret
-  //    ) {
-  //      delete aKeys[position];
-  //    } else {
-  //      aKeys[position] = target;
-  //    }
-  //    activeKeys.value = aKeys;
-  //  };
-  //}

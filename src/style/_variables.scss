@@ -20,17 +20,19 @@ $note-font-family: 'Fragment Mono', monospace;
 $note-border: 1px solid var(--muted);
 $note-font-size: 1.4rem;
 
+$pressed-color: var(--pine);
+$note-font-color-pressed: $pressed-color;
+
 $note-font-color: var(--subtle);
-$note-font-color-hover: var(--text);
-
 $note-open-font-color: var(--text);
-$note-open-font-color-hover: var(--text);
-
 $note-semi-font-color: color-mix(in srgb, var(--subtle) 50%, transparent);
-$note-semi-font-color-hover: var(--text);
+
+$note-font-color-hover: $pressed-color;
+$note-open-font-color-hover: $pressed-color;
+$note-semi-font-color-hover: $pressed-color;
 
 $note-background-color: var(--base);
-$note-background-color-hover: var(--overlay);
+$note-background-color-hover: var(--surface);
 
 $note-fret-border-color: var(--highlight_med);
 $note-fret-font-size: 1.1rem;

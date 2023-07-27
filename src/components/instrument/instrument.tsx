@@ -7,9 +7,13 @@ import { ArmString } from "./instrument.arm";
 const Instrument = () => {
   const { tuning, instrument } = useContext(AppContext) as AppState;
   return (
-    <div class="instrument_arm" data-instrument={instrument.value.name.toLowerCase()}>{tuning.value.map((_, position: number) => {
-      return <ArmString position={position} />
-    })}</div>
+    <div
+      class="instrument_arm"
+      data-instrument={instrument.value.name.toLowerCase()}
+    >
+      {tuning.value.map((_, position: number) => {
+        return <ArmString position={position} />
+      })}</div>
   );
 };
 

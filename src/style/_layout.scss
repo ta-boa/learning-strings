@@ -1,20 +1,23 @@
+@use "sass:color";
 @import "./mixins";
 @import "./variables";
 
 .app_main {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .app_content {
     display: flex;
     flex: 1;
-    overflow-y: auto;
 
     @include for-tablet-landscape-up {
-        overflow-y: hidden;
-        overflow-x: auto;
         align-items: center;
     }
 }
@@ -24,15 +27,17 @@
 .instrument_arm {
     display: flex;
     flex-direction: row-reverse;
-    margin: auto;
     max-width: fit-content;
-    padding: $note-width 0;
-    $spread:2rem;
-    filter: drop-shadow(2px 0rem $spread var(--base));
+    margin: auto;
+    padding: ($note-height * 1.5) 0;
+
+    //$spread: 10rem;
+    //$shadow: var(--foam);
+    //filter: drop-shadow(2px 0rem $spread $shadow);
 
     @include for-tablet-landscape-up {
-        filter: drop-shadow(0px 2rem $spread var(--base));
-        padding: 0 $note-width;
+        //filter: drop-shadow(0px 2rem $spread $shadow);
+        padding: 0 ($note-height * 2);
         flex-direction: column;
     }
 }

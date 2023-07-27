@@ -79,20 +79,35 @@
   }
 }
 
+$note-transition-time: 100ms;
+$note-transition-type: linear;
+
+@mixin pressed {
+  &[aria-pressed="true"] {
+    border-color: $pressed-color;
+
+    .note_label {
+      color: $note-font-color-pressed;
+    }
+  }
+}
+
 .note {
   appearance: none;
   outline: none;
   background-color: $note-background-color;
-  border: 0;
+  border-width: 1px;
   border-style: solid;
-  border-bottom-width: 1px;
-  border-color: $note-fret-border-color;
+  border-color: transparent;
+  border-bottom-color: $note-fret-border-color;
   display: flex;
   position: relative;
   height: $note-height;
   width: $note-width;
   cursor: pointer;
-  transition: background-color 100ms linear;
+  transition: background-color $note-transition-time linear,
+    border-color $note-transition-time linear,
+    color $note-transition-time linear;
 
 
   &[data-fret="0"] {
@@ -105,6 +120,7 @@
     background-color: $note-background-color-hover;
 
     .note_label {
+      font-weight: bold;
       color: $note-font-color-hover;
     }
   }
@@ -113,15 +129,17 @@
     height: $note-width;
     width: $note-height;
 
-    border-bottom-width: 0;
-    border-right-width: 1px;
+    border-bottom-color: transparent;
+    border-right-color: $note-fret-border-color;
 
     &[data-fret="0"] {
       left: 0;
     }
   }
 
+  @include pressed();
 }
+
 
 .note_label {
   color: $note-font-color;
@@ -151,15 +169,17 @@
   .note_label {
     color: $note-semi-font-color;
   }
+
+  @include pressed();
 }
 
 [data-hidden="true"] .note_label {
   opacity: 0;
 }
 
-$fret-gap: 1.02;
-
 .note_fret {
+  $fret-gap: 1.02;
+
   cursor: none;
   user-select: none;
   pointer-events: none;
