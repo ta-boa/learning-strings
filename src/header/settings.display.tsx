@@ -1,4 +1,4 @@
-import { AppContext, AppState } from "app";
+import { AppContext, AppState } from "../app";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 

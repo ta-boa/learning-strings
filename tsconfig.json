@@ -15,11 +15,8 @@
     "paths": {
       "react": ["./node_modules/preact/compat"],
       "react-dom": ["./node_modules/preact/compat"],
-      "app": ["./src/components/app"],
-      "settings": ["./src/settings/index"],
       "music/*": ["./src/music/*"],
-      "components/*": ["./src/components/*"],
-      "feat/*": ["./src/components/feat/*"]
+      "components/*": ["./src/components/*"]
     }
   },
   "include": ["src/**/*"],

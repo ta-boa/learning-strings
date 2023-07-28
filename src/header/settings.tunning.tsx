@@ -1,4 +1,4 @@
-import { AppContext, AppState } from "app";
+import { AppContext, AppState } from "../app";
 import { FretSequence, getFriendlyNoteName } from "music/notes";
 import { Note } from "music/types";
 import { h } from "preact";

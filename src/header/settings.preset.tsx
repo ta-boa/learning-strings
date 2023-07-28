@@ -1,4 +1,4 @@
-import { AppContext, AppState } from "app";
+import { AppContext, AppState } from "../app";
 import { Fragment, h } from "preact";
 import { useContext } from "preact/hooks";
 export default function Preset() {

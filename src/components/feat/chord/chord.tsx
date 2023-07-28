@@ -1,10 +1,10 @@
 import { Fragment, h } from "preact";
 import { useContext } from "preact/hooks";
 import { signal } from "@preact/signals";
-import { AppState } from "../../app";
+import { AppState } from "../../../app";
 import AllScales from "../../../music/scales";
 import { Note, NoteSettings } from "../../../music/types";
-import { AppContext } from "../../app";
+import { AppContext } from "../../../app";
 import { getFriendlyNoteName } from "../../../music/notes";
 import style from "./style.scss";
 

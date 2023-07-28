@@ -98,7 +98,7 @@ export const MajorScaleProgression = {
   B: getMajorScaleFromNote("B"),
 };
 
-const buildScale = (selection: number[], mutations: Mutation[] = []) => {
+const buildScale = (selection: number[], mutations: Mutation[] = []) : { [key: string]: Note[] } => {
   return Object.keys(MajorScaleProgression).reduce((newScale, note: Note) => {
     const notes = MajorScaleProgression[note];
     newScale[note] = transformNotes(pick(selection, notes), mutations);

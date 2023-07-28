@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { AppContext } from "../../app";
+import { AppContext } from "../../../app";
 import { Note, NoteSettings, Progression } from "../../../music/types";
 import { getFriendlyNoteName, getNoteFromFret } from "../../../music/notes";
 import { useContext } from "preact/hooks";
-import { AppState } from "../../app";
+import { AppState } from "../../../app";
 import { Fragment, h } from "preact";
 import style from "./style.scss";
 

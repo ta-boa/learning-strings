@@ -1,5 +1,5 @@
 import { h } from "preact";
-import Instruments from "../settings/index";
+import Instruments from "./settings/index";
 import { AppContext, createAppState } from "./app";
 import Header from "./header/header";
 import Instrument from "./instrument/instrument";

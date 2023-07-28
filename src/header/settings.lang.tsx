@@ -1,4 +1,4 @@
-import { AppContext, AppState } from "app";
+import { AppContext, AppState } from "../app";
 import { NoteLang } from "music/notes";
 import { h } from "preact"
 import { useContext } from "preact/hooks";

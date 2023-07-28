@@ -1,0 +1,35 @@
+@import "./variables";
+
+@mixin font-reset {
+    font-size: 1.4rem;
+    font-family: $text-font-family;
+}
+
+.show-chord {
+    @include font-reset();
+    position: absolute;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    transform: translateX(-50%);
+}
+
+.show-chord-title {
+    @include font-reset();
+    flex: 1;
+    border: 1px solid var(--love);
+    padding: 1rem;
+}
+
+.show-chord-name {
+    @include font-reset();
+    color:var(--text);
+    flex: 1;
+}
+
+.show-chord-preset {
+    @include font-reset();
+    color:var(--muted);
+    flex: 1;
+}

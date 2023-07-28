@@ -31,8 +31,8 @@
     margin: auto;
     padding: ($note-height * 1.5) 0;
 
-    //$spread: 10rem;
-    //$shadow: var(--foam);
+    //$spread: 5rem;
+    //$shadow: var(--muted);
     //filter: drop-shadow(2px 0rem $spread $shadow);
 
     @include for-tablet-landscape-up {
