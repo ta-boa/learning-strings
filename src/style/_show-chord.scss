@@ -8,28 +8,48 @@
 .show-chord {
     @include font-reset();
     position: absolute;
+    top: 2rem;
     left: 50%;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    padding: 0.5rem 1em;
     transform: translateX(-50%);
 }
 
-.show-chord-title {
-    @include font-reset();
-    flex: 1;
-    border: 1px solid var(--love);
-    padding: 1rem;
+.show-chord[data-match="true"] {
+    background-color: var(--overlay);
+    align-self: flex-start;
+
+    .show-chord-label {
+        font-size: 3rem;
+        color: var(--gold)
+    }
 }
 
-.show-chord-name {
+.show-chord-label {
+    align-self: center;
     @include font-reset();
-    color:var(--text);
+    color: var(--text);
+    font-size: 2rem;
+    margin-top: 0.2rem;
     flex: 1;
 }
 
 .show-chord-preset {
     @include font-reset();
-    color:var(--muted);
+    font-size: 1.4rem;
+    color: var(--text);
     flex: 1;
+}
+
+.switch-mode {
+    cursor: pointer;
+    margin-top: 1rem;
+    @include font-reset();
+    appearance: none;
+    border: 0;
+    outline: 0;
+    text-decoration: underline;
+    background-color: transparent;
+    color: var(--muted);
 }

@@ -3,9 +3,10 @@ import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
 import Scales from "../music/scales";
 import { Note } from "../music/types";
+import { getFriendlyNoteName } from "music/notes";
 
 export default function ShowChord() {
-    const { activeKeys } = useContext(AppContext) as AppState;
+    const { activeKeys, lang } = useContext(AppContext) as AppState;
 
     const notes = Object.entries(activeKeys.value).map(([position, value]) => {
         return value.note.map((note: Note) => {
@@ -29,16 +30,27 @@ export default function ShowChord() {
         })
     }
 
+    let content = (
+        <Fragment>
+            <span class="show-chord-label">Try a chord!</span>
+        </Fragment>
+    );
+    if (matches.length) {
+        if (matches.length > 1) {
+            console.log("Matching more than one chord", matches);
+        }
+        const chord = matches[0];
+        content = (
+            <Fragment>
+                <span class="show-chord-label">{getFriendlyNoteName(chord.chordName, lang.value)}</span>
+                <span class="show-chord-preset">Scale: {chord.presetName}</span>
+            </Fragment>
+        )
+    }
+
     return (
         <div class="show-chord" data-match={matches.length > 0}>
-            <span class="show-chord-title">Chord</span>
-            {matches.map(chord => {
-                return (
-                    <Fragment>
-                        <span class="show-cord-name">{chord.chordName}</span>
-                        <span class="show-cord-preset">{chord.presetName}</span>
-                    </Fragment>
-                )
-            })}
+            {content}
+            <button class="switch-mode">Chord Progression</button>
         </div>)
 }
