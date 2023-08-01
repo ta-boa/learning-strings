@@ -8,7 +8,7 @@ const Instrument = () => {
   const { tuning, instrument } = useContext(AppContext) as AppState;
   return (
     <div
-      class="instrument_arm"
+      class="instrument"
       data-instrument={instrument.value.name.toLowerCase()}
     >
       {tuning.value.map((_, position: number) => {

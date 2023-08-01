@@ -17,12 +17,22 @@
 }
 
 .show-chord[data-match="true"] {
-    background-color: var(--overlay);
     align-self: flex-start;
+
+    .show-chord-wrapper {
+        flex: 1;
+        display: flex;
+        padding: 1rem;
+        flex-direction: column;
+        min-height: 100%;
+        min-width: 100%;
+        background-color: var(--overlay);
+    }
 
     .show-chord-label {
         font-size: 3rem;
-        color: var(--gold)
+        color: var(--gold);
+        align-self: flex-start;
     }
 }
 
@@ -43,9 +53,9 @@
 }
 
 .switch-mode {
+    @include font-reset();
     cursor: pointer;
     margin-top: 1rem;
-    @include font-reset();
     appearance: none;
     border: 0;
     outline: 0;

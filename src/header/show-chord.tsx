@@ -41,10 +41,10 @@ export default function ShowChord() {
         }
         const chord = matches[0];
         content = (
-            <Fragment>
+            <div class="show-chord-wrapper">
                 <span class="show-chord-label">{getFriendlyNoteName(chord.chordName, lang.value)}</span>
                 <span class="show-chord-preset">Scale: {chord.presetName}</span>
-            </Fragment>
+            </div >
         )
     }
 

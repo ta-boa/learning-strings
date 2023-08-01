@@ -60,7 +60,7 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
 
 
 const App = () => (
-  <div id="app">
+  <div>
     <Router>
       <Route path="/:instrument?" component={Home} />
     </Router>

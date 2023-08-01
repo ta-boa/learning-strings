@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    z-index: 1;
+    z-index: $z-index-instrument;
     top: 0;
     left: 0;
     bottom: 0;
@@ -24,7 +24,7 @@
 
 /*Instrument*/
 
-.instrument_arm {
+.instrument {
     display: flex;
     flex-direction: row-reverse;
     max-width: fit-content;
@@ -42,6 +42,11 @@
     }
 }
 
-.header {
-    position: relative;
+header {
+    padding: 1rem;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: $z-index-header;
+    position: absolute;
 }

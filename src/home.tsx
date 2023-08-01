@@ -3,6 +3,7 @@ import Instruments from "./settings/index";
 import { AppContext, createAppState } from "./app";
 import Header from "./header/header";
 import Instrument from "./instrument/instrument";
+import ShowChord from "./header/show-chord";
 
 interface Props {
   instrument?: string;
