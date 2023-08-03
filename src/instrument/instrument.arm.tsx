@@ -58,16 +58,30 @@ export const ArmString = ({ position }: ArmStringProps) => {
     };
   }
 
-  const isPressed = (note: NoteSettings) => {
+  console.log(activeKeys.value)
+
+  const isNotePressed = (note: NoteSettings) => {
     const keys = activeKeys.value as PressedKeys;
     const current: NoteSettings | undefined = keys[position];
     if (current === undefined) return false;
     return current.note === note.note && current.fret === note.fret;
   };
 
+  const isStringPressed = (position: number) => {
+    return position.toString() in activeKeys.value
+  }
+
   return (
-    <div class="arm_string" data-position={position} data-last-string={position === last}>
-      <span aria-hidden="true" class="arm_string_cord" data-string={position + 1}></span>
+    <div
+      class="arm_string"
+      data-position={position}
+      data-is-pressed={isStringPressed(position)}
+      data-last-string={position === last}>
+
+      <span
+        aria-hidden="true"
+        class="arm_string_cord"
+        data-string={position + 1}></span>
 
       {notes.map((current: NoteSettings, key: number) => {
         const note = pickNote(current.note);
@@ -109,7 +123,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
             data-hidden={hidden}
             data-position={position}
             data-note={current.note}
-            aria-pressed={isPressed(current)}
+            aria-pressed={isNotePressed(current)}
             aria-label={"string " + (position + 1) + " note " + noteName}
           >
             {noteFret}
@@ -120,24 +134,3 @@ export const ArmString = ({ position }: ArmStringProps) => {
     </div>
   );
 };
-
-
-
-  //const isPressed = (note: NoteSettings) => {
-  //  const keys = activeKeys.value as PressedKeys;
-  //  const current: NoteSettings | undefined = keys[position];
-  //  if (current === undefined) return false;
-  //  return current.note === note.note && current.fret === note.fret;
-  //};
-
-  //const getProgressionStep = (note: NoteSettings): number | null => {
-  //  let step: number = -1;
-  //  progression.value.some((prog: Progression, index) => {
-  //    const match = prog.position === position && note.fret === prog.fret;
-  //    if (match) step = index;
-  //    return match;
-  //  });
-  //  if (step === -1) return null;
-  //  return step + 1;
-  //};
-

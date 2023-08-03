@@ -15,8 +15,28 @@
 
 body {
   font-size: 10px;
-  font-family: $text-font-family;
+  font-family: $font-family-sans;
   background-color: $body-background-color;
   color: $body-font-color;
   font-weight: normal;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  font-family: $font-family-mono;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 1rem;
+  color: var(--text);
+
+
+  &:hover,
+  &:focus-within,
+  &:active,
+  &:hover {
+    color: var(--iris);
+  }
 }

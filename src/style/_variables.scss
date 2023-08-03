@@ -1,6 +1,7 @@
-$ui-font-family: 'IBM Plex Sans Condensed', sans-serif;
-$text-font-family: 'IBM Plex Sans Condensed', sans-serif;
-$note-font-family: 'Fragment Mono', monospace;
+$font-family-serif: 'Noto Serif', serif;
+$font-family-sans: 'Noto Sans', sans-serif;
+$font-family-symbols: 'Noto Sans Symbols', sans-serif;
+$font-family-mono: 'Noto Sans Mono', monospace;
 
 // GLOBAL
 $body-background-color: var(--base);
@@ -12,25 +13,28 @@ $z-index-header: 2;
 
 // INSTRUMENT
 $string-color: color-mix(in srgb, var(--text) 10%, transparent);
-$string-font-color: var(--text);
+$string-font-color: var(--subtle);
 $string-font-color-hover: var(--gold);
 
 $arm-background-color: var(--surface);
 
 $string-cord-z: 110;
 $sticky-note-z: 100;
-$note-width: 4rem;
-$note-height: 4.5rem;
+$note-width: 3rem;
+$note-height: 3.5rem;
+$note-transition: 100ms linear;
 
 $note-border: 1px solid var(--muted);
-$note-font-size: 1.4rem;
+$note-font-size: 1rem;
 
-$pressed-color: var(--pine);
+$pressed-color: var(--love);
 $note-font-color-pressed: $pressed-color;
+$note-border-color-pressed: $pressed-color;
+$note-background-color-pressed: var(--base);
 
-$note-font-color: var(--subtle);
+$note-font-color: var(--text);
 $note-open-font-color: var(--text);
-$note-semi-font-color: color-mix(in srgb, var(--subtle) 50%, transparent);
+$note-semi-font-color: color-mix(in srgb, var(--subtle) 80%, transparent);
 
 $note-font-color-hover: $pressed-color;
 $note-open-font-color-hover: $pressed-color;
@@ -38,8 +42,9 @@ $note-semi-font-color-hover: $pressed-color;
 
 $note-background-color: var(--base);
 $note-background-color-hover: var(--surface);
+$note-border-color-hover: var(--surface);
 
 $note-fret-border-color: var(--highlight_med);
-$note-fret-font-size: 1.1rem;
+$note-fret-font-size: 0.8rem;
 $note-fret-font-color: var(--subtle);
 $note-fret-bullet-font-color: var(--gold);

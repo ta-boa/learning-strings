@@ -2,20 +2,28 @@
 @import "./variables";
 
 .menu {
-    display: flex;
+    display: inline-flex;
 }
 
-.menu_item {
-    display: flex;
-}
-
-.menu_label {
+.menu_trigger {
+    display: inline-block;
+    padding: 0;
+    font-size: 0;
     user-select: none;
-    display: flex;
-    font-weight: normal;
-    font-size: 1.4rem;
-    padding: 1rem;
     cursor: pointer;
+}
+
+svg {
+    fill: var(--subtle);
+
+    &:hover {
+        fill: var(--gold);
+    }
+}
+
+.menu[open] .menu_trigger {
+    border-color: var(--gold);
+    color: var(--gold)
 }
 
 .menu_content {
@@ -30,9 +38,13 @@
     padding: 1rem 0;
     width: fit-content;
 
-    @include for-tablet-landscape-up {
-        flex-direction: row;
+    &[aria-hidden="true"] {
+        display: none;
     }
+
+    //@include for-tablet-landscape-up {
+    //    flex-direction: row;
+    //}
 
     fieldset {
         padding: 1rem;
@@ -62,21 +74,6 @@
     }
 }
 
-.menu_label {
-    color: var(--text);
-    border: 1px solid var(--subtle);
-
-    &:hover,
-    &:active {
-        background-color: var(--base);
-        border: 1px solid var(--gold);
-    }
-}
-
-[open] .menu_label {
-    border-color: var(--gold);
-    color: var(--gold)
-}
 
 select {
     cursor: pointer;

@@ -5,7 +5,7 @@
     right: 1rem;
     top: 1rem;
     font-size: 1.4rem;
-    font-family: $ui-font-family;
+    font-family: $font-family-serif;
 }
 
 .library-content {
@@ -13,7 +13,7 @@
 }
 
 .library-chord-preset {
-    font-family: $ui-font-family;
+    font-family: $font-family-serif;
     font-size: 1.4rem;
 }
 
@@ -21,7 +21,7 @@
     padding: 1rem;
 
     li * {
-        font-family: $ui-font-family;
+        font-family: $font-family-serif;
         font-size: 1.4rem;
     }
 }
