@@ -9,14 +9,12 @@ export default function Lang() {
         lang.value = select.value as NoteLang;
     }
     return (
-        <fieldset>
-            <legend>Notes as</legend>
-            <div>
-                <select id="note-lang" name="note-lang" onChange={updateLang}>
-                    <option value="abc">C D E</option>
-                    <option value="doremi">Do Re Mi</option>
-                </select>
-            </div>
-        </fieldset >
+        <div class="menu_field">
+            <label for="note-lang" class="menu_field_legend">Show notes as:</label>
+            <select id="note-lang" name="note-lang" onChange={updateLang}>
+                <option value="abc">C, D, E</option>
+                <option value="doremi">Do, Re, Mi</option>
+            </select>
+        </div>
     )
 }

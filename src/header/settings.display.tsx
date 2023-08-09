@@ -18,9 +18,9 @@ export default function Display() {
         settings.value = newValue;
     }
 
-    return (<fieldset>
-        <legend>Display</legend>
-        <div>
+    return (<div class="menu_field">
+        <label for="display" class="menu_field_legend">Display settings</label>
+        <div style="display:flex;flex-direction:column">
             <div class="checkbox_field">
                 <input id="frets" type="checkbox" onInput={updateSettings} checked={settings.value.fret} name="fret" />
                 <label for="frets">
@@ -40,5 +40,5 @@ export default function Display() {
                 </label>
             </div>
         </div>
-    </fieldset >)
+    </div >)
 }

@@ -2,7 +2,18 @@
 @import "./variables";
 
 .menu {
-    display: inline-flex;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu_heading {
+    font-family: $font-family-serif;
+    color: var(--gold);
+    font-size: 2rem;
+    font-weight: 300;
+    padding: 0.2rem 0 0.5rem 1rem;
+    margin-bottom: 1rem;
 }
 
 .menu_trigger {
@@ -11,90 +22,100 @@
     font-size: 0;
     user-select: none;
     cursor: pointer;
-}
+    position: sticky;
+    top: 0;
 
-svg {
-    fill: var(--subtle);
+    svg {
+        fill: var(--subtle);
 
-    &:hover {
-        fill: var(--gold);
+        &:hover {
+            fill: var(--gold);
+        }
     }
 }
 
-.menu[open] .menu_trigger {
-    border-color: var(--gold);
-    color: var(--gold)
+.menu_close {
+    font-size: 1.2rem;
+    padding: 0;
+    padding-left: 1rem;
+
+    color: var(--iris);
+
+    &:hover {
+        background-color: var(--overlay);
+        color: var(--text);
+    }
+
+    text-align: left;
+}
+
+.menu_wrapper {
+    font-family: $font-family-serif;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: normal;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: max(30vw, 300px);
+
+    background-color: var(--surface);
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+
+    transform: translateX(0);
+    transition: transform 0.25s ease-out;
+    overflow-x: auto;
+
+    &[aria-hidden="true"] {
+        transform: translateX(-100%);
+    }
 }
 
 .menu_content {
-    position: absolute;
+    flex: 1;
+    overflow-x: auto;
+}
+
+.menu_field {
     display: flex;
     flex-direction: column;
-    background-color: var(--base);
-    color: var(--text);
-    font-size: 1.4rem;
-    font-weight: normal;
-    margin-top: 1rem;
-    padding: 1rem 0;
-    width: fit-content;
-
-    &[aria-hidden="true"] {
-        display: none;
-    }
-
-    //@include for-tablet-landscape-up {
-    //    flex-direction: row;
-    //}
-
-    fieldset {
-        padding: 1rem;
-        width: fit-content;
-        border-color: var(--foan);
-        border-style: groove;
-        margin-bottom: 2rem;
-
-        &:last-child {
-            margin-right: 0;
-        }
-
-        @include for-tablet-landscape-up {
-            margin-bottom: inherit;
-            margin-right: 2rem;
-        }
-
-    }
-
-    legend {
-        font-size: 1.4rem;
-        padding: 0 0.3rem;
-    }
-
-    input {
-        margin-right: 0.5rem;
-    }
+    margin: 0 1rem 2rem 1rem;
+    padding: 0;
 }
 
+.menu_field_legend {
+    appearance: none;
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--subtle);
+    margin-right: 1ch;
+    margin-bottom: 0.1ch;
+}
 
-select {
-    cursor: pointer;
+// specific to string tuning
+.menu_string_tuning_label {
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding-left: 0.2rem;
+}
 
-    &:not(:last-of-type) {
-        margin-right: 1rem;
+.menu_string_tuning_wrapper {
+    flex-direction: row;
+    display: flex;
+}
+
+.menu_string_tuning {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.4rem;
+
+    &:not(:last-child) {
+        margin-right: 0.4rem;
     }
-}
-
-select,
-option {
-    background-color: transparent;
-    color: var(--text);
-    font-size: 1.4rem;
-    border-style: none;
-    border: 0;
-    outline: 0;
-}
-
-option {
-    background-color: var(--surface);
 }
 
 .checkbox_field {
@@ -105,24 +126,89 @@ option {
         margin-right: 1rem;
     }
 
-    label,
-    input[type="checkbox"] {
-        font-size: 1.4rem;
-        cursor: pointer;
-        user-select: none;
+}
+
+$form-element-hover: var(--gold);
+
+select {
+    appearance: none;
+    outline: 0;
+    border: 0;
+    display: flex;
+    width: fit-content;
+    cursor: pointer;
+    font-family: $font-family-serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 300;
+    background-color: transparent;
+    margin-right: 0.2rem;
+
+    &:hover,
+    &:focus-visible {
+        color: $form-element-hover;
+    }
+}
+
+option {
+    border-style: none;
+    color: var(--text);
+    background-color: var(--surface);
+}
+
+
+
+label,
+input[type="checkbox"] {
+    cursor: pointer;
+    user-select: none;
+    font-family: $font-family-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+input[type="checkbox"] {
+    $size: 1rem;
+    appearance: none;
+    outline: none;
+
+    display: block;
+    background-color: transparent;
+
+    position: relative;
+    width: $size * 1.2;
+    height: $size * 1.2;
+
+    margin-right: 0.2rem;
+    align-self: center;
+    padding: 0.2rem;
+
+    transition: background-color 0.2s linear;
+
+    &:hover::after,
+    &:focus-visible::after,
+    &:focus-visible:checked::after,
+    &:hover:checked::after {
+        color: $form-element-hover;
     }
 
-    input[type="checkbox"] {
-        appearance: none;
-        outline: none;
-        display: block;
-        width: 1.2rem;
-        height: 1.2rem;
-        font-size: 1.2rem;
-        border: 1px solid var(--text);
+    &::after {
+        display: flex;
+        color: var(--text);
+        content: "⭘";
+        position: absolute;
+        align-items: center;
+        justify-content: space-around;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 
-        &:checked {
-            background-color: var(--muted);
-        }
+    &:checked:after {
+        content: "◉";
+        color: var(--text);
     }
 }

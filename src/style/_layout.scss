@@ -42,9 +42,9 @@
 }
 
 header {
-    top: 1rem;
-    left: 1rem;
-    right: 1rem;
+    top: 0;
+    left: 0;
     z-index: $z-index-header;
     position: absolute;
+    
 }
