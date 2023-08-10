@@ -1,12 +1,6 @@
 @import "./mixins";
 @import "./variables";
 
-.menu {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
 .menu_heading {
     font-family: $font-family-serif;
     color: var(--gold);
@@ -58,7 +52,7 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    width: max(30vw, 300px);
+    width: $menu-wrapper-size;
 
     background-color: var(--surface);
     flex-direction: column;
@@ -66,11 +60,12 @@
     flex: 1;
 
     transform: translateX(0);
-    transition: transform 0.25s ease-out;
+    transition: transform $menu-transition-time-in ease-out;
     overflow-x: auto;
 
     &[aria-hidden="true"] {
         transform: translateX(-100%);
+        transition-duration: $menu-transition-time-out;
     }
 }
 
@@ -128,6 +123,8 @@
 
 }
 
+// FORMS
+
 $form-element-hover: var(--gold);
 
 select {
@@ -157,8 +154,6 @@ option {
     color: var(--text);
     background-color: var(--surface);
 }
-
-
 
 label,
 input[type="checkbox"] {

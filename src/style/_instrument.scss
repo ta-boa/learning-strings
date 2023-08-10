@@ -91,9 +91,9 @@
 //   }
 // }
 
-// .note[data-hidden="true"] .note_label {
-//   opacity: 0;
-// }
+.note[data-hidden="true"] .note_label {
+  opacity: 0;
+}
 
 .note_fret {
   $fret-gap: 1.02;

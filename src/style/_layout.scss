@@ -16,35 +16,51 @@
 .app_content {
     display: flex;
     flex: 1;
-    //@include for-tablet-landscape-up {
-    //    align-items: center;
-    //}
+    overflow-x: hidden;
 }
 
-/*Instrument*/
-
 .instrument {
+    $scale-duration: 1.5;
     display: flex;
     flex-direction: row-reverse;
     max-width: fit-content;
     margin: auto;
     padding: ($note-height * 1.5) 0;
     margin-top: 5rem;
-    //$spread: 5rem;
-    //$shadow: var(--muted);
-    //filter: drop-shadow(2px 0rem $spread $shadow);
+    transition: transform ($menu-transition-time-in * $scale-duration) ease-out;
 
-    //@include for-tablet-landscape-up {
-    //    //filter: drop-shadow(0px 2rem $spread $shadow);
-    //    padding: 0 ($note-height * 2);
-    //    flex-direction: column;
-    //}
+    &[data-dir="right"] {
+        flex-direction: row;
+    }
+
+    &[data-state="left-menu"] {
+        transform: translateX($menu-wrapper-size);
+        transition-duration: $menu-transition-time-out * $scale-duration;
+    }
+
+
+    @include for-tablet-portrait-up() {
+        &[data-state="left-menu"] {
+            transform: translateX($menu-wrapper-size * 0.5);
+        }
+    }
+
+    @include for-tablet-landscape-up() {
+        &[data-state="left-menu"] {
+            transform: translateX($menu-wrapper-size * 0.4);
+        }
+    }
+    @include for-desktop-up() {
+        &[data-state="left-menu"] {
+            transform: translateX(0);
+        }
+    }
 }
 
-header {
+.menu {
     top: 0;
     left: 0;
     z-index: $z-index-header;
     position: absolute;
-    
+
 }

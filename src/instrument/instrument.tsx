@@ -5,10 +5,12 @@ import { AppContext } from "../app";
 import { ArmString } from "./instrument.arm";
 
 const Instrument = () => {
-  const { tuning, instrument } = useContext(AppContext) as AppState;
+  const { tuning, instrument, dir, state } = useContext(AppContext) as AppState;
   return (
     <div
       class="instrument"
+      data-dir={dir}
+      data-state={state}
       data-instrument={instrument.value.name.toLowerCase()}
     >
       {tuning.value.map((_, position: number) => {

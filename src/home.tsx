@@ -15,9 +15,9 @@ const Home = ({ instrument }: Props) => {
     <AppContext.Provider value={state}>
       <Header></Header>
       <main class="app_main">
-        <section class="app_content">
+        <div class="app_content">
           <Instrument />
-        </section>
+        </div>
       </main>
     </AppContext.Provider>
   );

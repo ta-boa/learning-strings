@@ -58,8 +58,6 @@ export const ArmString = ({ position }: ArmStringProps) => {
     };
   }
 
-  console.log(activeKeys.value)
-
   const isNotePressed = (note: NoteSettings) => {
     const keys = activeKeys.value as PressedKeys;
     const current: NoteSettings | undefined = keys[position];

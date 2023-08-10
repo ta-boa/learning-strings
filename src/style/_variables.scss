@@ -11,6 +11,11 @@ $body-font-color: var(--text);
 $z-index-instrument: 1;
 $z-index-header: 2;
 
+// MENU
+$menu-wrapper-size: 300px;
+$menu-transition-time-in: 0.25s;
+$menu-transition-time-out: 0.15s;
+
 // INSTRUMENT
 $string-color: color-mix(in srgb, var(--text) 10%, transparent);
 $string-font-color: var(--subtle);

@@ -13,8 +13,13 @@ export interface Settings {
   fret: boolean,
 }
 
+export type ArmDirection = "left" | "right";
+export type State = "initial" | "left-menu";
+
 export type AppState = {
   lang: Signal<NoteLang>,
+  dir: Signal<ArmDirection>,
+  state: Signal<State>,
   activeKeys: Signal<Record<string, NoteSettings>>;
   instrument: Signal<InstrumentSettings>;
   tuning: Signal<Note[]>;
@@ -30,6 +35,8 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   const activeKeys = signal({} as PressedKeys);
   const progression = signal([]);
   const lang = signal("abc");
+  const dir = signal("left");
+  const state = signal("initial");
 
   const view = signal({
     major: true,
@@ -48,7 +55,9 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   });
 
   return {
+    state,
     lang,
+    dir,
     instrument,
     tuning,
     activeKeys,
