@@ -1,27 +1,15 @@
 @import "./mixins";
 @import "./variables";
 
-// ARM STRING 
-// START
-
 .arm_string {
     position: relative;
     display: flex;
     flex-direction: column;
-
-    //@include for-tablet-landscape-up {
-    //  flex-direction: row;
-    //}
 }
 
 [data-instrument="banjo"] .arm_string[data-position="4"] {
     margin-top: $note-height * 5;
     margin-left: inherit;
-
-    //@include for-tablet-landscape-up {
-    //  margin-top: inherit;
-    //  margin-left: $note-height * 5;
-    //}
 }
 
 .arm_string_cord {
@@ -37,15 +25,6 @@
     left: 49%;
     width: 1px;
     z-index: $string-cord-z;
-
-    //@include for-tablet-landscape-up {
-    //  top: 50%;
-    //  right: -$note-width;
-    //  left: -$note-width;
-    //  height: 1px;
-    //  width: unset;
-    //}
-
 }
 
 .arm_string_cord::before {
@@ -69,12 +48,6 @@
     padding: 0.2rem;
     left: -0.5rem;
     top: 0;
-
-    //@include for-tablet-landscape-up {
-    //  padding: 0.2rem;
-    //  left: 0;
-    //  top: -0.8rem;
-    //}
 }
 
 .arm_string:hover .arm_string_cord::before {

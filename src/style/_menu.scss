@@ -1,7 +1,30 @@
 @import "./mixins";
 @import "./variables";
 
-.menu_heading {
+.menu_bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $menu-bar-height;
+}
+
+.menu_trigger {
+    display: inline-flex;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: $font-family-mono;
+    font-weight: 600;
+    user-select: none;
+    cursor: pointer;
+    color: var(--text);
+
+    &:hover {
+        color: var(--gold);
+        background-color: var(--overlay);
+    }
+}
+
+.overlay_heading {
     font-family: $font-family-serif;
     color: var(--gold);
     font-size: 2rem;
@@ -10,66 +33,28 @@
     margin-bottom: 1rem;
 }
 
-.menu_trigger {
-    display: inline-block;
-    padding: 0;
-    font-size: 0;
-    user-select: none;
-    cursor: pointer;
-    position: sticky;
-    top: 0;
-
-    svg {
-        fill: var(--subtle);
-
-        &:hover {
-            fill: var(--gold);
-        }
-    }
-}
-
-.menu_close {
+.overlay_close {
     font-size: 1.2rem;
-    padding: 0;
+    padding: 0.2rem 0;
     padding-left: 1rem;
 
-    color: var(--iris);
+    color: var(--love);
+    text-align: left;
 
     &:hover {
-        background-color: var(--overlay);
-        color: var(--text);
+        background-color: var(--muted);
+        color: var(--love);
     }
 
-    text-align: left;
 }
 
-.menu_wrapper {
-    font-family: $font-family-serif;
-    color: var(--text);
-    font-size: 1rem;
-    font-weight: normal;
-
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: $menu-wrapper-size;
-
-    background-color: var(--surface);
-    flex-direction: column;
-    display: flex;
-    flex: 1;
-
-    transform: translateX(0);
-    transition: transform $menu-transition-time-in ease-out;
-    overflow-x: auto;
-
-    &[aria-hidden="true"] {
-        transform: translateX(-100%);
-        transition-duration: $menu-transition-time-out;
-    }
+.right_overlay .overlay_close {
+    text-align: right;
+    padding: 0.2rem 0;
+    padding-right: 1rem;
 }
 
-.menu_content {
+.overlay_content {
     flex: 1;
     overflow-x: auto;
 }

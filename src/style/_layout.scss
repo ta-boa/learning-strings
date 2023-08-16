@@ -2,21 +2,86 @@
 @import "./mixins";
 @import "./variables";
 
-.app_main {
+body {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    z-index: $z-index-instrument;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    height: 100%;
+    min-width: 100%;
+    overflow-x: hidden;
 }
 
-.app_content {
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu {
+    position: fixed;
+    top: calc(100% - $menu-bar-height);
+    width: 100%;
+    transform: translate(0, 0);
+    background-color: var(--surface);
+    transition: top 0.2s ease-out;
+    z-index: 1;
+
+    &[data-overlay="content"] {
+        top: calc(80% - $menu-bar-height);
+    }
+}
+
+@mixin overlay($shift: "left") {
+
+    font-family: $font-family-serif;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: normal;
+
+    position: fixed;
+    width: $menu-wrapper-size;
+    overflow-x: auto;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+
+    @if $shift =="left" {
+        left: 0;
+    }
+
+    @else {
+        right: 0;
+    }
+
+    background-color: var(--overlay);
+    flex-direction: column;
     display: flex;
     flex: 1;
-    overflow-x: hidden;
+
+    transform: translateX(0);
+    transition: transform $menu-transition-time-in ease-out;
+
+    &[aria-hidden="true"] {
+        transition-duration: $menu-transition-time-out;
+
+        @if $shift =="left" {
+            transform: translateX(-100%);
+        }
+
+        @else {
+            transform: translateX(100%);
+        }
+    }
+}
+
+.left_overlay {
+    @include overlay("left");
+}
+
+.right_overlay {
+    @include overlay("right");
+}
+
+.overlay {
+    width: 100%;
 }
 
 .instrument {
@@ -25,42 +90,41 @@
     flex-direction: row-reverse;
     max-width: fit-content;
     margin: auto;
-    padding: ($note-height * 1.5) 0;
     margin-top: 5rem;
-    transition: transform ($menu-transition-time-in * $scale-duration) ease-out;
+    margin-bottom: 6rem;
+    transition: transform $menu-transition-time-in ease-out;
+    transform: translateX(-$note-width * 0.35);
 
     &[data-dir="right"] {
         flex-direction: row;
     }
 
-    &[data-state="left-menu"] {
-        transform: translateX($menu-wrapper-size);
+    &[data-state="settings"] {
+        //transform: translateX($menu-wrapper-size);
+        transition-duration: $menu-transition-time-out * $scale-duration;
+    }
+
+    &[data-state="content"] {
+        //transform: translateX($menu-wrapper-size * -1);
         transition-duration: $menu-transition-time-out * $scale-duration;
     }
 
 
-    @include for-tablet-portrait-up() {
-        &[data-state="left-menu"] {
-            transform: translateX($menu-wrapper-size * 0.5);
-        }
-    }
+    // @include for-tablet-portrait-up() {
+    //     &[data-state="left-menu"] {
+    //         transform: translateX($menu-wrapper-size * 0.5);
+    //     }
+    // }
 
-    @include for-tablet-landscape-up() {
-        &[data-state="left-menu"] {
-            transform: translateX($menu-wrapper-size * 0.4);
-        }
-    }
-    @include for-desktop-up() {
-        &[data-state="left-menu"] {
-            transform: translateX(0);
-        }
-    }
-}
+    // @include for-tablet-landscape-up() {
+    //     &[data-state="left-menu"] {
+    //         transform: translateX($menu-wrapper-size * 0.4);
+    //     }
+    // }
 
-.menu {
-    top: 0;
-    left: 0;
-    z-index: $z-index-header;
-    position: absolute;
-
+    // @include for-desktop-up() {
+    //     &[data-state="left-menu"] {
+    //         transform: translateX(0);
+    //     }
+    // }
 }
