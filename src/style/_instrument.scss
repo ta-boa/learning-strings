@@ -96,7 +96,7 @@
 }
 
 .note_fret {
-  $fret-gap: 1.02;
+  $fret-gap: 1.5;
 
   cursor: none;
   user-select: none;
@@ -110,7 +110,7 @@
   display: flex;
   position: absolute;
 
-  justify-content: center;
+  //justify-content: center;
   left: 0;
   top: 0;
   right: 0;

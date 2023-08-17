@@ -19,13 +19,14 @@ body {
     position: fixed;
     top: calc(100% - $menu-bar-height);
     width: 100%;
+    height: inherit;
     transform: translate(0, 0);
-    background-color: var(--surface);
+    background-color: var(--highlight_low);
     transition: top 0.2s ease-out;
     z-index: 1;
 
     &[data-overlay="content"] {
-        top: calc(80% - $menu-bar-height);
+        top: calc(70% - $menu-bar-height);
     }
 }
 
@@ -93,7 +94,7 @@ body {
     margin-top: 5rem;
     margin-bottom: 6rem;
     transition: transform $menu-transition-time-in ease-out;
-    transform: translateX(-$note-width * 0.35);
+    transform: translateX(-$note-width * 0.5);
 
     &[data-dir="right"] {
         flex-direction: row;

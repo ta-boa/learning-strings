@@ -13,10 +13,6 @@ export default function Menu() {
         state.value = state.value === value ? "initial" : value;
     }
 
-    const closeMenu = () => {
-        state.value = "initial";
-    }
-
     return <div class="menu" data-overlay={state}>
         <div class="menu_bar">
             <button

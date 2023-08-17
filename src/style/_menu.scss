@@ -1,17 +1,22 @@
 @import "./mixins";
 @import "./variables";
+@import "./overlay";
 
 .menu_bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: $menu-bar-height;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--iris);
 }
 
 .menu_trigger {
     display: inline-flex;
+    height: inherit;
     padding: 1rem;
     font-size: 1rem;
+    align-items: center;
     font-family: $font-family-mono;
     font-weight: 600;
     user-select: none;
@@ -22,41 +27,6 @@
         color: var(--gold);
         background-color: var(--overlay);
     }
-}
-
-.overlay_heading {
-    font-family: $font-family-serif;
-    color: var(--gold);
-    font-size: 2rem;
-    font-weight: 300;
-    padding: 0.2rem 0 0.5rem 1rem;
-    margin-bottom: 1rem;
-}
-
-.overlay_close {
-    font-size: 1.2rem;
-    padding: 0.2rem 0;
-    padding-left: 1rem;
-
-    color: var(--love);
-    text-align: left;
-
-    &:hover {
-        background-color: var(--muted);
-        color: var(--love);
-    }
-
-}
-
-.right_overlay .overlay_close {
-    text-align: right;
-    padding: 0.2rem 0;
-    padding-right: 1rem;
-}
-
-.overlay_content {
-    flex: 1;
-    overflow-x: auto;
 }
 
 .menu_field {

@@ -1,0 +1,36 @@
+@import "./mixins";
+@import "./variables";
+
+.overlay_heading {
+    font-family: $font-family-serif;
+    color: var(--gold);
+    font-size: 2rem;
+    font-weight: 300;
+    padding: 0.2rem 0 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.overlay_close {
+    font-size: 1.2rem;
+    padding: 0.2rem 0;
+    padding-left: 1rem;
+
+    color: var(--love);
+    text-align: left;
+
+    &:hover {
+        background-color: var(--muted);
+        color: var(--love);
+    }
+}
+
+.right_overlay .overlay_close {
+    text-align: right;
+    padding: 0.2rem 0;
+    padding-right: 1rem;
+}
+
+.overlay_content {
+    flex: 1;
+    overflow-x: auto;
+}

@@ -11,15 +11,14 @@ function ChordItem({ name, notes }) {
     return (
         <div class="content_chord_item">
             <strong class="content_chord_note">
-                {getFriendlyNoteName(name, lang.value)}
+                {getFriendlyNoteName(name, lang.value)} =
             </strong>
-            {notes.map((note: Note, key: number) => {
-                return (
-                    <div class="content_chord_note" key={key} >
-                        {getFriendlyNoteName(note, lang.value)}
-                    </div>
-                );
-            })}
+            <div class="content_chord_note">
+                {notes.map((note: Note, key: number) => {
+                    const sign = key < notes.length - 1 ? " " : "";
+                    return getFriendlyNoteName(note, lang.value) + sign;
+                })}
+            </div>
         </div >
     );
 }
@@ -44,17 +43,17 @@ const ScaleList = () => {
     );
 };
 
+
+//<ScaleList />
+
 export default function Content() {
-    return <Fragment>
-        <div class="content_chord_wrapper">
-            <ScaleList />
-            {Object.keys(scale.value)
-                .sort()
-                .map((name, key) => {
-                    return (
-                        <ChordItem key={key} name={name} notes={scale.value[name]} />
-                    );
-                })}
-        </div>
-    </Fragment>
+    return <div class="content_chord_wrapper">
+        {Object.keys(scale.value)
+            .sort()
+            .map((name, key) => {
+                return (
+                    <ChordItem key={key} name={name} notes={scale.value[name]} />
+                );
+            })}
+    </div>
 }
