@@ -29,7 +29,6 @@ button {
   font-size: 1rem;
   cursor: pointer;
   background-color: transparent;
-  padding: 1rem;
   color: var(--text);
 
 
@@ -37,6 +36,6 @@ button {
   &:focus-within,
   &:active,
   &:hover {
-    color: var(--iris);
+    color: var(--gold);
   }
 }

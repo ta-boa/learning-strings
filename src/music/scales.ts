@@ -106,7 +106,7 @@ const buildScale = (selection: number[], mutations: Mutation[] = []) : { [key: s
   }, {});
 };
 
-export default {
+export const Scales = {
   Major: {
     ...buildScale([0, 2, 4]),
   },

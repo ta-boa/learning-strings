@@ -18,17 +18,72 @@ body {
 .menu {
     position: fixed;
     top: calc(100% - $menu-bar-height);
-    width: 100%;
+    left: 0;
+    right: 0;
     height: inherit;
     transform: translate(0, 0);
-    background-color: var(--highlight_low);
+    background-color: var(--overlay);
     transition: top 0.2s ease-out;
     z-index: 1;
 
-    &[data-overlay="content"] {
+    &[data-state="settings"],
+    &[data-state="content"] {
         top: calc(70% - $menu-bar-height);
     }
 }
+
+$scale-duration: 1.5;
+
+.instrument {
+    display: flex;
+    max-width: fit-content;
+    margin: auto;
+    margin-top: 5rem;
+    margin-bottom: 6rem;
+
+    flex-direction: row-reverse;
+    transition: transform $menu-transition-time-in ease-out;
+    transform: translateX(-$note-width * 0.5);
+
+    &[data-dir="right"] {
+        flex-direction: row;
+    }
+
+    &[data-state="settings"],
+    &[data-state="content"] {
+        //transform: translateX($menu-wrapper-size * -1);
+        //transition-duration: $menu-transition-time-out * $scale-duration;
+        margin-bottom: calc(70% + 3rem);
+    }
+
+    //&[data-state="settings"] {
+    //    //transform: translateX($menu-wrapper-size);
+    //    //transition-duration: $menu-transition-time-out * $scale-duration;
+    //}
+
+
+
+    // @include for-tablet-portrait-up() {
+    //     &[data-state="left-menu"] {
+    //         transform: translateX($menu-wrapper-size * 0.5);
+    //     }
+    // }
+
+    // @include for-tablet-landscape-up() {
+    //     &[data-state="left-menu"] {
+    //         transform: translateX($menu-wrapper-size * 0.4);
+    //     }
+    // }
+
+    // @include for-desktop-up() {
+    //     &[data-state="left-menu"] {
+    //         transform: translateX(0);
+    //     }
+    // }
+}
+
+
+// TO REMOVE
 
 @mixin overlay($shift: "left") {
 
@@ -83,49 +138,4 @@ body {
 
 .overlay {
     width: 100%;
-}
-
-.instrument {
-    $scale-duration: 1.5;
-    display: flex;
-    flex-direction: row-reverse;
-    max-width: fit-content;
-    margin: auto;
-    margin-top: 5rem;
-    margin-bottom: 6rem;
-    transition: transform $menu-transition-time-in ease-out;
-    transform: translateX(-$note-width * 0.5);
-
-    &[data-dir="right"] {
-        flex-direction: row;
-    }
-
-    &[data-state="settings"] {
-        //transform: translateX($menu-wrapper-size);
-        transition-duration: $menu-transition-time-out * $scale-duration;
-    }
-
-    &[data-state="content"] {
-        //transform: translateX($menu-wrapper-size * -1);
-        transition-duration: $menu-transition-time-out * $scale-duration;
-    }
-
-
-    // @include for-tablet-portrait-up() {
-    //     &[data-state="left-menu"] {
-    //         transform: translateX($menu-wrapper-size * 0.5);
-    //     }
-    // }
-
-    // @include for-tablet-landscape-up() {
-    //     &[data-state="left-menu"] {
-    //         transform: translateX($menu-wrapper-size * 0.4);
-    //     }
-    // }
-
-    // @include for-desktop-up() {
-    //     &[data-state="left-menu"] {
-    //         transform: translateX(0);
-    //     }
-    // }
 }

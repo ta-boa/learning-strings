@@ -8,24 +8,51 @@
     align-items: center;
     height: $menu-bar-height;
     background-color: var(--surface);
-    border-bottom: 1px solid var(--iris);
+}
+
+.menu_bar_feature {
+    display: none;
+}
+
+[data-state="initial"] .menu_bar_feature[data-target="initial"] {
+    display: flex;
+}
+
+[data-state="content"] .menu_bar_feature[data-target="content"] {
+    display: flex;
 }
 
 .menu_trigger {
     display: inline-flex;
     height: inherit;
+
     padding: 1rem;
-    font-size: 1rem;
     align-items: center;
+
+    color: var(--text);
+    font-size: 1rem;
     font-family: $font-family-mono;
     font-weight: 600;
+
     user-select: none;
     cursor: pointer;
-    color: var(--text);
+    transition: background-color 0.2s ease-out,
+        color 0.2s linear;
 
     &:hover {
         color: var(--gold);
         background-color: var(--overlay);
+    }
+
+    &[data-active="true"] {
+        color: var(--gold);
+        background-color: var(--overlay);
+
+        &:hover {
+            background-color: var(--base);
+            //color: var(--text);
+        }
+
     }
 }
 

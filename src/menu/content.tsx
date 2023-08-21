@@ -1,58 +1,72 @@
-import { signal } from "@preact/signals";
-import { Note, NoteSettings } from "music/types";
-import { Fragment, h } from "preact";
+import { getFriendlyNoteName } from "music/notes";
+import { Note } from "music/types";
+import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
-import AllScales from "../music/scales";
-import { getFriendlyNoteName } from "music/notes";
 
-function ChordItem({ name, notes }) {
+const wait = (callback: () => void, ms: number = 10): () => void => {
+    const id = setTimeout(callback, ms);
+    return () => {
+        clearTimeout(id);
+    }
+}
+
+function ChordItem({ name, notes, onClick, onBlur }) {
     const { lang } = useContext(AppContext) as AppState;
     return (
-        <div class="content_chord_item">
-            <strong class="content_chord_note">
-                {getFriendlyNoteName(name, lang.value)} =
+        <div
+            className="content_chord_item">
+            <strong className="content_chord_note">
+                {getFriendlyNoteName(name, lang.value)}
             </strong>
-            <div class="content_chord_note">
-                {notes.map((note: Note, key: number) => {
-                    const sign = key < notes.length - 1 ? " " : "";
-                    return getFriendlyNoteName(note, lang.value) + sign;
-                })}
-            </div>
+            {notes.map((note: Note, index: number) => {
+                return <button
+                    data-key={`${name}-${index}`}
+                    data-note={note}
+                    onClick={onClick}
+                    onBlur={onBlur}
+                    className="content_chord_note">
+                    {getFriendlyNoteName(note, lang.value)}
+                </button>
+            })}
         </div >
     );
 }
 
-const scale = signal(AllScales.Major);
+export default function Content({ scale }) {
+    let cancelBlur: () => void;
+    let targetNote: Note
+    let targetKey: string
 
-const ScaleList = () => {
-    const updateScales = (event: Event) => {
-        const newScale = (event.currentTarget as HTMLSelectElement).value;
-        scale.value = AllScales[newScale];
-    };
-    return (<div style="display:flex;flex-direction:row;margin-bottom:1.4rem">
-        <label class="menu_field_legend" for="select-chord-scale">Scale:</label>
-        <select id="select-chord-scale" onChange={updateScales}>
-            {Object.keys(AllScales).map((name: string, key: number) => {
-                return (
-                    <option key={key} name={name} value={name}>{name}</option>
-                );
-            })}
-        </select>
-    </div>
-    );
-};
+    const removeHightlight = (id: string) => {
+        cancelBlur = undefined;
+        if (id === targetKey) {
+            targetNote = undefined;
+        }
+    }
 
+    const handleClick = (event: Event) => {
+        const button = event.target as HTMLButtonElement;
+        if (typeof cancelBlur === "function") {
+            cancelBlur();
+            cancelBlur = undefined;
+        }
+        targetNote = button.dataset.note as Note;
+        targetKey = button.dataset.key;
+    }
 
-//<ScaleList />
+    const handleBlur = (event: Event) => {
+        const button = event.target as HTMLButtonElement;
+        const key = button.dataset.key;
+        cancelBlur = wait(() => { removeHightlight(key) }, 100)
+    }
 
-export default function Content() {
-    return <div class="content_chord_wrapper">
-        {Object.keys(scale.value)
+    return <div className="content_chord_wrapper">
+        {Object.keys(scale)
             .sort()
             .map((name, key) => {
                 return (
-                    <ChordItem key={key} name={name} notes={scale.value[name]} />
+                    <ChordItem onClick={handleClick} onBlur={handleBlur} key={key} name={name} notes={scale[name]} />
                 );
             })}
     </div>
