@@ -3,15 +3,48 @@ import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
 import Content from "./content";
 import Settings from "./settings";
-import { Scales } from '../music/scales';
+import { Scales, ScaleType } from '../music/scales';
+import { Note } from "../music/types";
+import { Signal, signal } from "@preact/signals";
+import { getFriendlyNoteName } from "music/notes";
 
-const FeatureMenu = () => {
+const stringifiedScales = Object.entries(Scales).map(([presetName, presetChords]) => {
+    return Object.entries(presetChords).map(([chordName, chordNotes]) => {
+        return { presetName, chordName, notes: chordNotes.sort().join("") }
+    })
+}).flat();
+
+const FeatureMenu = ({ scale }) => {
+    const { activeKeys, lang } = useContext(AppContext) as AppState;
+
     const updateScales = (event: Event) => {
         const newScale = (event.currentTarget as HTMLSelectElement).value;
-        console.log(newScale);
+        scale.value = Scales[newScale]
+    }
+    const allPressedNotes = Object.values(activeKeys.value).map((value) => {
+        return value.note.map((note: Note) => {
+            return note;
+        })
+    }).flat();
+
+    let match: { presetName: string, chordName: string } | undefined = undefined;
+
+    if (allPressedNotes.length) {
+        const stringifiedNotes = allPressedNotes.sort().join("");
+        Object.values(stringifiedScales).some(({ presetName, chordName, notes }) => {
+            if (stringifiedNotes === notes) {
+                match = { presetName, chordName }
+                return true;
+            }
+        });
+    }
+
+    let barContent = "Try a chord"
+    if (match) {
+        barContent = `⚡${getFriendlyNoteName(match.chordName as Note, lang.value)} ${match.presetName}`;
     }
     return (<div>
-        <div class="menu_bar_feature" data-target="initial">⚡Try a chord</div>
+        <div class="menu_bar_feature" data-target="initial">{barContent}</div>
         <div class="menu_bar_feature" data-target="content">
             <select id="select-chord-scale" onChange={updateScales}>
                 {Object.keys(Scales).map((name: string, key: number) => {
@@ -28,25 +61,21 @@ export default function Menu() {
 
     const { state } = useContext(AppContext) as AppState;
 
+    const scale: Signal<ScaleType> = signal(Scales.Major);
+
     const toggleMenu = (value: "initial" | "content" | "settings") => () => {
         state.value = state.value === value ? "initial" : value;
     }
-    const currentScale = Scales.Major;
-
     return <div class="menu" data-state={state}>
         <div class="menu_bar">
             <button
-                id="left-trigger"
-                aria-label="open settings menu"
                 data-active={state.value === "settings"}
                 class="menu_trigger"
                 onClick={toggleMenu("settings")}>
                 ⋮
             </button>
-            <FeatureMenu></FeatureMenu>
+            <FeatureMenu scale={scale}></FeatureMenu>
             <button
-                id="right-trigger"
-                aria-label="open content menu"
                 class="menu_trigger"
                 data-active={state.value === "content"}
                 onClick={toggleMenu("content")}>
@@ -55,7 +84,7 @@ export default function Menu() {
         </div>
         {state.value !== "initial" && state.value === "settings" ?
             <Settings></Settings> :
-            <Content scale={currentScale}></Content>}
+            <Content scale={scale}></Content>}
     </div>
 
 }

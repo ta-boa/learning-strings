@@ -61,12 +61,13 @@ export default function Content({ scale }) {
         cancelBlur = wait(() => { removeHightlight(key) }, 100)
     }
 
-    return <div className="content_chord_wrapper">
-        {Object.keys(scale)
-            .sort()
-            .map((name, key) => {
+    const notesInside = scale.value.G.length;
+
+    return <div className="content_chord_wrapper" data-notes={notesInside}>
+        {Object.entries(scale.value)
+            .map(([name, value], key) => {
                 return (
-                    <ChordItem onClick={handleClick} onBlur={handleBlur} key={key} name={name} notes={scale[name]} />
+                    <ChordItem onClick={handleClick} onBlur={handleBlur} key={key} name={name} notes={value} />
                 );
             })}
     </div>

@@ -124,11 +124,13 @@ select {
     font-weight: 300;
     background-color: transparent;
     margin-right: 0.2rem;
+    text-align: center;
 
     &:hover,
     &:focus-visible {
         color: $form-element-hover;
     }
+
 }
 
 option {

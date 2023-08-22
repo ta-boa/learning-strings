@@ -28,7 +28,7 @@ body {
 
     &[data-state="settings"],
     &[data-state="content"] {
-        top: calc(70% - $menu-bar-height);
+        top: calc(60% - $menu-bar-height);
     }
 }
 

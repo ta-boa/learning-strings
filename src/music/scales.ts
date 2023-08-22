@@ -90,15 +90,18 @@ const transformNotes = (notes: Note[], mutations: Mutation[]) => {
 
 export const MajorScaleProgression = {
   F: getMajorScaleFromNote("F"),
-  C: getMajorScaleFromNote("C"),
   G: getMajorScaleFromNote("G"),
-  D: getMajorScaleFromNote("D"),
   A: getMajorScaleFromNote("A"),
-  E: getMajorScaleFromNote("E"),
   B: getMajorScaleFromNote("B"),
+  C: getMajorScaleFromNote("C"),
+  D: getMajorScaleFromNote("D"),
+  E: getMajorScaleFromNote("E"),
 };
 
-const buildScale = (selection: number[], mutations: Mutation[] = []) : { [key: string]: Note[] } => {
+export type ScaleType = Partial<{ [key: string]: Note[] } >
+export type ScalesType = Partial<{ [key: string]: ScaleType }>
+
+const buildScale = (selection: number[], mutations: Mutation[] = []) : ScaleType => {
   return Object.keys(MajorScaleProgression).reduce((newScale, note: Note) => {
     const notes = MajorScaleProgression[note];
     newScale[note] = transformNotes(pick(selection, notes), mutations);
@@ -106,7 +109,8 @@ const buildScale = (selection: number[], mutations: Mutation[] = []) : { [key: s
   }, {});
 };
 
-export const Scales = {
+  
+export const Scales : ScalesType = {
   Major: {
     ...buildScale([0, 2, 4]),
   },
