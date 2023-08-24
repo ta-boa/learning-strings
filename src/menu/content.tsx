@@ -12,22 +12,30 @@ const wait = (callback: () => void, ms: number = 10): () => void => {
 }
 
 function ChordItem({ name, notes, onClick, onBlur }) {
-    const { lang } = useContext(AppContext) as AppState;
+    const { lang, activeKeys, chordMatch } = useContext(AppContext) as AppState;
+
+    const pressedKeys = Object.keys(activeKeys.value).map((key) => {
+        return activeKeys.value[key].note;
+    }).flat().filter((value, index, self) => {
+        return self.indexOf(value) === index
+    })
+    const match = chordMatch.value?.chordName === name
     return (
         <div
             className="content_chord_item">
-            <strong className="content_chord_note">
+            <strong className="content_chord_note" data-match={match}>
                 {getFriendlyNoteName(name, lang.value)}
             </strong>
-            {notes.map((note: Note, index: number) => {
-                return <button
-                    data-key={`${name}-${index}`}
+            {notes.map((note: Note) => {
+                return <div
+                    data-pressed={pressedKeys.includes(note)}
+                    data-match={match}
                     data-note={note}
                     onClick={onClick}
                     onBlur={onBlur}
                     className="content_chord_note">
                     {getFriendlyNoteName(note, lang.value)}
-                </button>
+                </div>
             })}
         </div >
     );

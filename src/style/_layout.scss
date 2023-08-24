@@ -2,12 +2,13 @@
 @import "./mixins";
 @import "./variables";
 
+$menu-tilt: 74%;
+
 body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-width: 100%;
-    overflow-x: hidden;
+    min-width: max(300px, 100%);
 }
 
 .main {
@@ -28,7 +29,7 @@ body {
 
     &[data-state="settings"],
     &[data-state="content"] {
-        top: calc(60% - $menu-bar-height);
+        top: calc($menu-tilt - $menu-bar-height);
     }
 }
 
@@ -53,7 +54,7 @@ $scale-duration: 1.5;
     &[data-state="content"] {
         //transform: translateX($menu-wrapper-size * -1);
         //transition-duration: $menu-transition-time-out * $scale-duration;
-        margin-bottom: calc(70% + 3rem);
+        margin-bottom: calc($menu-tilt + 8rem);
     }
 
     //&[data-state="settings"] {

@@ -8,40 +8,17 @@ import { Note } from "../music/types";
 import { Signal, signal } from "@preact/signals";
 import { getFriendlyNoteName } from "music/notes";
 
-const stringifiedScales = Object.entries(Scales).map(([presetName, presetChords]) => {
-    return Object.entries(presetChords).map(([chordName, chordNotes]) => {
-        return { presetName, chordName, notes: chordNotes.sort().join("") }
-    })
-}).flat();
-
 const FeatureMenu = ({ scale }) => {
-    const { activeKeys, lang } = useContext(AppContext) as AppState;
+    const { activeKeys, lang, chordMatch } = useContext(AppContext) as AppState;
 
     const updateScales = (event: Event) => {
         const newScale = (event.currentTarget as HTMLSelectElement).value;
         scale.value = Scales[newScale]
     }
-    const allPressedNotes = Object.values(activeKeys.value).map((value) => {
-        return value.note.map((note: Note) => {
-            return note;
-        })
-    }).flat();
-
-    let match: { presetName: string, chordName: string } | undefined = undefined;
-
-    if (allPressedNotes.length) {
-        const stringifiedNotes = allPressedNotes.sort().join("");
-        Object.values(stringifiedScales).some(({ presetName, chordName, notes }) => {
-            if (stringifiedNotes === notes) {
-                match = { presetName, chordName }
-                return true;
-            }
-        });
-    }
 
     let barContent = "Try a chord"
-    if (match) {
-        barContent = `⚡${getFriendlyNoteName(match.chordName as Note, lang.value)} ${match.presetName}`;
+    if (chordMatch.value) {
+        barContent = `⚡${getFriendlyNoteName(chordMatch.value.chordName as Note, lang.value)} ${chordMatch.value.presetName}`;
     }
     return (<div>
         <div class="menu_bar_feature" data-target="initial">{barContent}</div>
