@@ -9,7 +9,7 @@ export type ArmStringProps = {
 };
 
 export const ArmString = ({ position }: ArmStringProps) => {
-  const { instrument, activeKeys, progression, notesGrid, settings, lang } = useContext(
+  const { instrument, activeKeys, notesGrid, settings, lang } = useContext(
     AppContext
   ) as AppState;
 
@@ -23,16 +23,16 @@ export const ArmString = ({ position }: ArmStringProps) => {
       return notes[0];
     }
 
-    const result = notes.reduce((acc: Note, n: Note): Note => {
-      if (!!acc) return acc;
+    const result = notes.reduce((result: Note, n: Note): Note => {
+      if (!!result) return result;
       if (isMajor(n) && major) {
-        acc = n;
+        result = n;
       } else if (isSharp(n)) {
-        acc = n;
+        result = n;
       } else if (isMinor(n)) {
-        acc = n;
+        result = n;
       }
-      return acc;
+      return result;
     }, null);
     return result
   }
@@ -122,6 +122,7 @@ export const ArmString = ({ position }: ArmStringProps) => {
             data-position={position}
             data-note={current.note}
             aria-pressed={isNotePressed(current)}
+            title={note}
             aria-label={"string " + (position + 1) + " note " + noteName}
           >
             {noteFret}

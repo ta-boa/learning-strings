@@ -23,7 +23,7 @@
 .content_chord_item {
     display: flex;
     flex-direction: column;
-    margin-right: 0.5ch;
+    margin-right: 1ch;
 
     &:last-child {
         margin-right: 0;
@@ -72,13 +72,14 @@
 }
 
 strong.content_chord_note {
-    border-color: transparent;
     font-weight: 600;
     background-color: var(--highlight_low);
-    color: var(--gold);
+    border-color: var(--foam);
+    color: var(--foam);
 
     &[data-match="true"] {
         color: var(--highlight_low);
-        background-color: var(--gold);
+        background-color: var(--foam);
+        //border-color: var(--gold);
     }
 }

@@ -1,25 +1,30 @@
+import { Signal, signal } from "@preact/signals";
+import { getFriendlyNoteName } from "music/notes";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
+import { ScaleType, Scales } from '../music/scales';
+import { Note } from "../music/types";
 import Content from "./content";
 import Settings from "./settings";
-import { Scales, ScaleType } from '../music/scales';
-import { Note } from "../music/types";
-import { Signal, signal } from "@preact/signals";
-import { getFriendlyNoteName } from "music/notes";
 
 const FeatureMenu = ({ scale }) => {
-    const { activeKeys, lang, chordMatch } = useContext(AppContext) as AppState;
+    const { lang, chordMatch, state } = useContext(AppContext) as AppState;
 
     const updateScales = (event: Event) => {
         const newScale = (event.currentTarget as HTMLSelectElement).value;
-        scale.value = Scales[newScale]
+        scale.value = Scales[newScale];
+        state.value = {
+            name: state.value.name,
+            tilt: Scales[newScale]["G"].length
+        }
     }
 
-    let barContent = "Try a chord"
+    let barContent = "🪕 Try a chord!"
     if (chordMatch.value) {
         barContent = `⚡${getFriendlyNoteName(chordMatch.value.chordName as Note, lang.value)} ${chordMatch.value.presetName}`;
     }
+
     return (<div>
         <div class="menu_bar_feature" data-target="initial">{barContent}</div>
         <div class="menu_bar_feature" data-target="content">
@@ -34,19 +39,24 @@ const FeatureMenu = ({ scale }) => {
     </div>)
 }
 
+const scale: Signal<ScaleType> = signal(Scales.Major);
 export default function Menu() {
 
     const { state } = useContext(AppContext) as AppState;
 
-    const scale: Signal<ScaleType> = signal(Scales.Major);
+    const stateName = state.value.name
+    const stateTilt = state.value.tilt
 
     const toggleMenu = (value: "initial" | "content" | "settings") => () => {
-        state.value = state.value === value ? "initial" : value;
+        state.value = {
+            name: stateName === value ? "initial" : value,
+            tilt: state.value.tilt
+        }
     }
-    return <div class="menu" data-state={state}>
+    return <div class="menu" data-state={stateName} data-tilt={stateTilt}>
         <div class="menu_bar">
             <button
-                data-active={state.value === "settings"}
+                data-active={stateName === "settings"}
                 class="menu_trigger"
                 onClick={toggleMenu("settings")}>
                 ⋮
@@ -54,12 +64,12 @@ export default function Menu() {
             <FeatureMenu scale={scale}></FeatureMenu>
             <button
                 class="menu_trigger"
-                data-active={state.value === "content"}
+                data-active={stateName === "content"}
                 onClick={toggleMenu("content")}>
-                {state.value === "initial" ? "♪" : "▾"}
+                {stateName === "initial" ? "♪" : "▾"}
             </button>
         </div>
-        {state.value !== "initial" && state.value === "settings" ?
+        {stateName !== "initial" && stateName === "settings" ?
             <Settings></Settings> :
             <Content scale={scale}></Content>}
     </div>

@@ -21,8 +21,11 @@ export interface Settings {
 }
 
 export type ArmDirection = "left" | "right";
-export type State = "initial" | "settings" | "content";
-export type ChordMath = { presetName: string, chordName: Note } | undefined
+export type State = {
+  name: "initial" | "settings" | "content"
+  tilt: number
+}
+export type ChordMath = { presetName: string, chordName: Note, notes: Array<Note> } | undefined
 
 export type AppState = {
   lang: Signal<NoteLang>;
@@ -71,7 +74,10 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   const progression = signal([]);
   const lang = signal("abc");
   const dir = signal("left");
-  const state = signal("initial");
+  const state = signal({
+    name: "initial",
+    tilt: Object.values(Scales)[0]["G"].length
+  });
 
   const view = signal({
     major: true,
@@ -95,8 +101,6 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
       return n.note;
     })
 
-
-
     if (notes.length === 0) {
       return;
     }
@@ -108,18 +112,21 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
       })
       .map(list => list.sort().join(""))
 
-
-    return allScales.find(({ presetName, chordName, notes }) => {
-      return uniqueNotes.reduce((result: ChordMath, seq: string) => {
-        if (result) {
-          return result;
+    let match: ChordMath;
+    allScales.some(({ presetName, chordName, notes }) => {
+      return uniqueNotes.reduce((result: boolean, seq: string) => {
+        if (!result && seq === notes) {
+          match = {
+            presetName,
+            chordName,
+            notes: Scales[presetName][chordName]
+          }
+          result = true;
         }
-        if (seq === notes) {
-          return (result = { presetName, chordName: chordName })
-        }
-        return result;
-      }, null);
+        return result
+      }, false);
     });
+    return match;
   });
 
   return {

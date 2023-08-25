@@ -10,7 +10,8 @@ const Instrument = () => {
     <div
       class="instrument"
       data-dir={dir}
-      data-state={state}
+      data-state={state.value.name}
+      data-tilt={state.value.tilt}
       data-instrument={instrument.value.name.toLowerCase()}
     >
       {tuning.value.map((_, position: number) => {

@@ -2,7 +2,8 @@
 @import "./mixins";
 @import "./variables";
 
-$menu-tilt: 74%;
+$menu-tilt-3: 74%;
+$menu-tilt-4: 70%;
 
 body {
     display: flex;
@@ -29,7 +30,14 @@ body {
 
     &[data-state="settings"],
     &[data-state="content"] {
-        top: calc($menu-tilt - $menu-bar-height);
+        &[data-tilt="3"] {
+            top: calc($menu-tilt-3 - $menu-bar-height);
+        }
+
+        &[data-tilt="4"] {
+            top: calc($menu-tilt-4 - $menu-bar-height);
+        }
+
     }
 }
 
@@ -54,7 +62,7 @@ $scale-duration: 1.5;
     &[data-state="content"] {
         //transform: translateX($menu-wrapper-size * -1);
         //transition-duration: $menu-transition-time-out * $scale-duration;
-        margin-bottom: calc($menu-tilt + 8rem);
+        margin-bottom: calc($menu-tilt-3 + 8rem);
     }
 
     //&[data-state="settings"] {
