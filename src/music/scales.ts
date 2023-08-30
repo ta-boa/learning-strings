@@ -1,4 +1,4 @@
-import { isMinor, isSharp, major, minor, sharp } from "./notes";
+import { isFlat, isSharp, major, minor, sharp } from "./notes";
 import { Note } from "./types";
 
 const getLoopFromNote = (note: Note): Note[] => {
@@ -28,7 +28,7 @@ const getNextHalfStep = (note: Note, list: Note[]) => {
     return major(targetNote);
   } else if (isSharp(baseNote)) {
     return major(targetNote);
-  } else if (isMinor(baseNote)) {
+  } else if (isFlat(baseNote)) {
     return major(targetNote);
   }
   return minor(targetNote);
@@ -98,10 +98,13 @@ export const MajorScaleProgression = {
   E: getMajorScaleFromNote("E"),
 };
 
-export type ScaleType = Partial<{ [key: string]: Note[] } >
-export type ScalesType = Partial<{ [key: string]: ScaleType }>
+export type ScaleType = Partial<{ [key: string]: Note[] }>;
+export type ScalesType = Partial<{ [key: string]: ScaleType }>;
 
-const buildScale = (selection: number[], mutations: Mutation[] = []) : ScaleType => {
+const buildScale = (
+  selection: number[],
+  mutations: Mutation[] = []
+): ScaleType => {
   return Object.keys(MajorScaleProgression).reduce((newScale, note: Note) => {
     const notes = MajorScaleProgression[note];
     newScale[note] = transformNotes(pick(selection, notes), mutations);
@@ -109,8 +112,7 @@ const buildScale = (selection: number[], mutations: Mutation[] = []) : ScaleType
   }, {});
 };
 
-  
-export const Scales : ScalesType = {
+export const Scales: ScalesType = {
   Major: {
     ...buildScale([0, 2, 4]),
   },

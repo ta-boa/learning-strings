@@ -1,31 +1,31 @@
 @import "variables";
 
 .library {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    font-size: 1.4rem;
-    font-family: $font-family-serif;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.4rem;
+  font-family: $font-family-serif;
 }
 
 .library-content {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .library-chord-preset {
-    font-family: $font-family-serif;
-    font-size: 1.4rem;
+  font-family: $font-family-serif;
+  font-size: 1.4rem;
 }
 
 .library-chord-content {
-    padding: 1rem;
+  padding: 1rem;
 
-    li * {
-        font-family: $font-family-serif;
-        font-size: 1.4rem;
-    }
+  li * {
+    font-family: $font-family-serif;
+    font-size: 1.4rem;
+  }
 }
 
 .open-library {
-    cursor: pointer;
+  cursor: pointer;
 }

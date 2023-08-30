@@ -2,7 +2,6 @@
 @import "./variables";
 @import "./instrument-string";
 
-
 .note {
   font-family: $font-family-mono;
   font-weight: 300;
@@ -16,8 +15,7 @@
   height: $note-height;
   width: $note-width;
   cursor: pointer;
-  transition: background-color $note-transition,
-    border-color $note-transition,
+  transition: background-color $note-transition, border-color $note-transition,
     color $note-transition;
 
   //@include for-tablet-landscape-up {
@@ -54,13 +52,11 @@
   }
 }
 
-
 .note[data-fret="0"] {
   position: sticky;
   top: 0;
   z-index: $sticky-note-z;
 }
-
 
 .note_label {
   color: $note-font-color;

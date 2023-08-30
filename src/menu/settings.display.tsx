@@ -3,42 +3,56 @@ import { h } from "preact";
 import { useContext } from "preact/hooks";
 
 export default function Display() {
-    const { settings } = useContext(
-        AppContext
-    ) as AppState;
+  const { display: settings } = useContext(AppContext) as AppState;
 
-    const updateSettings = (event: Event) => {
-        const newValue = { ...settings.value };
-        const prop = (event.currentTarget as HTMLInputElement).name;
-        const value = (event.currentTarget as HTMLInputElement).checked;
-        if (!(prop in newValue)) {
-            throw new Error("Invalid checkbox prop:" + prop);
-        }
-        newValue[prop] = value;
-        settings.value = newValue;
+  const updateSettings = (event: Event) => {
+    const newValue = { ...settings.value };
+    const prop = (event.currentTarget as HTMLInputElement).name;
+    const value = (event.currentTarget as HTMLInputElement).checked;
+    if (!(prop in newValue)) {
+      throw new Error("Invalid checkbox prop:" + prop);
     }
+    newValue[prop] = value;
+    settings.value = newValue;
+  };
 
-    return (<div class="menu_field">
-        <label for="display" class="menu_field_legend">Display settings</label>
-        <div style="display:flex;flex-direction:column">
-            <div class="checkbox_field">
-                <input id="frets" type="checkbox" onInput={updateSettings} checked={settings.value.fret} name="fret" />
-                <label for="frets">
-                    Frets
-                </label>
-            </div>
-            <div class="checkbox_field">
-                <input id="semi" type="checkbox" onInput={updateSettings} checked={settings.value.semi} name="semi" />
-                <label for="semi">
-                    Semiton
-                </label>
-            </div>
-            <div class="checkbox_field">
-                <input id="major" type="checkbox" onInput={updateSettings} checked={settings.value.major} name="major" />
-                <label for="major">
-                    Major
-                </label>
-            </div>
+  return (
+    <div class="menu_field">
+      <label for="display" class="menu_field_legend">
+        Display settings
+      </label>
+      <div style="display:flex;flex-direction:column">
+        <div class="checkbox_field">
+          <input
+            id="frets"
+            type="checkbox"
+            onInput={updateSettings}
+            checked={settings.value.fret}
+            name="fret"
+          />
+          <label for="frets">Frets</label>
         </div>
-    </div >)
+        <div class="checkbox_field">
+          <input
+            id="semi"
+            type="checkbox"
+            onInput={updateSettings}
+            checked={settings.value.semi}
+            name="semi"
+          />
+          <label for="semi">Semiton</label>
+        </div>
+        <div class="checkbox_field">
+          <input
+            id="major"
+            type="checkbox"
+            onInput={updateSettings}
+            checked={settings.value.major}
+            name="major"
+          />
+          <label for="major">Major</label>
+        </div>
+      </div>
+    </div>
+  );
 }

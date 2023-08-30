@@ -1,108 +1,134 @@
 @import "./mixins";
 @import "./variables";
-@import "./overlay";
 
 .menu_bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: $menu-bar-height;
-    background-color: var(--surface);
+  display: flex;
+  align-items: center;
+  height: $menu-bar-height;
+  background-color: var(--surface);
 }
 
 .menu_bar_feature {
-    display: none;
+  display: none;
 }
 
 [data-state="initial"] .menu_bar_feature[data-target="initial"] {
-    display: flex;
+  display: flex;
 }
 
 [data-state="content"] .menu_bar_feature[data-target="content"] {
-    display: flex;
+  display: flex;
+}
+
+@mixin menu_base() {
+  display: inline-flex;
+  width: 3rem;
+  height: $menu-bar-height * 0.9;
+
+  padding: 1rem;
+  margin-right: 1px;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--text);
+  font-size: 1rem;
+  font-family: $font-family-mono;
+  font-weight: 600;
+  border: 1px solid var(--highlight_med);
+
+  user-select: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-out,
+    color 0.2s linear;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &:first-of-type {
+    margin-left: 1px;
+  }
+}
+
+.menu_toggle {
+  @include menu_base();
+  font-weight: 600;
+
+  &:active,
+  &:focus,
+  &:focus-visible,
+  &:focus-within,
+  &:hover {
+    background-color: var(--overlay);
+    color: var(--love);
+  }
+
 }
 
 .menu_trigger {
-    display: inline-flex;
-    height: inherit;
+  @include menu_base();
 
-    padding: 1rem;
-    align-items: center;
+  &:hover {
+    color: var(--gold);
+    background-color: var(--overlay);
+  }
 
-    color: var(--text);
-    font-size: 1rem;
-    font-family: $font-family-mono;
-    font-weight: 600;
-
-    user-select: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease-out,
-        color 0.2s linear;
+  &[data-active="true"] {
+    color: var(--gold);
+    background-color: var(--overlay);
 
     &:hover {
-        color: var(--gold);
-        background-color: var(--overlay);
+      background-color: var(--base);
     }
-
-    &[data-active="true"] {
-        color: var(--gold);
-        background-color: var(--overlay);
-
-        &:hover {
-            background-color: var(--base);
-            //color: var(--text);
-        }
-
-    }
+  }
 }
 
 .menu_field {
-    display: flex;
-    flex-direction: column;
-    margin: 0 1rem 2rem 1rem;
-    padding: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem 2rem 1rem;
+  padding: 0;
 }
 
 .menu_field_legend {
-    appearance: none;
-    display: flex;
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: var(--subtle);
-    margin-right: 1ch;
-    margin-bottom: 0.1ch;
+  appearance: none;
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--subtle);
+  margin-right: 1ch;
+  margin-bottom: 0.1ch;
 }
 
 // specific to string tuning
 .menu_string_tuning_label {
-    color: var(--muted);
-    font-size: 0.8rem;
-    padding-left: 0.2rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-left: 0.2rem;
 }
 
 .menu_string_tuning_wrapper {
-    flex-direction: row;
-    display: flex;
+  flex-direction: row;
+  display: flex;
 }
 
 .menu_string_tuning {
-    display: flex;
-    flex-direction: column;
-    margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.4rem;
 
-    &:not(:last-child) {
-        margin-right: 0.4rem;
-    }
+  &:not(:last-child) {
+    margin-right: 0.4rem;
+  }
 }
 
 .checkbox_field {
-    display: inline-flex;
-    align-items: baseline;
+  display: inline-flex;
+  align-items: baseline;
 
-    &:not(:last-of-type) {
-        margin-right: 1rem;
-    }
-
+  &:not(:last-of-type) {
+    margin-right: 1rem;
+  }
 }
 
 // FORMS
@@ -110,84 +136,83 @@
 $form-element-hover: var(--gold);
 
 select {
-    appearance: none;
-    outline: 0;
-    border: 0;
-    display: flex;
-    width: fit-content;
-    cursor: pointer;
-    font-family: $font-family-serif;
-    font-size: 1.2rem;
-    color: var(--text);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    font-weight: 300;
-    background-color: transparent;
-    margin-right: 0.2rem;
-    text-align: center;
+  appearance: none;
+  outline: 0;
+  border: 0;
+  display: flex;
+  width: fit-content;
+  cursor: pointer;
+  font-family: $font-family-serif;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 300;
+  background-color: transparent;
+  margin-right: 0.2rem;
+  text-align: center;
 
-    &:hover,
-    &:focus-visible {
-        color: $form-element-hover;
-    }
-
+  &:hover,
+  &:focus-visible {
+    color: $form-element-hover;
+  }
 }
 
 option {
-    border-style: none;
-    color: var(--text);
-    background-color: var(--surface);
+  border-style: none;
+  color: var(--text);
+  background-color: var(--surface);
 }
 
 label,
 input[type="checkbox"] {
-    cursor: pointer;
-    user-select: none;
-    font-family: $font-family-serif;
-    font-size: 1.2rem;
-    font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+  font-family: $font-family-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
 }
 
 input[type="checkbox"] {
-    $size: 1rem;
-    appearance: none;
-    outline: none;
+  $size: 1rem;
+  appearance: none;
+  outline: none;
 
-    display: block;
-    background-color: transparent;
+  display: block;
+  background-color: transparent;
 
-    position: relative;
-    width: $size * 1.2;
-    height: $size * 1.2;
+  position: relative;
+  width: $size * 1.2;
+  height: $size * 1.2;
 
-    margin-right: 0.2rem;
-    align-self: center;
-    padding: 0.2rem;
+  margin-right: 0.2rem;
+  align-self: center;
+  padding: 0.2rem;
 
-    transition: background-color 0.2s linear;
+  transition: background-color 0.2s linear;
 
-    &:hover::after,
-    &:focus-visible::after,
-    &:focus-visible:checked::after,
-    &:hover:checked::after {
-        color: $form-element-hover;
-    }
+  &:hover::after,
+  &:focus-visible::after,
+  &:focus-visible:checked::after,
+  &:hover:checked::after {
+    color: $form-element-hover;
+  }
 
-    &::after {
-        display: flex;
-        color: var(--text);
-        content: "⭘";
-        position: absolute;
-        align-items: center;
-        justify-content: space-around;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
+  &::after {
+    display: flex;
+    color: var(--text);
+    content: "⭘";
+    position: absolute;
+    align-items: center;
+    justify-content: space-around;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 
-    &:checked:after {
-        content: "◉";
-        color: var(--text);
-    }
+  &:checked:after {
+    content: "◉";
+    color: var(--text);
+  }
 }

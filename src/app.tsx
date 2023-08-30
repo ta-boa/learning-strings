@@ -14,57 +14,68 @@ import { Scales } from "./music/scales";
 
 export const AppContext = createContext(null);
 
-export interface Settings {
+export interface Display {
   major: boolean;
   semi: boolean;
   fret: boolean;
 }
 
+export type Semi = "sharp" | "flat";
+
 export type ArmDirection = "left" | "right";
 export type State = {
-  name: "initial" | "settings" | "content"
-  tilt: number
-}
-export type ChordMath = { presetName: string, chordName: Note, notes: Array<Note> } | undefined
+  name: "initial" | "settings" | "content";
+  tilt: number;
+};
+export type ChordMath =
+  | { presetName: string; chordName: Note; notes: Array<Note> }
+  | undefined;
 
 export type AppState = {
   lang: Signal<NoteLang>;
   dir: Signal<ArmDirection>;
+  semi:Signal<Semi>;
   state: Signal<State>;
   activeKeys: Signal<Record<string, NoteSettings>>;
   instrument: Signal<InstrumentSettings>;
   tuning: Signal<Note[]>;
-  settings: Signal<Settings>;
+  display: Signal<Display>;
   progression: Signal<Progression[]>;
   notesGrid: Signal<NoteSettings[][]>;
   chordMatch: Signal<ChordMath>;
 };
 
-const stringifiedScales = Object.entries(Scales).map(([presetName, presetChords]) => {
-  return Object.entries(presetChords).map(([chordName, chordNotes]) => {
-    return { presetName, chordName: chordName as Note, notes: chordNotes.sort().join("") }
+const stringifiedScales = Object.entries(Scales)
+  .map(([presetName, presetChords]) => {
+    return Object.entries(presetChords).map(([chordName, chordNotes]) => {
+      return {
+        presetName,
+        chordName: chordName as Note,
+        notes: chordNotes.sort().join(""),
+      };
+    });
   })
-}).flat();
+  .flat();
 
-const allScales = Object.values(stringifiedScales)
+const allScales = Object.values(stringifiedScales);
 function createCombinations(keys: Array<Note[]>) {
-  var result = []
-  var current = []
-  var index = 0
+  var result = [];
+  var current = [];
+  var index = 0;
   function recurse() {
     if (index === keys.length) {
-      result.push(current.slice())
-      return
+      result.push(current.slice());
+      return;
     }
     for (var i = 0; i < keys[index].length; i++) {
-      current.push(keys[index][i])
-      index++
-      recurse()
-      index--
-      current.pop()
+      current.push(keys[index][i]);
+      index++;
+      recurse();
+      index--;
+      current.pop();
     }
   }
-  recurse()
+  recurse();
   return result;
 }
 export function createAppState(iSettings: InstrumentSettings): AppState {
@@ -74,9 +85,10 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   const progression = signal([]);
   const lang = signal("abc");
   const dir = signal("left");
+  const semi = signal("sharp");
   const state = signal({
     name: "initial",
-    tilt: Object.values(Scales)[0]["G"].length
+    tilt: Object.values(Scales)[0]["G"].length,
   });
 
   const view = signal({
@@ -95,11 +107,10 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
     });
   });
 
-
   const chordMatch = computed((): ChordMath => {
     const notes = Object.values(activeKeys.value).map((n: NoteSettings) => {
       return n.note;
-    })
+    });
 
     if (notes.length === 0) {
       return;
@@ -107,10 +118,10 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
     const uniqueNotes = createCombinations(notes)
       .map((noteList: []) => {
         return noteList.filter((value, index, self) => {
-          return self.indexOf(value) === index
-        })
+          return self.indexOf(value) === index;
+        });
       })
-      .map(list => list.sort().join(""))
+      .map((list) => list.sort().join(""));
 
     let match: ChordMath;
     allScales.some(({ presetName, chordName, notes }) => {
@@ -119,11 +130,11 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
           match = {
             presetName,
             chordName,
-            notes: Scales[presetName][chordName]
-          }
+            notes: Scales[presetName][chordName],
+          };
           result = true;
         }
-        return result
+        return result;
       }, false);
     });
     return match;
@@ -132,14 +143,15 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   return {
     state,
     lang,
+    semi,
     dir,
     instrument,
     tuning,
     activeKeys,
-    settings: view,
+    display: view,
     progression,
     notesGrid,
-    chordMatch
+    chordMatch,
   } as AppState;
 }
 

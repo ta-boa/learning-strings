@@ -155,9 +155,7 @@ export default function ScaleProgression() {
             {tuning.value.map((note: Note, index: number) => {
               return (
                 <option value={note} key={`s-${index}`}>
-                  ({index + 1}) {
-                  "getFriendlySemiNote(note)"
-                  }
+                  ({index + 1}) {"getFriendlySemiNote(note)"}
                 </option>
               );
             })}
