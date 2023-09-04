@@ -6,10 +6,16 @@
   align-items: center;
   height: $menu-bar-height;
   background-color: var(--surface);
+  content-visibility: visible;
 }
 
 .menu_bar_feature {
   display: none;
+  flex: 1;
+  place-self: stretch;
+  background-color: var(--overlay);
+  border: 3px solid var(--surface);
+  border-right-width: 1px;
 }
 
 [data-state="initial"] .menu_bar_feature[data-target="initial"] {
@@ -139,18 +145,21 @@ select {
   appearance: none;
   outline: 0;
   border: 0;
+
   display: flex;
   width: fit-content;
   cursor: pointer;
+  color: var(--text);
+  background-color: transparent;
+
   font-family: $font-family-serif;
   font-size: 1.2rem;
-  color: var(--text);
   text-decoration: underline;
   text-underline-offset: 4px;
   font-weight: 300;
-  background-color: transparent;
+  text-align: left;
+
   margin-right: 0.2rem;
-  text-align: center;
 
   &:hover,
   &:focus-visible {

@@ -4,24 +4,30 @@
 
 $menu-tilt-3: 74%;
 $menu-tilt-4: 70%;
+$max-width: 420px;
+
+// @TODO - remover data state e usar somente tilt
 
 body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-width: max(300px, 100%);
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .main {
   display: flex;
   flex-direction: column;
+  border: 1px solid red;
 }
 
 .menu {
   position: fixed;
   top: calc(100% - $menu-bar-height);
-  left: 0;
-  right: 0;
+  max-width: $max-width;
+  width: 100%;
   height: inherit;
   transform: translate(0, 0);
   background-color: var(--overlay);
@@ -59,83 +65,6 @@ $scale-duration: 1.5;
 
   &[data-state="settings"],
   &[data-state="content"] {
-    //transform: translateX($menu-wrapper-size * -1);
-    //transition-duration: $menu-transition-time-out * $scale-duration;
     margin-bottom: calc($menu-tilt-3 + 8rem);
   }
-
-  //&[data-state="settings"] {
-  //    //transform: translateX($menu-wrapper-size);
-  //    //transition-duration: $menu-transition-time-out * $scale-duration;
-  //}
-
-  // @include for-tablet-portrait-up() {
-  //     &[data-state="left-menu"] {
-  //         transform: translateX($menu-wrapper-size * 0.5);
-  //     }
-  // }
-
-  // @include for-tablet-landscape-up() {
-  //     &[data-state="left-menu"] {
-  //         transform: translateX($menu-wrapper-size * 0.4);
-  //     }
-  // }
-
-  // @include for-desktop-up() {
-  //     &[data-state="left-menu"] {
-  //         transform: translateX(0);
-  //     }
-  // }
-}
-
-// TO REMOVE
-
-@mixin overlay($shift: "left") {
-  font-family: $font-family-serif;
-  color: var(--text);
-  font-size: 1rem;
-  font-weight: normal;
-
-  position: fixed;
-  width: $menu-wrapper-size;
-  overflow-x: auto;
-  z-index: 2;
-  top: 0;
-  bottom: 0;
-
-  @if $shift == "left" {
-    left: 0;
-  } @else {
-    right: 0;
-  }
-
-  background-color: var(--overlay);
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-
-  transform: translateX(0);
-  transition: transform $menu-transition-time-in ease-out;
-
-  &[aria-hidden="true"] {
-    transition-duration: $menu-transition-time-out;
-
-    @if $shift == "left" {
-      transform: translateX(-100%);
-    } @else {
-      transform: translateX(100%);
-    }
-  }
-}
-
-.left_overlay {
-  @include overlay("left");
-}
-
-.right_overlay {
-  @include overlay("right");
-}
-
-.overlay {
-  width: 100%;
 }

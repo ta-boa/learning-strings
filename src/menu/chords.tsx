@@ -39,7 +39,7 @@ function ChordItem({ name, notes }) {
   );
 }
 
-export default function Content({ scale }) {
+export default function Chords({ scale }) {
   const notesInside = scale.value.G.length;
   console.log("list chords", scale.value)
 

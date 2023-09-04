@@ -3,7 +3,7 @@ import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
 import { ScaleType, Scales } from "../music/scales";
-import Content from "./content";
+import Chords from "./chords";
 
 const MenuToggle = ({a,b,onClick}) =>{
     let label  = signal(a);
@@ -59,7 +59,6 @@ const MenuBar = () => {
       >
         {stateName === "initial" ? "♪" : "▾"}
       </button>
-      <div>
         <div class="menu_bar_feature" data-target="content">
           <select id="select-chord-scale" onChange={updateScales}>
             {Object.keys(Scales).map((name: string, key: number) => {
@@ -71,13 +70,12 @@ const MenuBar = () => {
             })}
           </select>
         </div>
-      </div>
     </div>
   );
 };
 
 const MenuContent = () => {
-  return <Content scale={scale}></Content>;
+  return <Chords scale={scale}></Chords>;
 };
 
 export default function Menu() {
