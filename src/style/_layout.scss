@@ -2,17 +2,11 @@
 @import "./mixins";
 @import "./variables";
 
-$menu-tilt-3: 74%;
-$menu-tilt-4: 70%;
-$max-width: 420px;
-
-// @TODO - remover data state e usar somente tilt
-
 body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: $max-width;
+  max-width: $menu-bar-width;
   margin-left: auto;
   margin-right: auto;
 }
@@ -20,51 +14,4 @@ body {
 .main {
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
-}
-
-.menu {
-  position: fixed;
-  top: calc(100% - $menu-bar-height);
-  max-width: $max-width;
-  width: 100%;
-  height: inherit;
-  transform: translate(0, 0);
-  background-color: var(--overlay);
-  transition: top 0.2s ease-out;
-  z-index: 1;
-
-  &[data-state="settings"],
-  &[data-state="content"] {
-    &[data-tilt="3"] {
-      top: calc($menu-tilt-3 - $menu-bar-height);
-    }
-
-    &[data-tilt="4"] {
-      top: calc($menu-tilt-4 - $menu-bar-height);
-    }
-  }
-}
-
-$scale-duration: 1.5;
-
-.instrument {
-  display: flex;
-  max-width: fit-content;
-  margin: auto;
-  margin-top: 5rem;
-  margin-bottom: 6rem;
-
-  flex-direction: row-reverse;
-  transition: transform $menu-transition-time-in ease-out;
-  transform: translateX(-$note-width * 0.5);
-
-  &[data-dir="right"] {
-    flex-direction: row;
-  }
-
-  &[data-state="settings"],
-  &[data-state="content"] {
-    margin-bottom: calc($menu-tilt-3 + 8rem);
-  }
 }

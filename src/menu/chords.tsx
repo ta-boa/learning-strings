@@ -41,7 +41,7 @@ function ChordItem({ name, notes }) {
 
 export default function Chords({ scale }) {
   const notesInside = scale.value.G.length;
-  console.log("list chords", scale.value)
+  console.log("list chords", scale.value);
 
   return (
     <div className="content_chord_wrapper" data-notes={notesInside}>

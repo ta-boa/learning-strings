@@ -34,7 +34,7 @@ export type ChordMath =
 export type AppState = {
   lang: Signal<NoteLang>;
   dir: Signal<ArmDirection>;
-  semi:Signal<Semi>;
+  semi: Signal<Semi>;
   state: Signal<State>;
   activeKeys: Signal<Record<string, NoteSettings>>;
   instrument: Signal<InstrumentSettings>;
@@ -88,7 +88,7 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   const semi = signal("sharp");
   const state = signal({
     name: "initial",
-    tilt: Object.values(Scales)[0]["G"].length,
+    tilt: 0,
   });
 
   const view = signal({

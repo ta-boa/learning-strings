@@ -8,13 +8,15 @@ export type ArmStringProps = {
   position: number;
 };
 
-const pickNote = (notes: Note[], semi : Semi): Note => {
+const pickNote = (notes: Note[], semi: Semi): Note => {
   if (notes.length === 1) {
     return notes[0];
   }
-  return notes.find((note:Note)=>{
-    return semi === "sharp" && isSharp(note) || semi === "flat" && isFlat(note)
-  })
+  return notes.find((note: Note) => {
+    return (
+      (semi === "sharp" && isSharp(note)) || (semi === "flat" && isFlat(note))
+    );
+  });
 };
 
 export const ArmString = ({ position }: ArmStringProps) => {
@@ -22,10 +24,13 @@ export const ArmString = ({ position }: ArmStringProps) => {
     AppContext
   ) as AppState;
 
-  const { major: displayMajor, semi: displaySemi, fret: displayFret } = display.value;
+  const {
+    major: displayMajor,
+    semi: displaySemi,
+    fret: displayFret,
+  } = display.value;
   const lastPositionIndex = instrument.value.tuning.length;
   const stringNotesByPosition = notesGrid.value[position];
-
 
   const hasBullet = (fretNum: number): boolean => {
     return fretNum in instrument.value.armBullets || fretNum === 0;
