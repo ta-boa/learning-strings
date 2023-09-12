@@ -1,7 +1,7 @@
 @import "./mixins";
 @import "./variables";
 
-.content_chord_wrapper {
+.menu_chords {
   margin-top: 1rem;
   padding: 1ch;
   align-items: center;
@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.content_chord_item {
+.menu_chord_item {
   display: flex;
   flex-direction: column;
   margin-right: 1ch;
@@ -20,7 +20,7 @@
   }
 }
 
-.content_chord_note {
+.menu_chord_item_note {
   font-family: $font-family-sans;
   font-size: 0.8rem;
   color: var(--subtle);
@@ -55,11 +55,14 @@
   }
 }
 
-strong.content_chord_note {
+.menu_chord_item_lead {
+  @extend .menu_chord_item_note;
+
   font-weight: 600;
   background-color: var(--highlight_low);
   border-color: var(--foam);
   color: var(--foam);
+  margin-bottom: 0.8rem;
 
   &[data-match="true"] {
     color: var(--highlight_low);

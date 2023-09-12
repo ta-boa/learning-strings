@@ -1,20 +1,18 @@
-import { signal } from "@preact/signals";
+import { useSignal } from "@preact/signals";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
+import Chords from "./menu.chords";
 
-const MenuToggle = ({ a, b, onClick }) => {
-  let label = signal(a);
-  let option = signal("a");
+const MenuButton = ({ a, b, onClick, className = "menu_trigger" }) => {
+  let option = useSignal(a);
   const toggle = () => {
-    console.log("toggle", label.value, option.value);
-    label.value = label.value === a ? b : a;
-    option.value = label.value === a ? "a" : "b";
-    onClick(label.value === a ? "a" : "b", a, b);
+    option.value = option.value === a ? b : a;
+    onClick(option.value === a ? "a" : "b");
   };
   return (
-    <button data-option={option} class="menu_toggle" onClick={toggle}>
-      {label}
+    <button data-option={option.value === a ? "a" : "b"} className={className} onClick={toggle}>
+      {option}
     </button>
   );
 };
@@ -28,19 +26,19 @@ const MenuBar = () => {
   const toggleLang = (value: string) => {
     lang.value = value === "a" ? "abc" : "doremi";
   };
-
-  const toggleChords = (value: string, a: string, b: string) => {
+  
+  const toggleChords = (value: string) => {
     state.value = {
       name: state.value.name,
-      tilt: value === a ? 0 : 3,
-    };
+      tilt: value === "b" ? 5 : 0,
+    }
   };
 
   return (
     <div class="menu_bar">
-      <MenuToggle onClick={toggleSeminotesView} a="♯" b="♭"></MenuToggle>
-      <MenuToggle onClick={toggleLang} a="C" b="Do"></MenuToggle>
-      <MenuToggle onClick={toggleChords} a="♪" b="▾"></MenuToggle>
+      <MenuButton onClick={toggleSeminotesView} a="♯" b="♭"></MenuButton>
+      <MenuButton onClick={toggleLang} a="C" b="Do"></MenuButton>
+      <MenuButton onClick={toggleChords} a="♪" b="▴" className="menu_toggle"></MenuButton>
     </div>
   );
 };
@@ -51,6 +49,7 @@ export default function Menu() {
   return (
     <div class="menu" data-state={stateName} data-tilt={stateTilt}>
       <MenuBar></MenuBar>
+      <Chords></Chords>
     </div>
   );
 }

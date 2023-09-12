@@ -12,32 +12,11 @@
   transition: top 0.2s ease-out;
   z-index: 1;
 
-  &[data-tilt="1"] {
-    top: $menu-tilt-1;
+  @for $i from 1 through 10 {
+    &[data-tilt="#{$i}"] {
+      top: calc(100% + ($i * $menu-bar-height * -1));
+    }
   }
-
-  &[data-tilt="2"] {
-    top: $menu-tilt-2;
-  }
-
-  &[data-tilt="3"] {
-    top: $menu-tilt-3;
-  }
-
-  &[data-tilt="4"] {
-    top: $menu-tilt-4;
-  }
-
-  //&[data-state="settings"],
-  //&[data-state="content"] {
-  //  &[data-tilt="3"] {
-  //    top: calc($menu-tilt-3 - $menu-bar-height);
-  //  }
-  //
-  //  &[data-tilt="4"] {
-  //    top: calc($menu-tilt-4 - $menu-bar-height);
-  //  }
-  //}
 }
 
 .menu_bar {
