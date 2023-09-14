@@ -6,17 +6,13 @@
   top: calc(100% - $menu-bar-height);
   max-width: $menu-bar-width;
   width: 100%;
-  height: inherit;
+  height: 100%;
   transform: translate(0, 0);
   background-color: var(--overlay);
   transition: top 0.2s ease-out;
   z-index: 1;
-
-  @for $i from 1 through 10 {
-    &[data-tilt="#{$i}"] {
-      top: calc(100% + ($i * $menu-bar-height * -1));
-    }
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .menu_bar {
@@ -28,7 +24,7 @@
   content-visibility: visible;
 }
 
-@mixin menu_base() {
+@mixin menu_button() {
   display: inline-flex;
   width: 3rem;
   height: $menu-bar-height * 0.9;
@@ -57,8 +53,8 @@
   }
 }
 
-.menu_toggle {
-  @include menu_base();
+.menu_button_toggle {
+  @include menu_button();
   font-weight: 600;
 
   &:active,
@@ -75,11 +71,12 @@
 
   &[data-option="b"] {
     color: var(--gold);
+    background-color: var(--overlay);
   }
 }
 
-.menu_trigger {
-  @include menu_base();
+.menu_button_trigger {
+  @include menu_button();
 
   &:hover {
     color: var(--gold);
@@ -162,40 +159,6 @@
 // }
 
 // // FORMS
-
-// $form-element-hover: var(--gold);
-
-// select {
-//   appearance: none;
-//   outline: 0;
-//   border: 0;
-
-//   display: flex;
-//   width: fit-content;
-//   cursor: pointer;
-//   color: var(--text);
-//   background-color: transparent;
-
-//   font-family: $font-family-serif;
-//   font-size: 1.2rem;
-//   text-decoration: underline;
-//   text-underline-offset: 4px;
-//   font-weight: 300;
-//   text-align: left;
-
-//   margin-right: 0.2rem;
-
-//   &:hover,
-//   &:focus-visible {
-//     color: $form-element-hover;
-//   }
-// }
-
-// option {
-//   border-style: none;
-//   color: var(--text);
-//   background-color: var(--surface);
-// }
 
 // label,
 // input[type="checkbox"] {

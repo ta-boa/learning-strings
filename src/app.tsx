@@ -14,19 +14,15 @@ import { Scales } from "./music/scales";
 
 export const AppContext = createContext(null);
 
+export type Semi = "sharp" | "flat";
+export type ArmDirection = "left" | "right";
+export type MenuState = "initial" | "chords";
 export interface Display {
   major: boolean;
   semi: boolean;
   fret: boolean;
 }
 
-export type Semi = "sharp" | "flat";
-
-export type ArmDirection = "left" | "right";
-export type State = {
-  name: "initial" | "settings" | "content";
-  tilt: number;
-};
 export type ChordMath =
   | { presetName: string; chordName: Note; notes: Array<Note> }
   | undefined;
@@ -34,8 +30,9 @@ export type ChordMath =
 export type AppState = {
   lang: Signal<NoteLang>;
   dir: Signal<ArmDirection>;
+  tilt: Signal<number>;
   semi: Signal<Semi>;
-  state: Signal<State>;
+  menu: Signal<MenuState>;
   activeKeys: Signal<Record<string, NoteSettings>>;
   instrument: Signal<InstrumentSettings>;
   tuning: Signal<Note[]>;
@@ -84,14 +81,12 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   const activeKeys = signal({} as PressedKeys);
   const progression = signal([]);
   const lang = signal("abc");
+  const tilt = signal(0);
   const dir = signal("left");
   const semi = signal("sharp");
-  const state = signal({
-    name: "initial",
-    tilt: 0,
-  });
+  const menu = signal("initial");
 
-  const view = signal({
+  const display = signal({
     major: true,
     semi: true,
     fret: true,
@@ -141,14 +136,15 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
   });
 
   return {
-    state,
+    menu,
     lang,
     semi,
+    tilt,
     dir,
     instrument,
     tuning,
     activeKeys,
-    display: view,
+    display,
     progression,
     notesGrid,
     chordMatch,

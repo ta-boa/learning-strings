@@ -10,7 +10,8 @@
   margin-bottom: 6rem;
 
   flex-direction: row-reverse;
-  transition: transform $menu-transition-time-in ease-out;
+  transition: transform $menu-transition-time-in ease-out,
+    margin-bottom $menu-transition-time-in ease-out;
   transform: translateX(-$note-width * 0.5);
 
   &[data-dir="right"] {

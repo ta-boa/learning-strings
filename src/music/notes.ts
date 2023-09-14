@@ -39,6 +39,9 @@ export const NoteName = {
 
 export type NoteLang = "abc" | "doremi";
 
+export const BemolSign = "♭";
+export const SharpSign = "♯";
+
 export const getFriendlyNoteName = (note: Note, lang: NoteLang): string => {
   if (typeof note !== "string") {
     throw new Error("Not string");
@@ -50,7 +53,7 @@ export const getFriendlyNoteName = (note: Note, lang: NoteLang): string => {
       NoteName[friendlyNote.charAt(0)]
     );
   }
-  return friendlyNote.replace(/s$/, "♯").replace(/b$/, "♭");
+  return friendlyNote.replace(/s$/, SharpSign).replace(/b$/, BemolSign);
 };
 
 export const getNoteFromFret = (note: Note, fret: number): NoteSettings => {

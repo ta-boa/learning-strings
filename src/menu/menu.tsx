@@ -2,35 +2,42 @@ import { useSignal } from "@preact/signals";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
-import Chords from "./menu.chords";
+import MenuChords from "./menu.chords";
 
-const MenuButton = ({ a, b, onClick, className = "menu_trigger" }) => {
+const MenuButton = ({ a, b, onClick, className = "menu_button_trigger" }) => {
   let option = useSignal(a);
   const toggle = () => {
     option.value = option.value === a ? b : a;
     onClick(option.value === a ? "a" : "b");
   };
   return (
-    <button data-option={option.value === a ? "a" : "b"} className={className} onClick={toggle}>
+    <button
+      data-option={option.value === a ? "a" : "b"}
+      className={className}
+      onClick={toggle}
+    >
       {option}
     </button>
   );
 };
 
 const MenuBar = () => {
-  const { state, lang, semi } = useContext(AppContext) as AppState;
+  const { menu, lang, semi, tilt } = useContext(AppContext) as AppState;
 
   const toggleSeminotesView = (value: string) => {
     semi.value = value === "a" ? "sharp" : "flat";
   };
+
   const toggleLang = (value: string) => {
     lang.value = value === "a" ? "abc" : "doremi";
   };
-  
+
   const toggleChords = (value: string) => {
-    state.value = {
-      name: state.value.name,
-      tilt: value === "b" ? 5 : 0,
+    if (value === "a") {
+      menu.value = "initial";
+      tilt.value = 0;
+    } else {
+      menu.value = "chords";
     }
   };
 
@@ -38,18 +45,20 @@ const MenuBar = () => {
     <div class="menu_bar">
       <MenuButton onClick={toggleSeminotesView} a="♯" b="♭"></MenuButton>
       <MenuButton onClick={toggleLang} a="C" b="Do"></MenuButton>
-      <MenuButton onClick={toggleChords} a="♪" b="▴" className="menu_toggle"></MenuButton>
+      <MenuButton
+        onClick={toggleChords}
+        a="♪"
+        b="▾"
+        className="menu_button_toggle"
+      ></MenuButton>
     </div>
   );
 };
 export default function Menu() {
-  const { state } = useContext(AppContext) as AppState;
-  const stateName = state.value.name;
-  const stateTilt = state.value.tilt;
   return (
-    <div class="menu" data-state={stateName} data-tilt={stateTilt}>
+    <div class="menu">
       <MenuBar></MenuBar>
-      <Chords></Chords>
+      <MenuChords></MenuChords>
     </div>
   );
 }

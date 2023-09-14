@@ -9,13 +9,16 @@ interface Props {
 }
 
 const Home = ({ instrument }: Props) => {
-  const state = createAppState(Instruments[instrument] || Instruments.banjo);
+  const context = createAppState(Instruments[instrument] || Instruments.banjo);
+  const { tilt, menu } = context;
   return (
-    <AppContext.Provider value={state}>
-      <main class="main">
-        <Instrument />
-      </main>
-      <Menu></Menu>
+    <AppContext.Provider value={context}>
+      <div data-state={menu} data-tilt={tilt}>
+        <main class="main">
+          <Instrument />
+        </main>
+        <Menu></Menu>
+      </div>
     </AppContext.Provider>
   );
 };

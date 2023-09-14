@@ -1,4 +1,12 @@
-import { isFlat, isSharp, major, minor, sharp } from "./notes";
+import {
+  BemolSign,
+  SharpSign,
+  isFlat,
+  isSharp,
+  major,
+  minor,
+  sharp,
+} from "./notes";
 import { Note } from "./types";
 
 const getLoopFromNote = (note: Note): Note[] => {
@@ -112,29 +120,61 @@ const buildScale = (
   }, {});
 };
 
-export const Scales: ScalesType = {
-  Major: {
-    ...buildScale([0, 2, 4]),
-  },
-  Minor: {
-    ...buildScale([0, 2, 4], [echo, minor, echo]),
-  },
-  Diminished: {
-    ...buildScale([0, 2, 4], [echo, minor, minor]),
-  },
-  Augmented: {
-    ...buildScale([0, 2, 4], [echo, echo, sharp]),
-  },
-  "Major 7": {
-    ...buildScale([0, 2, 4, 6]),
-  },
-  "Minor 7": {
-    ...buildScale([0, 2, 4, 6], [echo, minor, echo, minor]),
-  },
-  "Dominant 7": {
-    ...buildScale([0, 2, 4, 6], [echo, echo, echo, minor]),
-  },
-  "Augmented 7": {
-    ...buildScale([0, 2, 4, 6], [echo, echo, sharp, minor]),
-  },
+export const ScaleReference = {
+  Major: ["1", "3", "5"],
+  Minor: ["1", `3${BemolSign}`, "5"],
+  Diminished: ["1", `3${BemolSign}`, `5${BemolSign}`],
+  Augmented: ["1", "3", `5${SharpSign}`],
+  "Major 7": ["1", "3", "5", "7"],
+  "Minor 7": ["1", `3${BemolSign}`, "5", `7${BemolSign}`],
+  "Dominant 7": ["1", "3", "5", `7${BemolSign}`],
+  "Augmented 7": ["1", "3", `5${SharpSign}`, "7b"],
 };
+
+export const Scales: ScalesType = Object.entries(ScaleReference).reduce(
+  (newScale, [name, formula]) => {
+    const indexList = [];
+    const modiferList = [];
+    formula.map((value: string) => {
+      indexList.push(parseInt(value) - 1);
+      modiferList.push(
+        value.indexOf(BemolSign) > -1
+          ? minor
+          : value.indexOf(SharpSign) > -1
+          ? sharp
+          : echo
+      );
+    });
+    // Ex os call: buildScale([0, 2, 4], [echo, minor, echo]),
+    newScale[name] = buildScale(indexList, modiferList);
+    return newScale;
+  },
+  {}
+);
+
+// export const Scales: ScalesType = {
+//   Major: {
+//     ...buildScale([0, 2, 4]),
+//   },
+//   Minor: {
+//     ...buildScale([0, 2, 4], [echo, minor, echo]),
+//   },
+//   Diminished: {
+//     ...buildScale([0, 2, 4], [echo, minor, minor]),
+//   },
+//   Augmented: {
+//     ...buildScale([0, 2, 4], [echo, echo, sharp]),
+//   },
+//   "Major 7": {
+//     ...buildScale([0, 2, 4, 6]),
+//   },
+//   "Minor 7": {
+//     ...buildScale([0, 2, 4, 6], [echo, minor, echo, minor]),
+//   },
+//   "Dominant 7": {
+//     ...buildScale([0, 2, 4, 6], [echo, echo, echo, minor]),
+//   },
+//   "Augmented 7": {
+//     ...buildScale([0, 2, 4, 6], [echo, echo, sharp, minor]),
+//   },
+// };
