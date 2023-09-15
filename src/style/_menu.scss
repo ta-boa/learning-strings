@@ -1,10 +1,11 @@
 @import "./mixins";
 @import "./variables";
+@import "./menu.chords";
 
 .menu {
   position: fixed;
   top: calc(100% - $menu-bar-height);
-  max-width: $menu-bar-width;
+  max-width: calc($menu-bar-width - 3px);
   width: 100%;
   height: 100%;
   transform: translate(0, 0);
@@ -66,11 +67,11 @@
   }
 
   &[data-option="a"] {
-    color: var(--rose);
+    color: var(--pine);
   }
 
   &[data-option="b"] {
-    color: var(--gold);
+    color: var(--pine);
     background-color: var(--overlay);
   }
 }
@@ -92,62 +93,6 @@
     }
   }
 }
-
-// .menu_bar_feature {
-//   display: none;
-//   flex: 1;
-//   place-self: stretch;
-//   background-color: var(--overlay);
-//   border: 3px solid var(--surface);
-//   border-right-width: 1px;
-// }
-
-// [data-state="initial"] .menu_bar_feature[data-target="initial"] {
-//   display: flex;
-// }
-
-// [data-state="content"] .menu_bar_feature[data-target="content"] {
-//   display: flex;
-// }
-
-// .menu_field {
-//   display: flex;
-//   flex-direction: column;
-//   margin: 0 1rem 2rem 1rem;
-//   padding: 0;
-// }
-
-// .menu_field_legend {
-//   appearance: none;
-//   display: flex;
-//   font-size: 1.2rem;
-//   font-weight: 300;
-//   color: var(--subtle);
-//   margin-right: 1ch;
-//   margin-bottom: 0.1ch;
-// }
-
-// // specific to string tuning
-// .menu_string_tuning_label {
-//   color: var(--muted);
-//   font-size: 0.8rem;
-//   padding-left: 0.2rem;
-// }
-
-// .menu_string_tuning_wrapper {
-//   flex-direction: row;
-//   display: flex;
-// }
-
-// .menu_string_tuning {
-//   display: flex;
-//   flex-direction: column;
-//   margin-top: 0.4rem;
-
-//   &:not(:last-child) {
-//     margin-right: 0.4rem;
-//   }
-// }
 
 // .checkbox_field {
 //   display: inline-flex;

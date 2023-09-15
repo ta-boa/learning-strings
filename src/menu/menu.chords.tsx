@@ -1,9 +1,9 @@
-import { useSignal } from "@preact/signals";
+import { computed, useSignal } from "@preact/signals";
 import { getFriendlyNoteName } from "music/notes";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
-import { Scales } from "../music/scales";
+import { Scales, ScaleReference } from "../music/scales";
 import { Note } from "../music/types";
 
 function ChordItem({ name, notes, presetName }) {
@@ -36,7 +36,6 @@ function ChordItem({ name, notes, presetName }) {
             data-pressed={pressedKeys.includes(note)}
             data-match={match}
             data-note={note}
-            arial-label={noteName}
           >
             {noteName}
           </div>
@@ -51,7 +50,11 @@ export default function MenuChords() {
 
   const presetName = useSignal("Major");
   const scale = useSignal(Scales[presetName.value]);
+  const chordRef = computed(() => {
+    return ScaleReference[presetName.value];
+  });
 
+  console.log(ScaleReference, chordRef.value);
   if (menu.value === "chords") {
     tilt.value = scale.value.G.length + 3;
   }
@@ -77,6 +80,11 @@ export default function MenuChords() {
         })}
       </select>
       <div className="menu_chords_grid">
+        <div class="menu_chord_ref">
+          {Array.from(chordRef.value).map((ref: string) => {
+            return <span class="menu_chord_ref_item">{ref}</span>;
+          })}
+        </div>
         {Object.entries(scale.value).map(([name, value], key) => {
           return (
             <ChordItem

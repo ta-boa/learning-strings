@@ -13,7 +13,7 @@ const Home = ({ instrument }: Props) => {
   const { tilt, menu } = context;
   return (
     <AppContext.Provider value={context}>
-      <div data-state={menu} data-tilt={tilt}>
+      <div class="app" data-state={menu} data-tilt={tilt}>
         <main class="main">
           <Instrument />
         </main>

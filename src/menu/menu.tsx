@@ -44,6 +44,7 @@ const MenuBar = () => {
   return (
     <div class="menu_bar">
       <MenuButton onClick={toggleSeminotesView} a="♯" b="♭"></MenuButton>
+      <MenuButton onClick={toggleSeminotesView} a="🪛" b="♭"></MenuButton>
       <MenuButton onClick={toggleLang} a="C" b="Do"></MenuButton>
       <MenuButton
         onClick={toggleChords}

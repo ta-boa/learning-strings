@@ -11,6 +11,11 @@ body {
   margin-right: auto;
 }
 
+.app {
+  overflow: hidden;
+  border: 2px solid var(--surface);
+}
+
 .main {
   display: flex;
   flex-direction: column;
