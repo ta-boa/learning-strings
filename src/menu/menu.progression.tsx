@@ -45,56 +45,15 @@ function ChordItem({ name, notes, presetName }) {
   );
 }
 
-export default function MenuChords() {
+export default function MenuProgression() {
   const { menu, tilt } = useContext(AppContext) as AppState;
-
-  const presetName = useSignal("Major");
-  const scale = useSignal(Scales[presetName.value]);
-  const chordRef = computed(() => {
-    return ScaleReference[presetName.value];
-  });
-
-  if (menu.value === "chords") {
-    tilt.value = scale.value.G.length + 3;
+  if (menu.value === "progression") {
+    tilt.value = 2;
   }
 
-  const updateScales = (event: Event) => {
-    const select = event.target as HTMLSelectElement;
-    const selectedValue = select.value;
-    if (select.value in Scales) {
-      scale.value = Scales[selectedValue];
-      presetName.value = selectedValue;
-    }
-  };
-
   return (
-    <div class="menu_chords" aria-hidden={menu.value !== "chords"}>
-      <select onChange={updateScales}>
-        {Object.keys(Scales).map((name: string, key: number) => {
-          return (
-            <option key={key} name={name} value={name}>
-              {name}
-            </option>
-          );
-        })}
-      </select>
-      <div className="menu_chords_grid">
-        <div class="menu_chord_ref">
-          {Array.from(chordRef.value).map((ref: string) => {
-            return <span class="menu_chord_ref_item">{ref}</span>;
-          })}
-        </div>
-        {Object.entries(scale.value).map(([name, value], key) => {
-          return (
-            <ChordItem
-              key={key}
-              name={name}
-              notes={value}
-              presetName={presetName}
-            />
-          );
-        })}
-      </div>
+    <div aria-hidden={menu.value !== "progression"} class="menu_progression">
+      progression
     </div>
   );
 }

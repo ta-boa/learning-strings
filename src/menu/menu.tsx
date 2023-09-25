@@ -3,8 +3,15 @@ import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
 import MenuChords from "./menu.chords";
+import MenuProgression from "./menu.progression";
 
-const MenuButton = ({ a, b, onClick, className = "menu_button_trigger" }) => {
+const MenuToggleFeature = ({
+  a,
+  b,
+  onClick,
+  className = "menu_button_trigger",
+  disabled = false,
+}) => {
   let option = useSignal(a);
   const toggle = () => {
     option.value = option.value === a ? b : a;
@@ -12,12 +19,27 @@ const MenuButton = ({ a, b, onClick, className = "menu_button_trigger" }) => {
   };
   return (
     <button
+      disabled={disabled}
       data-option={option.value === a ? "a" : "b"}
       className={className}
       onClick={toggle}
     >
       {option}
     </button>
+  );
+};
+
+const MenuTogglePanel = ({ a, b, onClick, panel }) => {
+  const { menu } = useContext(AppContext) as AppState;
+  const disabled = menu.value !== panel && menu.value !== "initial";
+  return (
+    <MenuToggleFeature
+      a={a}
+      b={b}
+      onClick={onClick}
+      className="menu_button_toggle"
+      disabled={disabled}
+    />
   );
 };
 
@@ -32,7 +54,7 @@ const MenuBar = () => {
     lang.value = value === "a" ? "abc" : "doremi";
   };
 
-  const toggleChords = (value: string) => {
+  const toggleChordsMenu = (value: string) => {
     if (value === "a") {
       menu.value = "initial";
       tilt.value = 0;
@@ -41,17 +63,36 @@ const MenuBar = () => {
     }
   };
 
+  const toggleProgressionMenu = (value: string) => {
+    if (value === "a") {
+      menu.value = "initial";
+      tilt.value = 0;
+    } else {
+      menu.value = "progression";
+    }
+  };
+
   return (
     <div class="menu_bar">
-      <MenuButton onClick={toggleSeminotesView} a="♯" b="♭"></MenuButton>
-      <MenuButton onClick={toggleSeminotesView} a="🪛" b="♭"></MenuButton>
-      <MenuButton onClick={toggleLang} a="C" b="Do"></MenuButton>
-      <MenuButton
-        onClick={toggleChords}
+      <MenuTogglePanel
+        onClick={toggleChordsMenu}
         a="♪"
         b="▾"
-        className="menu_button_toggle"
-      ></MenuButton>
+        panel="chords"
+      ></MenuTogglePanel>
+      <MenuTogglePanel
+        onClick={toggleProgressionMenu}
+        panel="progression"
+        a="⇅"
+        b="▾"
+      ></MenuTogglePanel>
+
+      <MenuToggleFeature
+        onClick={toggleSeminotesView}
+        a="♯"
+        b="♭"
+      ></MenuToggleFeature>
+      <MenuToggleFeature onClick={toggleLang} a="C" b="Do"></MenuToggleFeature>
     </div>
   );
 };
@@ -60,43 +101,7 @@ export default function Menu() {
     <div class="menu">
       <MenuBar></MenuBar>
       <MenuChords></MenuChords>
+      <MenuProgression></MenuProgression>
     </div>
   );
 }
-
-{
-  /* <div class="menu_bar_feature" data-target="content">
-<select id="select-chord-scale" onChange={updateScales}>
-  {Object.keys(Scales).map((name: string, key: number) => {
-    return (
-      <option key={key} name={name} value={name}>
-        {name}
-      </option>
-    );
-  })}
-</select>
-<MenuContent></MenuContent>
-</div> */
-}
-
-// const toggleMenu = (value: "initial" | "content" | "settings") => () => {
-//   state.value = {
-//     name: stateName === value ? "initial" : value,
-//     tilt: state.value.tilt,
-//   };
-// };
-
-//const scale: Signal<ScaleType> = signal(Scales.Major);
-
-// const updateScales = (event: Event) => {
-//   const newScale = (event.currentTarget as HTMLSelectElement).value;
-//   scale.value = Scales[newScale];
-//   state.value = {
-//     name: state.value.name,
-//     tilt: Scales[newScale]["G"].length,
-//   };
-// };
-
-//const MenuContent = () => {
-//  return <Chords scale={scale}></Chords>;
-//};

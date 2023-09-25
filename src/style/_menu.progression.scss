@@ -1,0 +1,12 @@
+@import "./mixins";
+@import "./variables";
+
+.menu_progression {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    &[aria-hidden="true"] {
+        display: none;
+    }
+}

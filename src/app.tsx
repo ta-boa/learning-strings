@@ -16,7 +16,7 @@ export const AppContext = createContext(null);
 
 export type Semi = "sharp" | "flat";
 export type ArmDirection = "left" | "right";
-export type MenuState = "initial" | "chords";
+export type MenuState = "initial" | "chords" | "progression";
 export interface Display {
   major: boolean;
   semi: boolean;

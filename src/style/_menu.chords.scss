@@ -10,6 +10,10 @@ $item-font-size: 0.8rem;
   display: flex;
   flex-direction: column;
   padding: 1rem;
+
+  &[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 .menu_chords_grid {
@@ -17,7 +21,7 @@ $item-font-size: 0.8rem;
   display: flex;
   justify-content: center;
   margin-top: 1rem;
-  margin-left: calc(($item-size * -1) - 1rem);
+  margin-left: calc(($item-size * -1) - 2rem);
 }
 
 .menu_chord_item {
@@ -60,7 +64,7 @@ $item-font-size: 0.8rem;
     &[data-match="true"] {
       border-color: var(--gold);
       color: var(--gold);
-      font-weight: 600;
+      font-weight: 400;
     }
   }
 }
