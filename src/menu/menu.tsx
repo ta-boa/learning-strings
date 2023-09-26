@@ -97,11 +97,14 @@ const MenuBar = () => {
   );
 };
 export default function Menu() {
+  const { menu } = useContext(AppContext) as AppState;
   return (
     <div class="menu">
       <MenuBar></MenuBar>
-      <MenuChords></MenuChords>
-      <MenuProgression></MenuProgression>
+      {menu.value === "chords" ? <MenuChords></MenuChords> : undefined}
+      {menu.value === "progression" ? (
+        <MenuProgression></MenuProgression>
+      ) : undefined}
     </div>
   );
 }

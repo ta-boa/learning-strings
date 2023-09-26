@@ -7,14 +7,13 @@ import {
   NoteSettings,
   PressedKeys,
   Progression,
-} from "music/types";
-import { NoteLang, getNoteFromFret, isSharp } from "./music/notes";
+} from "./music/types";
+import { NoteLang, Semi, getNoteFromFret, isSharp } from "./music/notes";
 import { Signal, computed, signal } from "@preact/signals";
 import { Scales } from "./music/scales";
 
 export const AppContext = createContext(null);
 
-export type Semi = "sharp" | "flat";
 export type ArmDirection = "left" | "right";
 export type MenuState = "initial" | "chords" | "progression";
 export interface Display {

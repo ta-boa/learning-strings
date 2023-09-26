@@ -1,3 +1,5 @@
+// https://i.pinimg.com/originals/5f/0c/1e/5f0c1eafcc60e59237151d6c82f5c101.jpg
+
 import { Note, NoteSettings } from "./types";
 
 export const major = (note: Note): Note => note.charAt(0) as Note;
@@ -39,6 +41,7 @@ export const NoteName = {
 
 export type NoteLang = "abc" | "doremi";
 
+export type Semi = "sharp" | "flat";
 export const BemolSign = "♭";
 export const SharpSign = "♯";
 
@@ -70,4 +73,16 @@ export const getNoteFromFret = (note: Note, fret: number): NoteSettings => {
   }
   nextNote = Array.isArray(lastNote) ? lastNote : [lastNote];
   return { note: nextNote, fret } as NoteSettings;
+};
+
+export const getSemiToneFromType = (notes: Note[], semi: Semi) => {
+  if (notes.length === 1) {
+    return notes[0];
+  }
+  return notes.find((note: Note) => {
+    return (
+      (semi === "sharp" && isSharp(note)) || (semi === "flat" && isFlat(note))
+    );
+  });
+  return;
 };

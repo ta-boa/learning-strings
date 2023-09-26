@@ -1,59 +1,84 @@
-import { computed, useSignal } from "@preact/signals";
-import { getFriendlyNoteName } from "music/notes";
+import { useSignal } from "@preact/signals";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
-import { Scales, ScaleReference } from "../music/scales";
-import { Note } from "../music/types";
+import { getNoteFromFret, getSemiToneFromType } from "../music/notes";
+import { Note, NoteSettings, Progression } from "../music/types";
 
-function ChordItem({ name, notes, presetName }) {
-  const { lang, activeKeys, chordMatch } = useContext(AppContext) as AppState;
-
-  const pressedKeys = Object.keys(activeKeys.value)
-    .map((key) => {
-      return activeKeys.value[key].note;
-    })
-    .flat()
-    .filter((value, index, self) => {
-      return self.indexOf(value) === index;
-    });
-
-  let match = false;
-  if (presetName.value && presetName.value === chordMatch.value?.presetName) {
-    match = chordMatch.value?.chordName === name;
-  }
-
-  return (
-    <div className="menu_chord_item">
-      <strong className="menu_chord_item_lead" data-match={match}>
-        {getFriendlyNoteName(name, lang.value)}
-      </strong>
-      {notes.map((note: Note) => {
-        const noteName = getFriendlyNoteName(note, lang.value);
-        return (
-          <div
-            className="menu_chord_item_note"
-            data-pressed={pressedKeys.includes(note)}
-            data-match={match}
-            data-note={note}
-          >
-            {noteName}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+const getSingleStringProgression = (
+  selectedNote: Note,
+  selectedFret: number
+) => {
+  return [
+    getNoteFromFret(selectedNote, selectedFret),
+    getNoteFromFret(selectedNote, selectedFret + 2), // whole
+    getNoteFromFret(selectedNote, selectedFret + 4), // whole
+    getNoteFromFret(selectedNote, selectedFret + 5), // half
+    getNoteFromFret(selectedNote, selectedFret + 7), // whole
+    getNoteFromFret(selectedNote, selectedFret + 9), // whole
+    getNoteFromFret(selectedNote, selectedFret + 11), // whole
+    getNoteFromFret(selectedNote, selectedFret + 12), // half
+  ] as NoteSettings[];
+};
 
 export default function MenuProgression() {
-  const { menu, tilt } = useContext(AppContext) as AppState;
+  const { menu, tilt, activeKeys, semi, progression, notesGrid } = useContext(
+    AppContext
+  ) as AppState;
+
+  const linear = useSignal([]);
+
   if (menu.value === "progression") {
-    tilt.value = 2;
+    tilt.value = 4;
+  }
+
+  const entries = Object.entries(activeKeys.value);
+  if (entries.length === 1) {
+    const [position, noteSetting] = entries[0];
+    const currentSetting: NoteSettings = noteSetting;
+    const note = getSemiToneFromType(currentSetting.note, semi.value);
+    linear.value = getSingleStringProgression(note, currentSetting.fret).map(
+      (setting: NoteSettings): Progression[] => {
+        const { fret, note } = setting;
+        return {
+          fret,
+          note,
+          position: parseInt(position),
+        } as Progression;
+      }
+    );
   }
 
   return (
     <div aria-hidden={menu.value !== "progression"} class="menu_progression">
-      progression
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td>root</td>
+            <td>whole</td>
+            <td>whole</td>
+            <td>half</td>
+            <td>whole</td>
+            <td>whole</td>
+            <td>whole</td>
+            <td>half</td>
+          </tr>
+        </thead>
+        <tr>
+          <td>single</td>
+          {linear.value.map((item: Progression) => {
+            return (
+              <td>
+                {item.fret}:{getSemiToneFromType(item.note, semi.value)}
+              </td>
+            );
+          })}
+        </tr>
+        <tr>
+          <td>multi</td>
+        </tr>
+      </table>
     </div>
   );
 }
