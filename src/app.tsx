@@ -47,7 +47,7 @@ const stringifiedScales = Object.entries(Scales)
       return {
         presetName,
         chordName: chordName as Note,
-        notes: chordNotes.sort().join(""),
+        notes: [...chordNotes].sort().join(""),
       };
     });
   })
@@ -115,7 +115,7 @@ export function createAppState(iSettings: InstrumentSettings): AppState {
           return self.indexOf(value) === index;
         });
       })
-      .map((list) => list.sort().join(""));
+      .map((list) => [...list].sort().join(""));
 
     let match: ChordMath;
     allScales.some(({ presetName, chordName, notes }) => {

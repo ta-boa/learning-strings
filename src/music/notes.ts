@@ -42,7 +42,8 @@ export const NoteName = {
 export type NoteLang = "abc" | "doremi";
 
 export type Semi = "sharp" | "flat";
-export const BemolSign = "♭";
+
+export const FlatSign = "♭";
 export const SharpSign = "♯";
 
 export const getFriendlyNoteName = (note: Note, lang: NoteLang): string => {
@@ -56,7 +57,7 @@ export const getFriendlyNoteName = (note: Note, lang: NoteLang): string => {
       NoteName[friendlyNote.charAt(0)]
     );
   }
-  return friendlyNote.replace(/s$/, SharpSign).replace(/b$/, BemolSign);
+  return friendlyNote.replace(/s$/, SharpSign).replace(/b$/, FlatSign);
 };
 
 export const getNoteFromFret = (note: Note, fret: number): NoteSettings => {
@@ -84,5 +85,4 @@ export const getSemiToneFromType = (notes: Note[], semi: Semi) => {
       (semi === "sharp" && isSharp(note)) || (semi === "flat" && isFlat(note))
     );
   });
-  return;
 };

@@ -1,16 +1,16 @@
 import {
-  BemolSign,
-  SharpSign,
   isFlat,
   isSharp,
   major,
   minor,
   sharp,
+  getNoteFromFret,
+  getSemiToneFromType,
 } from "./notes";
 import { Note } from "./types";
 
 const getLoopFromNote = (note: Note): Note[] => {
-  const base: Note[] = ["C", "D", "E", "F", "G", "A", "B"];
+  const base: Note[] = ["A", "B", "C", "D", "E", "F", "G"];
   const index = base.indexOf(note);
   const left = base.splice(index);
   return left.concat(base);
@@ -84,7 +84,18 @@ const pick = (range: number[], list: Note[]) => {
   });
 };
 
+const toBemol = (note: Note) => {
+  const setting = getNoteFromFret(note, 11);
+  return getSemiToneFromType(setting.note, "flat");
+};
+
+const toSharp = (note: Note) => {
+  const setting = getNoteFromFret(note, 13);
+  return getSemiToneFromType(setting.note, "sharp");
+};
+
 type Mutation = (note: Note) => Note;
+
 const transformNotes = (notes: Note[], mutations: Mutation[]) => {
   if (mutations.length === 0) return notes;
   if (notes.length != mutations.length) {
@@ -97,13 +108,13 @@ const transformNotes = (notes: Note[], mutations: Mutation[]) => {
 };
 
 export const MajorScaleProgression = {
+  C: getMajorScaleFromNote("C"),
+  D: getMajorScaleFromNote("D"),
+  E: getMajorScaleFromNote("E"),
   F: getMajorScaleFromNote("F"),
   G: getMajorScaleFromNote("G"),
   A: getMajorScaleFromNote("A"),
   B: getMajorScaleFromNote("B"),
-  C: getMajorScaleFromNote("C"),
-  D: getMajorScaleFromNote("D"),
-  E: getMajorScaleFromNote("E"),
 };
 
 export type ScaleType = Partial<{ [key: string]: Note[] }>;
@@ -115,38 +126,40 @@ const buildScale = (
 ): ScaleType => {
   return Object.keys(MajorScaleProgression).reduce((newScale, note: Note) => {
     const notes = MajorScaleProgression[note];
-    newScale[note] = transformNotes(pick(selection, notes), mutations);
+    const notesInScale = pick(selection, notes);
+    console.log(note, notesInScale, notes);
+    const transformedNotes = transformNotes(notesInScale, mutations);
+    newScale[note] = transformedNotes;
     return newScale;
   }, {});
 };
 
+// @todo- use b and s for notes to avoid ugly code
 export const ScaleReference = {
   Major: ["1", "3", "5"],
-  Minor: ["1", `3${BemolSign}`, "5"],
-  Diminished: ["1", `3${BemolSign}`, `5${BemolSign}`],
-  Augmented: ["1", "3", `5${SharpSign}`],
-  "Major 7": ["1", "3", "5", "7"],
-  "Minor 7": ["1", `3${BemolSign}`, "5", `7${BemolSign}`],
-  "Dominant 7": ["1", "3", "5", `7${BemolSign}`],
-  "Augmented 7": ["1", "3", `5${SharpSign}`, "7b"],
+  Minor: ["1", "3b", "5"],
+  Diminished: ["1", "3b", "5b"],
+  Augmented: ["1", "3", "5s"],
+  "Major 7": ["1", "3", "5", "7b"],
+  "Minor 7": ["1", "3b", "5", "7b"],
+  "Dominant 7": ["1", "3", "5", "7s"],
+  "Augmented 7": ["1", "3", "5s", "7b"],
 };
 
 export const Scales: ScalesType = Object.entries(ScaleReference).reduce(
   (newScale, [name, formula]) => {
     const indexList = [];
     const modiferList = [];
-    formula.map((value: string) => {
+    formula.map((value: Note) => {
       indexList.push(parseInt(value) - 1);
       modiferList.push(
-        value.indexOf(BemolSign) > -1
-          ? minor
-          : value.indexOf(SharpSign) > -1
-          ? sharp
-          : echo
+        isFlat(value) ? toBemol : isSharp(value) ? toSharp : echo
       );
     });
     // Ex os call: buildScale([0, 2, 4], [echo, minor, echo]),
-    newScale[name] = buildScale(indexList, modiferList);
+    console.log("Build scale", name, indexList);
+    const notesInScale = buildScale(indexList, modiferList);
+    newScale[name] = notesInScale;
     return newScale;
   },
   {}

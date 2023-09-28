@@ -50,12 +50,13 @@ export default function MenuChords() {
 
   const presetName = useSignal("Major");
   const scale = useSignal(Scales[presetName.value]);
+
   const chordRef = computed(() => {
     return ScaleReference[presetName.value];
   });
 
   if (menu.value === "chords") {
-    tilt.value = scale.value.G.length + 3;
+    tilt.value = scale.value.A.length + 3;
   }
 
   const updateScales = (event: Event) => {

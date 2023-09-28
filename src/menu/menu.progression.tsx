@@ -38,7 +38,7 @@ export default function MenuProgression() {
     const currentSetting: NoteSettings = noteSetting;
     const note = getSemiToneFromType(currentSetting.note, semi.value);
     linear.value = getSingleStringProgression(note, currentSetting.fret).map(
-      (setting: NoteSettings): Progression[] => {
+      (setting: NoteSettings): Progression => {
         const { fret, note } = setting;
         return {
           fret,

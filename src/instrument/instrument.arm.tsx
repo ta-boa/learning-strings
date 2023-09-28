@@ -1,8 +1,14 @@
 import { h } from "preact";
 import { useContext } from "preact/hooks";
-import { AppState, AppContext, Semi } from "../app";
+import { AppState, AppContext } from "../app";
 import { Note, NoteSettings, PressedKeys } from "../music/types";
-import { getFriendlyNoteName, isMajor, isFlat, isSharp } from "../music/notes";
+import {
+  getFriendlyNoteName,
+  isMajor,
+  isFlat,
+  isSharp,
+  Semi,
+} from "../music/notes";
 
 export type ArmStringProps = {
   position: number;
