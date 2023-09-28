@@ -78,13 +78,13 @@ const getMajorScaleFromNote = (note: Note): Note[] => {
   return result;
 };
 
-const pick = (range: number[], list: Note[]) => {
+const pickNotesFromList = (range: number[], list: Note[]) => {
   return list.filter((_, index) => {
     return range.includes(index);
   });
 };
 
-const toBemol = (note: Note) => {
+const toFlat = (note: Note) => {
   const setting = getNoteFromFret(note, 11);
   return getSemiToneFromType(setting.note, "flat");
 };
@@ -96,7 +96,7 @@ const toSharp = (note: Note) => {
 
 type Mutation = (note: Note) => Note;
 
-const transformNotes = (notes: Note[], mutations: Mutation[]) => {
+const applyMutationsOnList = (notes: Note[], mutations: Mutation[]) => {
   if (mutations.length === 0) return notes;
   if (notes.length != mutations.length) {
     throw Error("notes and mutations should have same length");
@@ -126,9 +126,9 @@ const buildScale = (
 ): ScaleType => {
   return Object.keys(MajorScaleProgression).reduce((newScale, note: Note) => {
     const notes = MajorScaleProgression[note];
-    const notesInScale = pick(selection, notes);
+    const notesInScale = pickNotesFromList(selection, notes);
     console.log(note, notesInScale, notes);
-    const transformedNotes = transformNotes(notesInScale, mutations);
+    const transformedNotes = applyMutationsOnList(notesInScale, mutations);
     newScale[note] = transformedNotes;
     return newScale;
   }, {});
@@ -153,41 +153,13 @@ export const Scales: ScalesType = Object.entries(ScaleReference).reduce(
     formula.map((value: Note) => {
       indexList.push(parseInt(value) - 1);
       modiferList.push(
-        isFlat(value) ? toBemol : isSharp(value) ? toSharp : echo
+        isFlat(value) ? toFlat : isSharp(value) ? toSharp : echo
       );
     });
-    // Ex os call: buildScale([0, 2, 4], [echo, minor, echo]),
-    console.log("Build scale", name, indexList);
+    // Ex os call: buildScale([0, 2, 4], [echo, toSharp, toFlat]),
     const notesInScale = buildScale(indexList, modiferList);
     newScale[name] = notesInScale;
     return newScale;
   },
   {}
 );
-
-// export const Scales: ScalesType = {
-//   Major: {
-//     ...buildScale([0, 2, 4]),
-//   },
-//   Minor: {
-//     ...buildScale([0, 2, 4], [echo, minor, echo]),
-//   },
-//   Diminished: {
-//     ...buildScale([0, 2, 4], [echo, minor, minor]),
-//   },
-//   Augmented: {
-//     ...buildScale([0, 2, 4], [echo, echo, sharp]),
-//   },
-//   "Major 7": {
-//     ...buildScale([0, 2, 4, 6]),
-//   },
-//   "Minor 7": {
-//     ...buildScale([0, 2, 4, 6], [echo, minor, echo, minor]),
-//   },
-//   "Dominant 7": {
-//     ...buildScale([0, 2, 4, 6], [echo, echo, echo, minor]),
-//   },
-//   "Augmented 7": {
-//     ...buildScale([0, 2, 4, 6], [echo, echo, sharp, minor]),
-//   },
-// };
