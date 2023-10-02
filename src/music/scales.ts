@@ -127,7 +127,6 @@ const buildScale = (
   return Object.keys(MajorScaleProgression).reduce((newScale, note: Note) => {
     const notes = MajorScaleProgression[note];
     const notesInScale = pickNotesFromList(selection, notes);
-    console.log(note, notesInScale, notes);
     const transformedNotes = applyMutationsOnList(notesInScale, mutations);
     newScale[note] = transformedNotes;
     return newScale;

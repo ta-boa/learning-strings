@@ -2,7 +2,11 @@ import { useSignal } from "@preact/signals";
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppContext, AppState } from "../app";
-import { getNoteFromFret, getSemiToneFromType } from "../music/notes";
+import {
+  getFriendlyNoteName,
+  getNoteFromFret,
+  getSemiToneFromType,
+} from "../music/notes";
 import { Note, NoteSettings, Progression } from "../music/types";
 
 const getSingleStringProgression = (
@@ -22,9 +26,8 @@ const getSingleStringProgression = (
 };
 
 export default function MenuProgression() {
-  const { menu, tilt, activeKeys, semi, progression, notesGrid } = useContext(
-    AppContext
-  ) as AppState;
+  const { menu, tilt, activeKeys, semi, lang, progression, notesGrid } =
+    useContext(AppContext) as AppState;
 
   const linear = useSignal([]);
 
@@ -51,7 +54,7 @@ export default function MenuProgression() {
 
   return (
     <div aria-hidden={menu.value !== "progression"} class="menu_progression">
-      <table>
+      <table cellSpacing={2}>
         <thead>
           <tr>
             <td></td>
@@ -70,7 +73,11 @@ export default function MenuProgression() {
           {linear.value.map((item: Progression) => {
             return (
               <td>
-                {item.fret}:{getSemiToneFromType(item.note, semi.value)}
+                {item.position}:{item.fret} -{" "}
+                {getFriendlyNoteName(
+                  getSemiToneFromType(item.note, semi.value),
+                  lang.value
+                )}
               </td>
             );
           })}

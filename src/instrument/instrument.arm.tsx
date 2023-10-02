@@ -26,9 +26,8 @@ const pickNote = (notes: Note[], semi: Semi): Note => {
 };
 
 export const ArmString = ({ position }: ArmStringProps) => {
-  const { instrument, activeKeys, notesGrid, display, lang, semi } = useContext(
-    AppContext
-  ) as AppState;
+  const { instrument, activeKeys, notesGrid, display, lang, semi, menu } =
+    useContext(AppContext) as AppState;
 
   const {
     major: displayMajor,
@@ -44,6 +43,11 @@ export const ArmString = ({ position }: ArmStringProps) => {
 
   const togglePressed = (target: NoteSettings) => {
     return () => {
+      // In progression mode only one key can be presset at time
+      if (menu.value === "progression") {
+        activeKeys.value = { [position]: target };
+        return;
+      }
       const aKeys = { ...activeKeys.value } as PressedKeys;
       const current: null | NoteSettings = aKeys[position];
       if (
