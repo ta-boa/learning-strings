@@ -50,6 +50,7 @@ export default function MenuProgression() {
         } as Progression;
       }
     );
+    progression.value = linear.value;
   }
 
   return (
@@ -73,7 +74,7 @@ export default function MenuProgression() {
           {linear.value.map((item: Progression) => {
             return (
               <td>
-                {item.position}:{item.fret} -{" "}
+                {item.position+1}:{item.fret} -{" "}
                 {getFriendlyNoteName(
                   getSemiToneFromType(item.note, semi.value),
                   lang.value

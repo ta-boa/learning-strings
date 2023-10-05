@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { useContext } from "preact/hooks";
 import { AppState, AppContext } from "../app";
-import { Note, NoteSettings, PressedKeys } from "../music/types";
+import { Note, NoteSettings, PressedKeys, Progression } from "../music/types";
 import {
   getFriendlyNoteName,
   isMajor,
@@ -26,14 +26,23 @@ const pickNote = (notes: Note[], semi: Semi): Note => {
 };
 
 export const ArmString = ({ position }: ArmStringProps) => {
-  const { instrument, activeKeys, notesGrid, display, lang, semi, menu } =
-    useContext(AppContext) as AppState;
+  const {
+    instrument,
+    activeKeys,
+    notesGrid,
+    display,
+    lang,
+    semi,
+    menu,
+    progression,
+  } = useContext(AppContext) as AppState;
 
   const {
     major: displayMajor,
     semi: displaySemi,
     fret: displayFret,
   } = display.value;
+
   const lastPositionIndex = instrument.value.tuning.length;
   const stringNotesByPosition = notesGrid.value[position];
 
@@ -72,6 +81,15 @@ export const ArmString = ({ position }: ArmStringProps) => {
 
   const isStringPressed = (position: number) => {
     return position.toString() in activeKeys.value;
+  };
+
+  const isNoteHighlighted = (note: NoteSettings, position: number) => {
+    if (menu.value !== "progression" || !progression.value.length) return false;
+    return (
+      progression.value.find((p: Progression) => {
+        return p.position === position && p.fret === note.fret;
+      }) !== undefined
+    );
   };
 
   return (
@@ -123,6 +141,10 @@ export const ArmString = ({ position }: ArmStringProps) => {
           hidden = displayMajor === false && current.fret !== 0;
         }
 
+        const noteTitle = `string ${position + 1} fret ${
+          current.fret
+        } note ${noteName}`;
+
         return (
           <button
             key={key}
@@ -131,10 +153,11 @@ export const ArmString = ({ position }: ArmStringProps) => {
             data-fret={current.fret}
             data-hidden={hidden}
             data-position={position}
+            data-highlight={isNoteHighlighted(current, position)}
             data-note={current.note}
             aria-pressed={isNotePressed(current)}
-            title={note}
-            aria-label={"string " + (position + 1) + " note " + noteName}
+            title={noteTitle}
+            aria-label={noteTitle}
           >
             {noteFret}
             <span class="note_label">{noteName}</span>

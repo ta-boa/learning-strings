@@ -25,7 +25,7 @@
   appearance: none;
   outline: none;
   background-color: $note-background-color;
-  border: 1px solid $note-background-color;
+  border: 0;
   border-bottom: 1px solid $note-fret-border-color;
   display: flex;
   position: relative;
@@ -34,18 +34,6 @@
   cursor: pointer;
   transition: background-color $note-transition, border-color $note-transition,
     color $note-transition;
-
-  //@include for-tablet-landscape-up {
-  //  height: $note-width;
-  //  width: $note-height;
-  //
-  //  border-bottom-color: transparent;
-  //  border-right-color: $note-fret-border-color;
-  //
-  //  &[data-fret="0"] {
-  //    left: 0;
-  //  }
-  //}
 }
 
 .note:focus-within {
@@ -60,12 +48,22 @@
   }
 }
 
-.note[aria-pressed="true"] {
-  border-color: $note-border-color-pressed;
+:not(.note[data-highlight="true"]).note[aria-pressed="true"] {
+  border: 1px solid $note-border-color-pressed;
   background-color: $note-background-color-pressed;
 
   .note_label {
     color: $note-font-color-pressed;
+  }
+}
+
+.note[data-highlight="true"] {
+  //border-color: var(--foam);
+  //background-color: blue;
+
+  .note_label {
+    color: var(--rose);
+    font-weight: 600;
   }
 }
 
